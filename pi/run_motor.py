@@ -1,12 +1,15 @@
 import RPi.GPIO as GPIO
 import time
 
+pinNum = 36
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(7, GPIO.OUT)
+GPIO.setup(pinNum, GPIO.OUT, initial=GPIO.HIGH)
 # loop through 3 times, on for 5 seconds/off for 1 second
 for i in range(3):
-    GPIO.output(7,True)
+    print("Pin ON")
+    GPIO.output(pinNum,False)
     time.sleep(5)
-    GPIO.output(7,False)
+    GPIO.output(pinNum,True)
+    print("Pin Off")
     time.sleep(1)
 GPIO.cleanup()
