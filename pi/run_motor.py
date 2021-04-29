@@ -1,8 +1,9 @@
 import RPi.GPIO as GPIO
 import time
+
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(7, GPIO.OUT)
-# loop through 3 times, on/off for 1 second
+# loop through 3 times, on for 5 seconds/off for 1 second
 for i in range(3):
     GPIO.output(7,True)
     time.sleep(5)
