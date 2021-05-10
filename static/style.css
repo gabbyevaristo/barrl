@@ -1,0 +1,20 @@
+body { 
+    padding-top: 20%; 
+}
+
+#drink-container {
+    color: #2B2B2B;
+}
+
+#cart-icon {
+    color: black;
+}
+
+#drink-div {
+    margin-left: 23px;
+}
+
+#drink-properties-div {
+    font-size: 12px;
+    color: #555252;
+}

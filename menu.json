@@ -1,0 +1,48 @@
+{
+    "Rum and Coke": {
+        "price": "8.99",
+        "ingredients": "Rum, Coke",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Gin and Tonic": {
+        "price": "10.99",
+        "ingredients": "Gin, Tonic",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Long Island": {
+        "price": "11.99",
+        "ingredients": "Vodka, Tequila, Rum, Triple Sec, Gin, Coke",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Margarita": {
+        "price": "13.99",
+        "ingredients": "Tequila, Orange Liqueur, Lime Juice",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Screwdriver": {
+        "price": "11.99",
+        "ingredients": "Vodka, Orange Juice",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Sex on the Beach": {
+        "price": "15.99",
+        "ingredients": "Vodka, Orange Juice, Cranberry Juice",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Rum Runner": {
+        "price": "11.99",
+        "ingredients": "Rum, Banana Liqueur, Grenadine",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Pina Colada": {
+        "price": "15.99",
+        "ingredients": "White Rum, Pineapple Juice, Coconut",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    },
+    "Mojito": {
+        "price": "12.99",
+        "ingredients": "White Rum, Lime Juice",
+		"image": "https://www.staysnatched.com/wp-content/uploads/2019/03/keto-lemon-drop-cocktail.jpg"
+    }
+
+}
