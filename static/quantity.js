@@ -1,6 +1,5 @@
 function myFunction(clickedID, drink) {
     let buttonID = clickedID.slice(0,-7);
-    console.log(typeof(drink));
     $('#modal-title').text(drink.name);
     $("#modal-drink-image").attr("src", drink.image);
     $("#modal-drink-price").text("$" + drink.price);
