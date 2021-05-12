@@ -12,15 +12,6 @@
     <h2 class="my-3"> Shopping Cart </h2>
 </div>
 
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-      <p> {{ message }} </p>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-
-
 <!-- Show cart items if they exist -->
 {% if drinks %}
   <div class="container">

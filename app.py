@@ -1,10 +1,9 @@
-from flask import Flask, render_template, redirect, request, session, flash
+from flask import Flask, render_template, redirect, request, session
 from pi import pour_water
 from menu import drinks
 import json
 
 app = Flask(__name__)
-app.secret_key = "hello"
 
 
 @app.route('/', methods=["GET", "POST"])
