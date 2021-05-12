@@ -1,0 +1,56 @@
+html, body, #brand-name {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background: url("https://static5.depositphotos.com/1008347/501/i/600/depositphotos_5019783-stock-photo-cocktail-splashing.jpg") no-repeat center center fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    min-height: 100;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+}
+
+#brand-name-container {
+    top: 25%;
+}
+
+#brand-name {
+    color: white;
+    font-size: 4.9em;
+    font-family: Optima, Georgia, sans-serif;
+    animation: text 3s 1;
+}
+
+#menu-button-container {
+    top: 70%;
+}
+
+#menu-button {
+    width: 110px;
+    height: 36px;
+    font-size: 18px;
+    border-radius: 2em;
+    font-family: Optima, Georgia, sans-serif;
+}
+
+@keyframes text {
+    0% {
+        color: black;
+        margin-bottom: -40px;
+
+    }
+    30% {
+        letter-spacing: 20px;
+        margin-bottom: -40px;
+    }
+    85% {
+        letter-spacing: 8px;
+        max-resolution: -40px;
+    }
+}
