@@ -1,9 +1,11 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, session, flash
 from pi import pour_water
 from menu import drinks
 import json
 
 app = Flask(__name__)
+app.secret_key = "hello"
+
 
 @app.route('/', methods=["GET", "POST"])
 def index():
@@ -13,19 +15,18 @@ def index():
     else:
         return render_template('index.html')
 
+
 @app.route('/menu', methods=["GET", "POST"])
 def menu():
     return render_template('menu.html', drinks=drinks)
 
 
-# @app.route('/getdrinklist')
-# def get_python_data():
-#     return json.dumps(drinks)
-
-
-@app.route('/cart')
+@app.route('/shopping-cart')
 def cart():
-    return render_template('cart.html')
+    if "shopping_cart" not in session:
+        return render_template('cart.html', drinks={})
+    else:
+        return render_template('cart.html', drinks=drinks)
 
 
 if __name__ == "__main__":

@@ -1,41 +1,32 @@
 @media (max-width: 1920px) { 
     body { 
-        padding-top: 80px; 
+        padding-top: 10px; 
     }
 }
 
 @media (max-width: 500px) { 
     body { 
-        padding-top: 80px; 
+        padding-top: 10px; 
     } 
 }
 
-#quantity-input {
-    width: 70px;
-    text-align: center;
-}
 
-.btn-minus {
-    font-size: 20px !important;
-    padding: .0rem 1.2rem !important;
-}
+/* All pages */
 
-.btn-plus {
-    font-size: 20px !important;
-    padding: .0rem 1.05rem !important;
-}
-
-#menu-drink-image {
-    width: 50px; 
-    height: 67px;
+.form-group {
+    margin-top: 1rem !important;
 }
 
 #cart-icon {
     color: black;
 }
 
-#drink-div {
-    margin-left: 23px;
+
+/* Menu styles */
+
+#menu-drink-image {
+    width: 50px; 
+    height: 67px;
 }
 
 #drink-properties-div {
@@ -44,12 +35,68 @@
 }
 
 
-#quantity-container {
-    margin-top: 20px;
-    margin-bottom: 20px;
+/* Modal styles */
+
+#minus-button {
+    padding: .12rem .8rem !important;
+    height: 35px !important;
+}
+
+#plus-button {
+    height: 35px !important;
+}
+
+#quantity-value {
+    flex: none !important;
+    width: 9% !important;
+    margin-bottom: 0rem !important;
+    padding-top: 0.35rem !important;
+}
+
+.modal-body {
+    padding: 0.6rem !important;
+}
+
+.modal-footer {
+    padding: 0rem !important;
+}
+
+#add-to-cart-button {
+    border-radius: 0rem !important;
 }
 
 #modal-drink-image {
     width: 110px; 
     height: 140px;
 }
+
+#modal-drink-ingredients {
+    font-size: 0.9rem;
+}
+
+
+/* Shopping cart styles */
+
+#order-totals {
+    font-size: 0.85rem;
+}
+
+#empty-cart-text {
+    color: #555252;
+}
+
+.empty-cart-container {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#empty-cart-icon {
+    text-align: center;
+}
+
+#add-items-to-cart-link {
+    text-decoration: none;
+}
+

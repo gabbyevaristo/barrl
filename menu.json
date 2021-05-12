@@ -1,56 +1,20 @@
 {
-    "rum-and-coke": {
-		    "name": "Rum and Coke",
-        "price": "8.99",
-        "ingredients": "Rum, Coke",
-		    "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg"
-    },
-    "long-island": {
-        "name": "Long Island",
-        "price": "11.99",
-        "ingredients": "Vodka, Tequila, Rum, Triple Sec, Gin, Coke",
-		    "image": "https://s3.amazonaws.com/commonwealthcocktailsimages/I749VtLrMCOFRHE2biWxJw==-Long-Island-Iced-Tea-IBA-commonwealth-cocktails.png"
-    },
-    "margarita": {
-		    "name": "Margarita",
-        "price": "13.99",
-        "ingredients": "Tequila, Orange Liqueur, Lime Juice",
-		    "image": "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1616527475-31ioBkcVUeL.jpg?crop=1xw:1xh;center,top&resize=480:*"
-    },
     "screwdriver": {
-		    "name": "Screwdriver",
+		"name": "Screwdriver",
         "price": "11.99",
         "ingredients": "Vodka, Orange Juice",
-		    "image": "https://cdn.diffords.com/contrib/stock-images/2016/1/42/2016f9f668ba393c4d65892a8dcdf24bc30d.jpg"
+		"image": "https://cdn.diffords.com/contrib/stock-images/2016/1/42/2016f9f668ba393c4d65892a8dcdf24bc30d.jpg"
     },
     "sex-on-the-beach": {
-		    "name": "Sex on the Beach",
+		"name": "Sex on the Beach",
         "price": "15.99",
         "ingredients": "Vodka, Orange Juice, Cranberry Juice",
-		    "image": "https://cdn.diffords.com/contrib/stock-images/2017/8/48/20175bfb132fa3c89f7b565702377eedd9f7.jpg"
+		"image": "https://cdn.diffords.com/contrib/stock-images/2017/8/48/20175bfb132fa3c89f7b565702377eedd9f7.jpg"
     },
     "rum-runner": {
-		    "name": "Rum Runner",
+		"name": "Rum Runner",
         "price": "11.99",
         "ingredients": "Rum, Banana Liqueur, Grenadine",
-		    "image": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F19%2F2017%2F11%2F10%2Frum-runner-0-cl-2000.jpg"
-    },
-    "pina-colada": {
-		    "name": "Pina Colada",
-        "price": "15.99",
-        "ingredients": "White Rum, Pineapple Juice, Coconut",
-		    "image": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F19%2F2012%2F01%2F10%2F4077901-pinacolada-sdw-2000.jpg&q=85"
-    },
-    "mojito": {
-		    "name": "Mojito",
-        "price": "12.99",
-        "ingredients": "White Rum, Lime Juice",
-		    "image": "https://d1fsk0mx7eozuf.cloudfront.net/uploads/2017/12/Mojito.jpg"
-    },
-	  "bloody-mary": {
-		    "name": "Bloody Mary",
-        "price": "13.99",
-        "ingredients": "Vodka, Tomato Juice",
-		    "image": "https://pvtfc.com/wp-content/uploads/2018/10/180734704-612x612.jpg"
+		"image": "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F19%2F2017%2F11%2F10%2Frum-runner-0-cl-2000.jpg"
     }
 }

@@ -1,11 +1,100 @@
 {% extends "layout.html" %}
 
-{% block title %} Checkout {% endblock %}
+{% block title %} Shopping Cart {% endblock %}
 
 {% block head %}
   {{ super() }}
 {% endblock %}
 
 {% block content %}
-  <p> Checkout </p>
+
+<div class="pt-5 mt-2 text-center">
+    <h2 class="my-3"> Shopping Cart </h2>
+</div>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <p> {{ message }} </p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+
+<!-- Show cart items if they exist -->
+{% if drinks %}
+  <div class="container">
+    <div class="list-group">
+
+      {% for drink in drinks.keys(): %}
+        <div class="list-group-item list-group-item-action flex-column align-items-start">
+          <div class="row">
+
+            <div class="column">
+              <img src={{ drinks[drink]["image"] }} id="menu-drink-image">
+            </div>
+
+            <div class="column ml-3">
+              <div class="d-flex w-100 justify-content-between">
+                <h6 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
+              </div>
+              <div id="drink-properties-div">
+                <p class="mb-1"> {{ drinks[drink]["ingredients"] }} </p>
+                <small> {{ drinks[drink]["price"] }} </small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+  <hr/>
+
+  <!-- Order summary-->
+  <div class="container pt-3 pb-5">
+    <div class="col">
+
+      <div class="rounded-pill bg-light text-uppercase font-weight-bold px-4 py-2"> Order Summary </div>
+
+      <div class="p-3" id="order-totals">
+        <ul class="list-unstyled mb-4">
+          <li class="d-flex justify-content-between border-bottom py-2 px-3">
+            <strong class="text-muted"> Order Subtotal </strong><strong> $390.00 </strong>
+          </li>
+          <li class="d-flex justify-content-between border-bottom py-2 px-3">
+            <strong class="text-muted"> Tax </strong><strong> $0.00 </strong>
+          </li>
+          <li class="d-flex justify-content-between border-bottom py-2 px-3">
+            <strong class="text-muted"> Total </strong>
+            <h6 class="font-weight-bold"> $400.00 </h6>
+          </li>
+        </ul><a href="#" class="btn btn-dark rounded-pill btn-block py-1"> Procceed to checkout </a>
+      </div>
+
+    </div>
+  </div>
+
+{% else %}
+
+<div class="empty-cart-container">
+  <div>
+    <div id="empty-cart-icon">
+      <button class="btn fa-3x" disabled> <i class="bi bi-cart-x"></i> </button>
+    </div>
+    <div class="text-center">
+      <h5 id="empty-cart-text"> Cart is empty </h5>
+    </div>
+    <p class="mt-4">
+      <a id="add-items-to-cart-link" class="font-weight-bold" href="/menu"> Add items to cart </a>
+    </p>
+  </div>
+</div>
+
+
+
+{% endif %}
+
 {% endblock %}
