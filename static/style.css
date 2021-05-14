@@ -4,12 +4,6 @@
     }
 }
 
-@media (max-width: 500px) { 
-    body { 
-        padding-top: 10px; 
-    } 
-}
-
 
 /* All pages */
 
@@ -17,41 +11,45 @@
     margin-top: 1rem !important;
 }
 
-#cart-icon {
+.cart-icon {
     color: black;
 }
 
 
 /* Menu styles */
 
-#menu-drink-image {
+.menu-drink-img {
     width: 50px; 
     height: 67px;
 }
 
-#drink-properties-div {
+.small-text {
     font-size: 12px;
     color: #555252;
 }
 
+@media (max-width: 1500px) {
+    .menu-drink-row {
+        width: 1500px;
+    }
+    .menu-drink-img-col {
+        max-width: 5%;
+    }
+}
+
+@media (max-width: 500px) {
+    .menu-drink-row {
+        width: 320px;
+    }
+    .menu-drink-img-col {
+        max-width: 23%;
+    }
+}
+
+
 
 /* Modal styles */
 
-#minus-button {
-    padding: .12rem .8rem !important;
-    height: 35px !important;
-}
-
-#plus-button {
-    height: 35px !important;
-}
-
-#quantity-value {
-    flex: none !important;
-    width: 9% !important;
-    margin-bottom: 0rem !important;
-    padding-top: 0.35rem !important;
-}
 
 .modal-body {
     padding: 0.6rem !important;
@@ -61,7 +59,23 @@
     padding: 0rem !important;
 }
 
-#add-to-cart-button {
+.minus-btn {
+    padding: .12rem .8rem !important;
+    height: 35px !important;
+}
+
+.plus-btn {
+    height: 35px !important;
+}
+
+.qty-value {
+    flex: none !important;
+    width: 9% !important;
+    margin-bottom: 0rem !important;
+    padding-top: 0.35rem !important;
+}
+
+.radius-remove {
     border-radius: 0rem !important;
 }
 
@@ -75,10 +89,11 @@
 }
 
 
+
 /* Shopping cart styles */
 
 #order-totals {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
 }
 
 #empty-cart-text {
@@ -100,3 +115,40 @@
     text-decoration: none;
 }
 
+.cart-item-div {
+    padding: .55rem 1.0rem !important;
+}
+
+.cart-drink-img {
+    width: 37px; 
+    height: 54px;
+}
+
+.cart-drink-img-col {
+    padding-left: 6px !important;
+}
+
+#cart-drink-price-header {
+    padding-left: 0px !important;
+}
+
+.cart-drink-price-col {
+    font-size: 12px;
+    color: #555252;
+    padding-left: 0px !important;
+}
+
+#cart-drink-quantity-header {
+    padding-left: 40px !important;
+}
+
+.cart-drink-quantity-col {
+    font-size: 12px;
+    color: #555252;
+    padding-left: 40px !important;
+}
+
+.cart-btn {
+    padding: 0rem 0rem !important;
+    line-height: 0 !important;
+}

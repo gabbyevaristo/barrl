@@ -2,71 +2,66 @@
 
 {% block title %} Menu {% endblock %}
 
-{% block head %}
-  {{ super() }}
-{% endblock %}
-
 {% block content %}
 
 <div class="pt-5 mt-2 text-center">
     <h2 class="my-3"> Menu </h2>
 </div>
 
-<div class="container">
-  <div class="list-group list-group-flush">
 
-    {% for drink in drinks.keys(): %}
-      <button type="button" id={{ drink + "-button" }} onclick="set_modal_data({{ drinks[drink] }});" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="row">
+<!-- Menu list -->
+<div class="list-group list-group-flush">
 
-          <div class="column">
-            <img src={{ drinks[drink]["image"] }} id="menu-drink-image">
-          </div>
-
-          <div class="column ml-3">
+  <!-- Menu items -->
+  {% for drink in drinks.keys(): %}
+    <button id={{ drink + "-button" }} type="button" onclick="open_menu_modal({{ drinks[drink] }});" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="row menu-drink-row ml-2">
+        <div class="menu-drink-img-col" class="col-2">
+          <img class="menu-drink-img" src={{ drinks[drink]["image"] }}>
+        </div>
+        <div class="col">
             <div class="d-flex w-100 justify-content-between">
-              <h6 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
+              <h5 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h5>
             </div>
-            <div id="drink-properties-div">
+            <div class="small-text">
               <p class="mb-1"> {{ drinks[drink]["ingredients"] }} </p>
               <small> {{ drinks[drink]["price"] }} </small>
             </div>
-          </div>
-
         </div>
-      </button>
-    {% endfor %}
+      </div>
+    </button>
+  {% endfor %}
 
-  </div>
 </div>
 
 
-<!-- Drink quantity modal -->
-<div class="modal fade" id="modal-drink" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+
+<!-- Add to cart modal -->
+<div id="modal-menu" class="modal fade" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title font-weight-bold" id="modal-drink-title"> </h5>
+        <h5 id="modal-drink-title" class="modal-title font-weight-bold"> </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         
-          <p class="ml-1" id="modal-drink-ingredients"> </p>
+          <p id="modal-drink-ingredients" class="ml-1"> </p>
 
           <div class="text-center">
-            <img src="" id="modal-drink-image" class="img-fluid mt-1"> 
+            <img id="modal-drink-image" src="" class="img-fluid mt-1"> 
 
-          <!-- Input spinner -->
+            <!-- Input quantity-->
             <div class="form-group row">
               <div class="input-group justify-content-center">
                 <div class="input-group-prepend mr-2">
-                  <button class="btn btn-outline-secondary" id="minus-button" type="button" disabled> - </button>
+                  <button id="minus-button" class="btn btn-outline-secondary minus-btn" type="button" disabled> - </button>
                 </div>
-                <p id="quantity-value"> 0 </p>
+                <p id="modal-menu-quantity" class="qty-value"> 0 </p>
                 <div class="input-group-append ml-2">
-                  <button class="btn btn-outline-secondary" id="plus-button" type="button"> + </button>
+                  <button id="plus-button" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
                 </div>
               </div>
             </div>
@@ -75,14 +70,21 @@
       </div>
           
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark btn-block p-3" id="add-to-cart-button"> 
-          <span class="pull-left" onclick="updateCart();"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span> 
-          <span class="pull-right" id="modal-drink-price"> </span>
+        <button id="add-to-cart-button" type="button" class="btn btn-dark btn-block p-3 radius-remove"> 
+          <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span> 
+          <span id="modal-drink-price" class="pull-right"> </span>
         </button>
       </div>
 
     </div>
   </div>
 </div>
+
+{% endblock %}
+
+
+{% block page_scripts %} 
+
+<script src="{{ url_for('static', filename='menu.js') }}"></script>
 
 {% endblock %}

@@ -1,25 +1,26 @@
-function set_modal_data(drink) {
+// Set data for modal on menu page
+function open_menu_modal(drink) {
     $('#modal-drink-title').text(drink.name);
     $("#modal-drink-ingredients").text(drink.ingredients);
     $("#modal-drink-image").attr("src", drink.image);
     $("#modal-drink-price").text("$" + drink.price);
-    $('#modal-drink').modal({backdrop: 'static', keyboard: false});
+    $('#modal-menu').modal({backdrop: 'static', keyboard: false});
 }
 
-
+// Increment and decrement quantity for modal on menu page
 $("#plus-button, #minus-button").click(function() {
     let button_id = $(this).attr('id');
-    let cur_quantity_string = $("#quantity-value").text();
+    let cur_quantity_string = $("#modal-menu-quantity").text();
     let cur_quantity_int = parseInt(cur_quantity_string);
 
     // Update quantity accordingly
     if (button_id == "plus-button") {
         if (cur_quantity_int < 4) {
-            $("#quantity-value").text((cur_quantity_int + 1).toString());
+            $("#modal-menu-quantity").text((cur_quantity_int + 1).toString());
         } 
     } else {
         if (cur_quantity_int >= 1) {
-            $("#quantity-value").text((cur_quantity_int - 1).toString());
+            $("#modal-menu-quantity").text((cur_quantity_int - 1).toString());
         }
     }
 

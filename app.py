@@ -4,6 +4,7 @@ from menu import drinks
 import json
 
 app = Flask(__name__)
+app.secret_key = 'barrl'
 
 
 @app.route('/', methods=["GET", "POST"])
@@ -23,11 +24,10 @@ def menu():
 @app.route('/shopping-cart')
 def cart():
     if "shopping_cart" not in session:
-        return render_template('cart.html', drinks={})
+        return render_template('cart.html', drinks=drinks)
     else:
         return render_template('cart.html', drinks=drinks)
 
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
-    
