@@ -55,8 +55,8 @@
             </div>
           </div>
 
-          <div  class="col-1 cart-drink-price-col">
-            <p> ${{ drinks[drink]["price"] }} </p>
+          <div id="cart-price-{{ loop.index }}" class="col-1 cart-drink-price-col">
+            <p> {{ drinks[drink]["price"] }} </p>
           </div>
 
           <div class="col-4 cart-drink-quantity-col">
@@ -82,11 +82,11 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 id="modal-cart-title-{{ loop.index }}" class="modal-title font-weight-bold"> </h5>
-              <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close reset-modal" data-index="{{ loop.index }}" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            
+
             <div class="modal-body">
               <div class="text-center"> 
 
@@ -94,11 +94,11 @@
                 <div class="form-group row">
                   <div class="input-group justify-content-center">
                     <div class="input-group-prepend mr-2">
-                      <button id="minus-cart-button-{{ loop.index }}" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
+                      <button id="minus-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="minus" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
                     </div>
                     <p id="modal-cart-quantity-{{ loop.index }}" class="qty-value"> </p>
                     <div class="input-group-append ml-2">
-                      <button id="plus-cart-button-{{ loop.index }}" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
+                      <button id="plus-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="plus" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
                     </div>
                   </div>
                 </div>
@@ -107,7 +107,7 @@
             </div>
                   
             <div class="modal-footer">
-              <button id="update-cart-button-{{ loop.index }}" type="button" class="btn btn-dark btn-block p-3 radius-remove"> 
+              <button id="update-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn"> 
                 <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span> 
                 <span id="modal-cart-price-{{ loop.index }}" class="pull-right"> </span>
               </button>
