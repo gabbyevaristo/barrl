@@ -14,7 +14,7 @@
 <!-- Shopping cart header row -->
 <div class="container">
   <div class="list-group list-group-flush">
-    <div id="cart-item-div" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="row">
         <div id="cart-drink-image-col" class="col-1">
           Items
@@ -39,7 +39,7 @@
 
     <!-- Shopping cart items -->
     {% for drink in drinks.keys(): %}
-      <div class="list-group-item list-group-item-action flex-column align-items-start cart-item-div">
+      <div id="cart-item-{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start cart-item">
         <div class="row">
 
           <div class="col-1 cart-drink-img-col">
@@ -56,12 +56,12 @@
           </div>
 
           <div id="cart-price-{{ loop.index }}" class="col-1 cart-drink-price-col">
-            <p> {{ drinks[drink]["price"] }} </p>
+            <p class="cart-price"> {{ drinks[drink]["price"] }} </p>
           </div>
 
           <div class="col-4 cart-drink-quantity-col">
             <div>
-              <span id="cart-quantity-{{ loop.index }}"> 2 </span>
+              <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> 1 </span>
               <div class="pull-right">
                 <button onclick="open_cart_modal({{ drinks[drink] }}, {{ loop.index }})" class="btn btn-xs ml-3 cart-btn" type="button">
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -107,7 +107,7 @@
             </div>
                   
             <div class="modal-footer">
-              <button id="update-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn"> 
+              <button data-index="{{ loop.index }}" type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn"> 
                 <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span> 
                 <span id="modal-cart-price-{{ loop.index }}" class="pull-right"> </span>
               </button>
@@ -129,16 +129,16 @@
 
     <div class="rounded-pill bg-light text-uppercase font-weight-bold px-4 py-1 text-center"> Order Summary </div>
 
-    <div id="order-totals" class="p-3">
+    <div class="p-3 order-totals">
       <ul class="list-unstyled mb-4">
         <li class="d-flex justify-content-between border-bottom py-2 px-3">
-          <strong class="text-muted"> Order Subtotal </strong><strong> $390.00 </strong>
+          <strong class="text-muted"> Order Subtotal </strong><strong id="subtotal"> </strong>
         </li>
         <li class="d-flex justify-content-between border-bottom py-2 px-3">
-          <strong class="text-muted"> Tax </strong><strong> $0.00 </strong>
+          <strong class="text-muted"> Tax </strong><strong> </strong>
         </li>
         <li class="d-flex justify-content-between border-bottom py-2 px-3">
-          <strong class="text-muted"> Total </strong><strong> $400.00 </strong>
+          <strong class="text-muted"> Total </strong><strong>  </strong>
         </li>
       </ul>
       <div class="text-center">
@@ -153,19 +153,19 @@
 <!-- Show empty cart -->
 {% else %}
 
-  <div class="empty-cart-container">
-    <div>
-      <div id="empty-cart-icon">
-        <button class="btn fa-3x" disabled> <i class="bi bi-cart-x"></i> </button>
-      </div>
-      <div class="text-center">
-        <h5 id="empty-cart-text"> Cart is empty </h5>
-      </div>
-      <p class="mt-4">
-        <a id="add-items-to-cart-link" class="font-weight-bold" href="/menu"> Add items to cart </a>
-      </p>
+<div class="empty-cart-container">
+  <div>
+    <div id="empty-cart-icon">
+      <button class="btn fa-3x" disabled> <i class="bi bi-cart-x"></i> </button>
     </div>
+    <div class="text-center">
+      <h5 id="empty-cart-text"> Cart is empty </h5>
+    </div>
+    <p class="mt-4">
+      <a id="add-items-to-cart-link" class="font-weight-bold" href="/menu"> Add items to cart </a>
+    </p>
   </div>
+</div>
 
 
 {% endif %}        
@@ -179,5 +179,3 @@
 <script src="{{ url_for('static', filename='cart.js') }}"></script>
 
 {% endblock %}
-
-

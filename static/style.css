@@ -92,7 +92,7 @@
 
 /* Shopping cart styles */
 
-#order-totals {
+.order-totals {
     font-size: 0.8rem;
 }
 
@@ -115,7 +115,7 @@
     text-decoration: none;
 }
 
-.cart-item-div {
+.cart-item, .cart-item-div {
     padding: .55rem 1.0rem !important;
 }
 

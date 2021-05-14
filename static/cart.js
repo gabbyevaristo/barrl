@@ -1,15 +1,6 @@
 // Load click handler on page render 
-window.onload = add_click_handlers;
-
-
-function delete_click_handler(event, parent) {
-    event.stopPropagation();
-    parent.remove();
-}
-
-function add_click_handlers() {
-    var cart_list = document.getElementById("cart");
-    var cart_items = cart_list.getElementsByClassName("cart-item-div");
+window.onload = function() {
+    var cart_items = document.getElementsByClassName("cart-item");
 
     cart_items.forEach(function(cart_item) {
         var delete_buttons = cart_item.getElementsByClassName("btn-trash");
@@ -18,6 +9,14 @@ function add_click_handlers() {
             return delete_click_handler(event, cart_item);
         }
     });
+
+    update_total();
+}
+
+
+function delete_click_handler(event, parent) {
+    event.stopPropagation();
+    parent.remove();
 }
 
 
@@ -30,6 +29,14 @@ function open_cart_modal(drink, i) {
     // Multiply drink price and quantity
     var price = parseInt(quantity) * parseFloat(drink.price);
     $('#modal-cart-price-'.concat(i)).text("$" + price.toString());
+
+    // Disable buttons if quantity is 1 or 4
+    if (parseInt(quantity) == 1) {
+        $('#minus-cart-button-'.concat(i)).prop('disabled', true);
+    } else if (parseInt(quantity) == 4) {
+        $('#plus-cart-button-'.concat(i)).prop('disabled', true);
+    }
+    
     $('#modal-cart-'.concat(i)).modal({backdrop: 'static', keyboard: false});
 }
 
@@ -66,8 +73,6 @@ $(".plus-btn, .minus-btn").click(function() {
         }
     }
 
-
-
     // Get updated quantity and update price value
     var updated_quantity = $('#modal-cart-quantity-'.concat(i)).text();
     var drink_price = $('#cart-price-'.concat(i)).text();
@@ -75,16 +80,18 @@ $(".plus-btn, .minus-btn").click(function() {
     $('#modal-cart-price-'.concat(i)).text("$" + price.toString());
 })
 
+
 // Update cart with edited quantity values
 $('.update-btn').click(function() {
     var i = $(this).data('index');
     var quantity = $('#modal-cart-quantity-'.concat(i)).text();
     $('#modal-cart-'.concat(i)).modal('hide'); 
     $('#cart-quantity-'.concat(i)).text(quantity);
+    update_total();
 })
 
 
-// Reset buttons if modal was closed out (changes should not be saved)
+// Reset buttons if modal was closed out (changes to buttons should not be saved)
 $('.reset-modal').click(function() {
     var i = $(this).data('index');
     var quantity = $('#cart-quantity-'.concat(i)).text();
@@ -99,3 +106,18 @@ $('.reset-modal').click(function() {
         $('#plus-cart-button-'.concat(i)).prop('disabled', false);
     }
 })
+
+
+function update_total() {
+    var cart_items = document.getElementsByClassName('cart-item');
+
+    var total = 0
+    for (var i =0; i < cart_items.length; i++) {
+        var cart_item = cart_items[i];
+
+        var price = cart_item.getElementsByClassName('cart-price')[0].innerHTML;
+        var quantity = cart_item.getElementsByClassName('cart-qty')[0].innerHTML;
+        total = total + (price * quantity);
+    }
+    document.getElementById('subtotal').innerHTML = total;
+}
