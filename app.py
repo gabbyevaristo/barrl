@@ -29,5 +29,10 @@ def cart():
         return render_template('cart.html', drinks=drinks)
 
 
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
+
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")
