@@ -1,9 +1,9 @@
 // Load click handler on page render 
 window.onload = function() {
-    var cart_items = document.getElementsByClassName("cart-item");
+    var cart_items = document.getElementsByClassName('cart-item');
 
     cart_items.forEach(function(cart_item) {
-        var delete_buttons = cart_item.getElementsByClassName("btn-trash");
+        var delete_buttons = cart_item.getElementsByClassName('btn-trash');
 
         delete_buttons[0].onclick = function(event) {
             return delete_click_handler(event, cart_item);
@@ -24,19 +24,16 @@ function delete_click_handler(event, parent) {
 // Set data for modal on cart page
 $('.btn-edit').click(function() {
     var i = $(this).data('index');
-    console.log(i);
+
     var quantity = $('#cart-quantity-'.concat(i)).text();
     $('#modal-cart-quantity-'.concat(i)).text(quantity);
 
-    var drink_name = $("#drink-name-".concat(i)).text();
-    $('#modal-cart-title-'.concat(i)).text(drink_name);
-    
     // Multiply drink price and quantity
     var price = $('#cart-price-'.concat(i)).text();
     var total_price = parseInt(quantity) * parseFloat(price);
     $('#modal-cart-price-'.concat(i)).text("$" + total_price.toString());
 
-    // Disable buttons if quantity is 1 or 4
+    // Set initial state of buttons when modal is first opened
     if (parseInt(quantity) == 1) {
         $('#minus-cart-button-'.concat(i)).prop('disabled', true);
     } else if (parseInt(quantity) == 4) {
@@ -48,7 +45,7 @@ $('.btn-edit').click(function() {
 
 
 // Increment and decrement quantity for modal on cart page
-$(".plus-btn, .minus-btn").click(function() {
+$('.plus-btn, .minus-btn').click(function() {
     var i = $(this).data('index');          
     var sign = $(this).data('identifier');
 
@@ -97,7 +94,7 @@ $('.update-btn').click(function() {
 })
 
 
-// Reset buttons if modal was closed out (changes to buttons should not be saved)
+// Reset button state if modal was closed out
 $('.reset-modal').click(function() {
     var i = $(this).data('index');
     var quantity = $('#cart-quantity-'.concat(i)).text();

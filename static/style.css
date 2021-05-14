@@ -79,12 +79,12 @@
     border-radius: 0rem !important;
 }
 
-#modal-drink-image {
+.modal-menu-img {
     width: 110px; 
     height: 140px;
 }
 
-#modal-drink-ingredients {
+.modal-menu-ingredients {
     font-size: 0.9rem;
 }
 
@@ -151,4 +151,8 @@
 .cart-btn {
     padding: 0rem 0rem !important;
     line-height: 0 !important;
+}
+
+.drink-name {
+    margin-bottom: .1rem !important;
 }

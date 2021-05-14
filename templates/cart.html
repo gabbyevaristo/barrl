@@ -16,7 +16,7 @@
   <div class="list-group list-group-flush">
     <div class="list-group-item list-group-item-action flex-column align-items-start">
       <div class="row">
-        <div id="cart-drink-image-col" class="col-1">
+        <div class="col-1 cart-drink-img-col">
           Items
         </div>
         <div class="col-6">
@@ -48,7 +48,7 @@
 
           <div class="col-6">
             <div class="d-flex w-100 justify-content-between">
-              <h6 id="drink-name-{{ loop.index }}" "font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
+              <h6 class="font-weight-bold drink-name"> {{ drinks[drink]["name"] }} </h6>
             </div>
             <div class="small-text">
               <p class="mb-1"><small> {{ drinks[drink]["ingredients"] }} </small></p>
@@ -81,7 +81,7 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 id="modal-cart-title-{{ loop.index }}" class="modal-title font-weight-bold"> </h5>
+              <h5 class="modal-title font-weight-bold"> {{ drinks[drink]["name"] }} </h5>
               <button type="button" class="close reset-modal" data-index="{{ loop.index }}" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -164,6 +164,7 @@
     <p class="mt-4">
       <a id="add-items-to-cart-link" class="font-weight-bold" href="/menu"> Add items to cart </a>
     </p>
+    <p id="subtotal" hidden> </p>
   </div>
 </div>
 

@@ -9,12 +9,18 @@
 </div>
 
 
+<!-- TESTING PUPOSES-->
+<form action="/menu" method="post">
+  <button class="btn btn-primary" type="submit"> GABBY </button>
+</form>
+
+
 <!-- Menu list -->
-<div class="list-group list-group-flush">
+<div id="menu" class="list-group list-group-flush">
 
   <!-- Menu items -->
   {% for drink in drinks.keys(): %}
-    <button id={{ drink + "-button" }} type="button" onclick="open_menu_modal({{ drinks[drink] }});" class="list-group-item list-group-item-action flex-column align-items-start">
+    <button id="menu-item-{{ drink }}" type="button" data-index="{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start btn-item">
       <div class="row menu-drink-row ml-2">
         <div class="menu-drink-img-col" class="col-2">
           <img class="menu-drink-img" src={{ drinks[drink]["image"] }}>
@@ -25,60 +31,60 @@
             </div>
             <div class="small-text">
               <p class="mb-1"> {{ drinks[drink]["ingredients"] }} </p>
-              <small> {{ drinks[drink]["price"] }} </small>
+              <small id="menu-price-{{ loop.index }}"> {{ drinks[drink]["price"] }} </small>
             </div>
         </div>
       </div>
     </button>
+
+
+    <!-- Add to cart modal -->
+    <div id="modal-menu-{{ loop.index }}" class="modal fade" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title font-weight-bold"> {{ drinks[drink]["name"] }} </h5>
+            <button type="button" class="close" data-index="{{ loop.index }}" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+              <p class="ml-1 modal-menu-ingredients"> {{ drinks[drink]["ingredients"] }} </p>
+
+              <div class="text-center">
+                <img src={{ drinks[drink]["image"] }} class="img-fluid mt-1 modal-menu-img"> 
+
+                <!-- Input quantity-->
+                <div class="form-group row">
+                  <div class="input-group justify-content-center">
+                    <div class="input-group-prepend mr-2">
+                      <button id="minus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="minus" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
+                    </div>
+                    <p id="modal-menu-quantity-{{ loop.index }}" class="qty-value"> 0 </p>
+                    <div class="input-group-append ml-2">
+                      <button id="plus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="plus" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+          </div>
+              
+          <div class="modal-footer">
+            <button id="add-to-cart-button-{{ loop.index }}" type="button" class="btn btn-dark btn-block p-3 radius-remove"> 
+              <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span> 
+              <span id="modal-menu-price-{{ loop.index }}" class="pull-right"> </span>
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
   {% endfor %}
 
 </div>
 
-
-
-<!-- Add to cart modal -->
-<div id="modal-menu" class="modal fade" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 id="modal-drink-title" class="modal-title font-weight-bold"> </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        
-          <p id="modal-drink-ingredients" class="ml-1"> </p>
-
-          <div class="text-center">
-            <img id="modal-drink-image" src="" class="img-fluid mt-1"> 
-
-            <!-- Input quantity-->
-            <div class="form-group row">
-              <div class="input-group justify-content-center">
-                <div class="input-group-prepend mr-2">
-                  <button id="minus-button" class="btn btn-outline-secondary minus-btn" type="button" disabled> - </button>
-                </div>
-                <p id="modal-menu-quantity" class="qty-value"> 0 </p>
-                <div class="input-group-append ml-2">
-                  <button id="plus-button" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
-                </div>
-              </div>
-            </div>
-
-          </div>
-      </div>
-          
-      <div class="modal-footer">
-        <button id="add-to-cart-button" type="button" class="btn btn-dark btn-block p-3 radius-remove"> 
-          <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span> 
-          <span id="modal-drink-price" class="pull-right"> </span>
-        </button>
-      </div>
-
-    </div>
-  </div>
-</div>
 
 {% endblock %}
 
