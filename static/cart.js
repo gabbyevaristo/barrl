@@ -1,5 +1,6 @@
-// Load click handler on page render (move to cart.js)
+// Load click handler on page render 
 window.onload = add_click_handlers;
+
 
 function delete_click_handler(event, parent) {
     event.stopPropagation();
@@ -13,24 +14,20 @@ function add_click_handlers() {
     cart_items.forEach(function(cart_item) {
         var delete_buttons = cart_item.getElementsByClassName("btn-trash");
 
-        delete_buttons.forEach(function(delete_button){
-            delete_button.onclick = function(event) {
-              return delete_click_handler(event, cart_item);
-            }
-        });
-
+        delete_buttons[0].onclick = function(event) {
+            return delete_click_handler(event, cart_item);
+        }
     });
 }
 
 
 // Set data for modal on cart page
-function open_cart_modal(drink) {
-    let cur_quantity = $("#cart-quantity").text();
-    $('#modal-cart-quantity').text(cur_quantity);
-    $('#modal-cart-title').text(drink.name);
-    $("#modal-cart-price").text("$" + drink.price);
-    $('#modal-cart').modal({backdrop: 'static', keyboard: false});
-    console.log(drink);
+function open_cart_modal(drink, i) {
+    let cur_quantity = $("#cart-quantity-".concat(i)).text();
+    $('#modal-cart-quantity-'.concat(i)).text(cur_quantity);
+    $('#modal-cart-title-'.concat(i)).text(drink.name);
+    $('#modal-cart-price-'.concat(i)).text("$" + drink.price);
+    $('#modal-cart-'.concat(i)).modal({backdrop: 'static', keyboard: false});
 }
 
 
@@ -65,8 +62,8 @@ $("#plus-cart-button, #minus-cart-button").click(function() {
     }
 })
 
-$("#update-cart-button").click(function() {
-    let cur_quantity = $("#modal-cart-quantity").text();
-    $('#modal-cart').modal('hide'); 
-    $('#cart-quantity').text(cur_quantity);
-})
+// $("#update-cart-button").click(function() {
+//     let cur_quantity = $("#modal-cart-quantity").text();
+//     $('#modal-cart-1').modal('hide'); 
+//     $('#cart-quantity').text(cur_quantity);
+// })

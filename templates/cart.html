@@ -14,23 +14,21 @@
 <!-- Shopping cart header row -->
 <div class="container">
   <div class="list-group list-group-flush">
-      <div id="cart-item-div" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="row">
-          <div id="cart-drink-image-col" class="col-1">
-            Items
-          </div>
-          <div class="col-6">
-          </div>
-          <div id="cart-drink-price-header" class="col-1">
-            Price
-          </div>
-          <div id="cart-drink-quantity-header" class="col-4">
-            Quantity
-          </div>
+    <div id="cart-item-div" class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="row">
+        <div id="cart-drink-image-col" class="col-1">
+          Items
+        </div>
+        <div class="col-6">
+        </div>
+        <div id="cart-drink-price-header" class="col-1">
+          Price
+        </div>
+        <div id="cart-drink-quantity-header" class="col-4">
+          Quantity
         </div>
       </div>
-
-
+    </div>
   </div>
 </div>
 
@@ -49,23 +47,23 @@
           </div>
 
           <div class="col-6">
-              <div class="d-flex w-100 justify-content-between">
-                <h6 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
-              </div>
-              <div class="small-text">
-                <p class="mb-1"><small> {{ drinks[drink]["ingredients"] }} </small></p>
-              </div>
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
+            </div>
+            <div class="small-text">
+              <p class="mb-1"><small> {{ drinks[drink]["ingredients"] }} </small></p>
+            </div>
           </div>
 
-          <div  class="col-1 cart-drink-price-col ">
+          <div  class="col-1 cart-drink-price-col">
             <p> ${{ drinks[drink]["price"] }} </p>
           </div>
 
           <div class="col-4 cart-drink-quantity-col">
             <div>
-              <span id="cart-quantity"> 2 </span>
+              <span id="cart-quantity-{{ loop.index }}"> 2 </span>
               <div class="pull-right">
-                <button onclick="open_cart_modal({{ drinks[drink] }});" class="btn btn-xs ml-3 btn-edit cart-btn" type="button">
+                <button onclick="open_cart_modal({{ drinks[drink] }}, {{ loop.index }})" class="btn btn-xs ml-3 cart-btn" type="button">
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
                 <button class="btn btn-xs ml-1 btn-trash cart-btn" type="button">
@@ -77,77 +75,80 @@
 
         </div>
       </div>
+
+      <!-- Edit cart modal -->
+      <div id="modal-cart-{{ loop.index }}" class="modal fade modal-cart" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 id="modal-cart-title-{{ loop.index }}" class="modal-title font-weight-bold"> </h5>
+              <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            
+            <div class="modal-body">
+              <div class="text-center"> 
+
+                <!-- Input quantity-->
+                <div class="form-group row">
+                  <div class="input-group justify-content-center">
+                    <div class="input-group-prepend mr-2">
+                      <button id="minus-cart-button-{{ loop.index }}" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
+                    </div>
+                    <p id="modal-cart-quantity-{{ loop.index }}" class="qty-value"> </p>
+                    <div class="input-group-append ml-2">
+                      <button id="plus-cart-button-{{ loop.index }}" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+                  
+            <div class="modal-footer">
+              <button id="update-cart-button-{{ loop.index }}" type="button" class="btn btn-dark btn-block p-3 radius-remove"> 
+                <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span> 
+                <span id="modal-cart-price-{{ loop.index }}" class="pull-right"> </span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     {% endfor %}
 
   </div>
 </div>
 
-  <!-- Order summary-->
-  <div class="container pt-3 pb-5">
-    <div class="col">
 
-      <div class="rounded-pill bg-light text-uppercase font-weight-bold px-4 py-1 text-center"> Order Summary </div>
+<!-- Order summary-->
+<div class="container pt-3 pb-5">
+  <div class="col">
 
-      <div id="order-totals" class="p-3">
-        <ul class="list-unstyled mb-4">
-          <li class="d-flex justify-content-between border-bottom py-2 px-3">
-            <strong class="text-muted"> Order Subtotal </strong><strong> $390.00 </strong>
-          </li>
-          <li class="d-flex justify-content-between border-bottom py-2 px-3">
-            <strong class="text-muted"> Tax </strong><strong> $0.00 </strong>
-          </li>
-          <li class="d-flex justify-content-between border-bottom py-2 px-3">
-            <strong class="text-muted"> Total </strong><strong> $400.00 </strong>
-          </li>
-        </ul>
-        <div class="text-center">
-          <a href="#" class="btn btn-dark btn-sm rounded-pill py-1"> Proceed to checkout </a>
-        </div>
-      </div>
+    <div class="rounded-pill bg-light text-uppercase font-weight-bold px-4 py-1 text-center"> Order Summary </div>
 
-    </div>
-  </div>
-
-
-  <!-- Edit cart modal -->
-  <div id="modal-cart" class="modal fade" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 id="modal-cart-title" class="modal-title font-weight-bold"> </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="text-center"> 
-
-              <!-- Input quantity-->
-              <div class="form-group row">
-                <div class="input-group justify-content-center">
-                  <div class="input-group-prepend mr-2">
-                    <button id="minus-cart-button" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
-                  </div>
-                  <p id="modal-cart-quantity" class="qty-value"> </p>
-                  <div class="input-group-append ml-2">
-                    <button id="plus-cart-button" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-        </div>
-            
-        <div class="modal-footer">
-          <button id="update-cart-button" type="button" class="btn btn-dark btn-block p-3 radius-remove"> 
-            <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span> 
-            <span id="modal-cart-price" class="pull-right"> </span>
-          </button>
-        </div>
-
+    <div id="order-totals" class="p-3">
+      <ul class="list-unstyled mb-4">
+        <li class="d-flex justify-content-between border-bottom py-2 px-3">
+          <strong class="text-muted"> Order Subtotal </strong><strong> $390.00 </strong>
+        </li>
+        <li class="d-flex justify-content-between border-bottom py-2 px-3">
+          <strong class="text-muted"> Tax </strong><strong> $0.00 </strong>
+        </li>
+        <li class="d-flex justify-content-between border-bottom py-2 px-3">
+          <strong class="text-muted"> Total </strong><strong> $400.00 </strong>
+        </li>
+      </ul>
+      <div class="text-center">
+        <a href="#" class="btn btn-dark btn-sm rounded-pill py-1"> Proceed to checkout </a>
       </div>
     </div>
+
   </div>
+</div>
+
 
 <!-- Show empty cart -->
 {% else %}
@@ -167,7 +168,8 @@
   </div>
 
 
-{% endif %}
+{% endif %}        
+
 
 {% endblock %}
 
@@ -177,4 +179,5 @@
 <script src="{{ url_for('static', filename='cart.js') }}"></script>
 
 {% endblock %}
+
 
