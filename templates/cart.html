@@ -48,7 +48,7 @@
 
           <div class="col-6">
             <div class="d-flex w-100 justify-content-between">
-              <h6 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
+              <h6 id="drink-name-{{ loop.index }}" "font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
             </div>
             <div class="small-text">
               <p class="mb-1"><small> {{ drinks[drink]["ingredients"] }} </small></p>
@@ -63,7 +63,7 @@
             <div>
               <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> 1 </span>
               <div class="pull-right">
-                <button onclick="open_cart_modal({{ drinks[drink] }}, {{ loop.index }})" class="btn btn-xs ml-3 cart-btn" type="button">
+                <button data-index="{{ loop.index }}" class="btn btn-xs ml-3 btn-edit cart-btn" type="button">
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
                 <button class="btn btn-xs ml-1 btn-trash cart-btn" type="button">

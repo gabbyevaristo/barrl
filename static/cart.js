@@ -17,18 +17,24 @@ window.onload = function() {
 function delete_click_handler(event, parent) {
     event.stopPropagation();
     parent.remove();
+    update_total();
 }
 
 
 // Set data for modal on cart page
-function open_cart_modal(drink, i) {
-    var quantity = $("#cart-quantity-".concat(i)).text();
+$('.btn-edit').click(function() {
+    var i = $(this).data('index');
+    console.log(i);
+    var quantity = $('#cart-quantity-'.concat(i)).text();
     $('#modal-cart-quantity-'.concat(i)).text(quantity);
-    $('#modal-cart-title-'.concat(i)).text(drink.name);
+
+    var drink_name = $("#drink-name-".concat(i)).text();
+    $('#modal-cart-title-'.concat(i)).text(drink_name);
     
     // Multiply drink price and quantity
-    var price = parseInt(quantity) * parseFloat(drink.price);
-    $('#modal-cart-price-'.concat(i)).text("$" + price.toString());
+    var price = $('#cart-price-'.concat(i)).text();
+    var total_price = parseInt(quantity) * parseFloat(price);
+    $('#modal-cart-price-'.concat(i)).text("$" + total_price.toString());
 
     // Disable buttons if quantity is 1 or 4
     if (parseInt(quantity) == 1) {
@@ -38,7 +44,7 @@ function open_cart_modal(drink, i) {
     }
     
     $('#modal-cart-'.concat(i)).modal({backdrop: 'static', keyboard: false});
-}
+})
 
 
 // Increment and decrement quantity for modal on cart page
@@ -119,5 +125,5 @@ function update_total() {
         var quantity = cart_item.getElementsByClassName('cart-qty')[0].innerHTML;
         total = total + (price * quantity);
     }
-    document.getElementById('subtotal').innerHTML = total;
+    document.getElementById('subtotal').innerHTML = "$" + (total.toFixed(2)).toString();
 }
