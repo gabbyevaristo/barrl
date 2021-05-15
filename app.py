@@ -5,7 +5,7 @@ from datetime import timedelta
 import json
 
 app = Flask(__name__)
-app.secret_key = 'barrrrrrl'
+app.secret_key = 'barrrrl'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 

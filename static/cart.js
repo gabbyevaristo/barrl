@@ -123,13 +123,19 @@ $('.reset-modal').click(function() {
 function update_total() {
     var cart_items = document.getElementsByClassName('cart-item');
 
-    var total = 0
+    var subtotal = 0
     for (var i =0; i < cart_items.length; i++) {
         var cart_item = cart_items[i];
 
         var price = cart_item.getElementsByClassName('cart-price')[0].innerHTML;
         var quantity = cart_item.getElementsByClassName('cart-qty')[0].innerHTML;
-        total = total + (price * quantity);
+        subtotal = subtotal + (price * quantity);
     }
-    document.getElementById('subtotal').innerHTML = "$" + total.toFixed(2).toString();
+    document.getElementById('subtotal').innerHTML = "$" + subtotal.toFixed(2).toString();
+
+    var tax = subtotal * 0.0775;
+    document.getElementById('tax').innerHTML = "$" + tax.toFixed(2).toString();
+
+    var total = tax + subtotal;
+    document.getElementById('total').innerHTML = "$" + total.toFixed(2).toString();
 }
