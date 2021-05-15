@@ -2,10 +2,26 @@
 
 {% block title %} Menu {% endblock %}
 
+{% block cart_quantity %} 
+
+{% if cart_quantity %}
+  {{ cart_quantity }} 
+{% endif %}
+
+{% endblock %}
+
+
 {% block content %}
 
 <div class="pt-5 mt-2 text-center">
-    <h2 class="my-3"> Menu </h2>
+  <!-- Item added to cart success alert
+  <div>
+    <div id="add-to-cart-alert" class="alert alert-success alert-dismissible rounded-pill d-none" role="alert">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close"> &times; </a>
+      Item has been added to cart
+    </div>
+  </div> -->
+  <h2 class="my-3"> Menu </h2>
 </div>
 
 

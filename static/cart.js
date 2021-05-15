@@ -131,6 +131,5 @@ function update_total() {
         var quantity = cart_item.getElementsByClassName('cart-qty')[0].innerHTML;
         total = total + (price * quantity);
     }
-    total = Math.round(total * 100) / 100
-    document.getElementById('subtotal').innerHTML = "$" + total.toString();
+    document.getElementById('subtotal').innerHTML = "$" + total.toFixed(2).toString();
 }

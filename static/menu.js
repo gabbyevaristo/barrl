@@ -12,15 +12,16 @@ $('.add-to-cart-btn').click(function() {
     var drink_id = $(this).data('id');
     var drink_quantity = $('#modal-menu-quantity-'.concat(i)).text();
 
+    $('#modal-menu-'.concat(i)).modal('hide');
+    reset_modal(i);
+    // $('#add-to-cart-alert').removeClass('d-none');
+
     fetch("/add-to-cart", {
         method: "POST",
         body: JSON.stringify({ drink_id: drink_id, drink_quantity: drink_quantity, }),
     }).then((_res) => {
         window.location.href = "/menu";
     });
-
-    $('#modal-menu-'.concat(i)).modal('hide');
-    reset_modal(i);
 })
 
 

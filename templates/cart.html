@@ -2,6 +2,15 @@
 
 {% block title %} Shopping Cart {% endblock %}
 
+{% block cart_quantity %} 
+
+{% if cart_quantity %}
+  {{ cart_quantity }} 
+{% endif %}
+
+
+{% endblock %}
+
 {% block content %}
 
 <div class="pt-5 mt-2 pb-3 text-center">

@@ -5,26 +5,29 @@ from datetime import timedelta
 import json
 
 app = Flask(__name__)
-app.secret_key = 'barrrrl'
+app.secret_key = 'barrrrrrl'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 
-@app.route('/', methods=["GET", "POST"])
+@app.route('/', methods=["GET"])
 def index():
     return render_template('index.html')
 
 
 @app.route('/menu', methods=["GET", "POST"])
 def menu():
-    return render_template('menu.html', drinks=drinks)
+    if "shopping_cart" not in session:
+        return render_template('menu.html', drinks=drinks, cart_quantity=None)
+    else:
+        return render_template('menu.html', drinks=drinks, cart_quantity=session["cart_quantity"])
 
 
 @app.route('/cart')
 def cart():
     if "shopping_cart" not in session:
-        return render_template('cart.html', drinks={})
+        return render_template('cart.html', drinks={}, cart_quantity=None)
     else:
-        return render_template('cart.html', drinks=session["shopping_cart"])
+        return render_template('cart.html', drinks=session["shopping_cart"], cart_quantity=session["cart_quantity"])
 
 
 @app.route('/add-to-cart', methods=['POST'])
@@ -36,6 +39,7 @@ def add_to_cart():
     session.modified = True
     if "shopping_cart" not in session:
         session["shopping_cart"] = {}
+        session["cart_quantity"] = "0"
 
     # If drink is already in cart, update quantity
     if drink_id not in session["shopping_cart"]:    
@@ -45,6 +49,7 @@ def add_to_cart():
         new_quantity = int(session["shopping_cart"][drink_id]['quantity']) + int(drink_quantity)
         session["shopping_cart"][drink_id]['quantity'] = str(new_quantity)
     
+    session["cart_quantity"] = get_cart_quantity()
     return jsonify({})
 
 
@@ -58,6 +63,7 @@ def edit_cart():
 
     # Update quantity
     session["shopping_cart"][drink_id]['quantity'] = updated_quantity
+    session["cart_quantity"] = get_cart_quantity()
     
     return jsonify({})
 
@@ -71,10 +77,12 @@ def remove_from_cart():
 
     # Remove item from session
     del session["shopping_cart"][drink_id]
+    session["cart_quantity"] = get_cart_quantity()
 
     # Render empty cart page and clear session if cart becomes empty
     if len(session["shopping_cart"]) == 0:
         session.pop("shopping_cart", None)
+        session.pop("cart_quantity", None)
     
     return jsonify({})
 
@@ -82,6 +90,11 @@ def remove_from_cart():
 @app.route('/checkout')
 def checkout():
     return render_template('checkout.html')
+
+
+def get_cart_quantity():
+    if "shopping_cart" in session:
+        return str(sum(int(drink['quantity']) for drink in session["shopping_cart"].values()))
 
 
 
