@@ -141,6 +141,7 @@ function update_total() {
 }
 
 
+// Proceed to checkout
 var checkout_button = document.getElementById('checkout');
 
 checkout_button.addEventListener('click', function() {

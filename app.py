@@ -99,34 +99,26 @@ def pour_portal():
 
 @app.route('/checkout-session', methods=['POST'])
 def checkout_session():
-    session = stripe.checkout.Session.create(
-    payment_method_types=['card'],
-    line_items=[{
-        'price_data': {
-            'currency': 'usd',
-            'product_data': {
-                'name': 'T-shirt',
-            },
-            'unit_amount': 2000,
-        },
-            'quantity': 1,
-        }],
-        mode='payment',
-        success_url=url_for('pour_portal', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-        cancel_url=url_for('menu', _external=True),
+    cart_items = get_cart_items()
+
+    checkout_session = stripe.checkout.Session.create(
+        payment_method_types=['card'],
+        line_items=cart_items,
+            mode='payment',
+            allow_promotion_codes=True,
+            success_url=url_for('pour_portal', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
+            cancel_url=url_for('menu', _external=True),
     )
 
-    # Might still need session on pour page (can just hide cart)
+    session["pour_items"] = session["shopping_cart"].copy()
     session.pop("shopping_cart", None)
     session.pop("cart_quantity", None)
 
-    return jsonify(id=session.id, public_key=app.config['STRIPE_PUBLIC_KEY'])
+    return jsonify(id=checkout_session.id, public_key=app.config['STRIPE_PUBLIC_KEY'])
 
 
 @app.route('/stripe-webhook', methods=['POST'])
 def stripe_webhook():
-    print('WEBHOOK CALLED')
-
     if request.content_length > 1024 * 1024:
         print('REQUEST TOO BIG')
         abort(400)
@@ -142,19 +134,14 @@ def stripe_webhook():
         )
     except ValueError as e:
         # Invalid payload
-        print("INVALID PAYLOAD")
         return {}, 400
     except stripe.error.SignatureVertificationError as e:
         # Invalid signature
-        print("INVALID SIGNATURE")
         return {}, 400
     
     # Handle checkout session completed event
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        print(session)
-        # line_items = stripe.checkout.Session.list_line_items(session['id'], limit=1)
-        # print(line_items['data'][0['description'])
 
     return {}
 
@@ -164,6 +151,18 @@ def get_cart_quantity():
         return str(sum(int(drink['quantity']) for drink in session["shopping_cart"].values()))
 
 
+def get_cart_items():
+    if "shopping_cart" in session:
+        items, items_list = session["shopping_cart"].copy(), []
+        for item in items:
+            item_dict = {}
+            item_dict['price_data'] = {'currency': 'usd', 'product_data': {'name': items[item]['name'], 'images': [items[item]['image']]}, 'unit_amount': int(float(items[item]['price']) * 100)}
+            item_dict['quantity'] = int(items[item]['quantity'])
+            item_dict['tax_rates'] = ['txr_1IrTYZEx3ZnFyUF0aZ43zasr']
+            items_list.append(item_dict)
+        return items_list
+
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=4455)
