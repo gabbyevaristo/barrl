@@ -61,12 +61,12 @@
 
           <div class="col-4 cart-drink-quantity-col">
             <div>
-              <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> 1 </span>
+              <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> {{ drinks[drink]["quantity"] }} </span>
               <div class="pull-right">
-                <button data-index="{{ loop.index }}" class="btn btn-xs ml-3 btn-edit cart-btn" type="button">
+                <button data-index="{{ loop.index }}" class="btn btn-xs ml-3 edit-btn cart-btn" type="button">
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-xs ml-1 btn-trash cart-btn" type="button">
+                <button class="btn btn-xs ml-1 trash-btn cart-btn" type="button">
                   <i class="fa fa-trash" aria-hidden="true"></i>
                 </button>
               </div>
@@ -107,7 +107,7 @@
             </div>
                   
             <div class="modal-footer">
-              <button data-index="{{ loop.index }}" type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn"> 
+              <button data-index="{{ loop.index }}" data-id={{ drink }} type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn"> 
                 <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span> 
                 <span id="modal-cart-price-{{ loop.index }}" class="pull-right"> </span>
               </button>

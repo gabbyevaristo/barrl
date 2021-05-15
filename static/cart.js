@@ -3,7 +3,7 @@ window.onload = function() {
     var cart_items = document.getElementsByClassName('cart-item');
 
     cart_items.forEach(function(cart_item) {
-        var delete_buttons = cart_item.getElementsByClassName('btn-trash');
+        var delete_buttons = cart_item.getElementsByClassName('trash-btn');
 
         delete_buttons[0].onclick = function(event) {
             return delete_click_handler(event, cart_item);
@@ -22,7 +22,7 @@ function delete_click_handler(event, parent) {
 
 
 // Set data for modal on cart page
-$('.btn-edit').click(function() {
+$('.edit-btn').click(function() {
     var i = $(this).data('index');
 
     var quantity = $('#cart-quantity-'.concat(i)).text();
@@ -87,9 +87,19 @@ $('.plus-btn, .minus-btn').click(function() {
 // Update cart with edited quantity values
 $('.update-btn').click(function() {
     var i = $(this).data('index');
-    var quantity = $('#modal-cart-quantity-'.concat(i)).text();
+    var drink_id = $(this).data('id');
+    var updated_quantity = $('#modal-cart-quantity-'.concat(i)).text();
+    $('#cart-quantity-'.concat(i)).text(updated_quantity);
     $('#modal-cart-'.concat(i)).modal('hide'); 
-    $('#cart-quantity-'.concat(i)).text(quantity);
+
+    // Edit quantity in session
+    fetch("/edit-cart", {
+        method: "POST",
+        body: JSON.stringify({ drink_id: drink_id, updated_quantity: updated_quantity }),
+    }).then((_res) => {
+        window.location.href = "/cart";
+    });
+
     update_total();
 })
 
@@ -122,5 +132,6 @@ function update_total() {
         var quantity = cart_item.getElementsByClassName('cart-qty')[0].innerHTML;
         total = total + (price * quantity);
     }
-    document.getElementById('subtotal').innerHTML = "$" + (total.toFixed(2)).toString();
+    total = Math.round(total * 100) / 100
+    document.getElementById('subtotal').innerHTML = "$" + total.toString();
 }

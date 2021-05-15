@@ -1,13 +1,37 @@
 // Open modal on menu page
-$('.btn-item').click(function() {
+$('.item-btn').click(function() {
     var i = $(this).data('index');
+    reset_modal(i);
+    $('#modal-menu-'.concat(i)).modal({backdrop: 'static', keyboard: false});
+})
+
+
+// When the user clicks on add to cart
+$('.add-to-cart-btn').click(function() {
+    var i = $(this).data('index');
+    var drink_id = $(this).data('id');
+    var drink_quantity = $('#modal-menu-quantity-'.concat(i)).text();
+
+    fetch("/add-to-cart", {
+        method: "POST",
+        body: JSON.stringify({ drink_id: drink_id, drink_quantity: drink_quantity, }),
+    }).then((_res) => {
+        window.location.href = "/menu";
+    });
+
+    $('#modal-menu-'.concat(i)).modal('hide');
+    reset_modal(i);
+})
+
+
+// Reset modal attributes when modal is exited
+function reset_modal(i) {
     $('#add-to-cart-button-'.concat(i)).prop('disabled', true);
     $('#modal-menu-price-'.concat(i)).prop('hidden', true);
     $('#modal-menu-quantity-'.concat(i)).text("0");
     $('#minus-menu-button-'.concat(i)).prop('disabled', true);
     $('#plus-menu-button-'.concat(i)).prop('disabled', false);
-    $('#modal-menu-'.concat(i)).modal({backdrop: 'static', keyboard: false});
-})
+}
 
 
 // Increment and decrement quantity for modal on menu page
@@ -28,8 +52,6 @@ $('.plus-btn, .minus-btn').click(function() {
             $('#modal-menu-quantity-'.concat(i)).text((quantity_int - 1).toString());
         }
     }
-
-    console.log(quantity_int);
 
     // Update button disabled attribute accordingly
     if (sign == "plus") {
@@ -55,11 +77,3 @@ $('.plus-btn, .minus-btn').click(function() {
     var price = parseInt(updated_quantity) * parseFloat(drink_price);
     $('#modal-menu-price-'.concat(i)).text("$" + price.toString());
 })
-
-
-// Reset modal if modal was closed out
-// $('.reset-modal').click(function() {
-//     var i = $(this).data('index');
-//     $('#minus-cart-button-'.concat(i)).prop('disabled', true);
-//     $('#plus-cart-button-'.concat(i)).prop('disabled', false);
-// })
