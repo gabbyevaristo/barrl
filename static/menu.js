@@ -19,7 +19,8 @@ $('.add-to-cart-btn').click(function() {
     fetch("/add-to-cart", {
         method: "POST",
         body: JSON.stringify({ drink_id: drink_id, drink_quantity: drink_quantity, }),
-    }).then((_res) => {
+    })
+    .then((_res) => {
         window.location.href = "/menu";
     });
 })

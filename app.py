@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request, session, jsonify,url_for
+from flask import Flask, render_template, redirect, request, session, jsonify,url_for, abort
 from pi import pour_water
 from menu import drinks
 from datetime import timedelta
@@ -7,7 +7,7 @@ import stripe
 
 
 app = Flask(__name__)
-app.secret_key = 'barrrrrrl'
+app.secret_key = 'barrl'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 app.config['STRIPE_PUBLIC_KEY'] = "pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7RZkGhfoSNKJBLkpF0WE6A5GNGedvZ8VyzpVFb5NF5tdPJRqXmfvmu003iF1LG6k"
@@ -112,7 +112,7 @@ def checkout_session():
             'quantity': 1,
         }],
         mode='payment',
-        success_url=url_for('pour_portal', _external=True),
+        success_url=url_for('pour_portal', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
         cancel_url=url_for('menu', _external=True),
     )
 
@@ -120,7 +120,43 @@ def checkout_session():
     session.pop("shopping_cart", None)
     session.pop("cart_quantity", None)
 
-    return jsonify(id=session.id)
+    return jsonify(id=session.id, public_key=app.config['STRIPE_PUBLIC_KEY'])
+
+
+@app.route('/stripe-webhook', methods=['POST'])
+def stripe_webhook():
+    print('WEBHOOK CALLED')
+
+    if request.content_length > 1024 * 1024:
+        print('REQUEST TOO BIG')
+        abort(400)
+
+    payload = request.get_data()
+    sig_header = request.environ.get('HTTP_STRIPE_SIGNATURE')
+    endpoint_secret = 'whsec_KQcUiBWfljqRFzN6AbqIKV6wb6s6bMd8'
+    event = None
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError as e:
+        # Invalid payload
+        print("INVALID PAYLOAD")
+        return {}, 400
+    except stripe.error.SignatureVertificationError as e:
+        # Invalid signature
+        print("INVALID SIGNATURE")
+        return {}, 400
+    
+    # Handle checkout session completed event
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        print(session)
+        # line_items = stripe.checkout.Session.list_line_items(session['id'], limit=1)
+        # print(line_items['data'][0['description'])
+
+    return {}
 
 
 def get_cart_quantity():
