@@ -5,7 +5,7 @@ from datetime import timedelta
 import json
 
 app = Flask(__name__)
-app.secret_key = 'barrrrrrl'
+app.secret_key = 'barrrrl'
 app.permanent_session_lifetime = timedelta(minutes=5)
 
 
@@ -58,7 +58,6 @@ def edit_cart():
 
     # Update quantity
     session["shopping_cart"][drink_id]['quantity'] = updated_quantity
-    print("HI")
     
     return jsonify({})
 
@@ -68,11 +67,14 @@ def remove_from_cart():
     data = json.loads(request.data)
     drink_id = data['drink_id']
 
-
     session.modified = True
 
     # Remove item from session
+    del session["shopping_cart"][drink_id]
 
+    # Render empty cart page and clear session if cart becomes empty
+    if len(session["shopping_cart"]) == 0:
+        session.pop("shopping_cart", None)
     
     return jsonify({})
 

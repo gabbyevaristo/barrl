@@ -66,7 +66,7 @@
                 <button data-index="{{ loop.index }}" class="btn btn-xs ml-3 edit-btn cart-btn" type="button">
                   <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 </button>
-                <button class="btn btn-xs ml-1 trash-btn cart-btn" type="button">
+                <button data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-xs ml-1 trash-btn cart-btn" type="button">
                   <i class="fa fa-trash" aria-hidden="true"></i>
                 </button>
               </div>

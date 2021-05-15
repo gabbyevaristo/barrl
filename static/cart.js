@@ -1,24 +1,23 @@
 // Load click handler on page render 
-window.onload = function() {
-    var cart_items = document.getElementsByClassName('cart-item');
+window.onload = update_total;
 
-    cart_items.forEach(function(cart_item) {
-        var delete_buttons = cart_item.getElementsByClassName('trash-btn');
 
-        delete_buttons[0].onclick = function(event) {
-            return delete_click_handler(event, cart_item);
-        }
+// Remove item from cart
+$('.trash-btn').click(function() {
+    var i = $(this).data('index');
+    var drink_id = $(this).data('id');
+
+    // Remove item from session
+    fetch("/remove-from-cart", {
+        method: "POST",
+        body: JSON.stringify({ drink_id: drink_id }),
+    }).then((_res) => {
+        window.location.href = "/cart";
     });
 
+    $('#cart-item-'.concat(i)).remove();
     update_total();
-}
-
-
-function delete_click_handler(event, parent) {
-    event.stopPropagation();
-    parent.remove();
-    update_total();
-}
+})
 
 
 // Set data for modal on cart page
@@ -41,6 +40,26 @@ $('.edit-btn').click(function() {
     }
     
     $('#modal-cart-'.concat(i)).modal({backdrop: 'static', keyboard: false});
+})
+
+
+// Update cart with edited quantity values
+$('.update-btn').click(function() {
+    var i = $(this).data('index');
+    var drink_id = $(this).data('id');
+    var updated_quantity = $('#modal-cart-quantity-'.concat(i)).text();
+    $('#cart-quantity-'.concat(i)).text(updated_quantity);
+    $('#modal-cart-'.concat(i)).modal('hide'); 
+
+    // Edit quantity in session
+    fetch("/edit-cart", {
+        method: "POST",
+        body: JSON.stringify({ drink_id: drink_id, updated_quantity: updated_quantity }),
+    }).then((_res) => {
+        window.location.href = "/cart";
+    });
+
+    update_total();
 })
 
 
@@ -81,26 +100,6 @@ $('.plus-btn, .minus-btn').click(function() {
     var drink_price = $('#cart-price-'.concat(i)).text();
     var price = parseInt(updated_quantity) * parseFloat(drink_price);
     $('#modal-cart-price-'.concat(i)).text("$" + price.toString());
-})
-
-
-// Update cart with edited quantity values
-$('.update-btn').click(function() {
-    var i = $(this).data('index');
-    var drink_id = $(this).data('id');
-    var updated_quantity = $('#modal-cart-quantity-'.concat(i)).text();
-    $('#cart-quantity-'.concat(i)).text(updated_quantity);
-    $('#modal-cart-'.concat(i)).modal('hide'); 
-
-    // Edit quantity in session
-    fetch("/edit-cart", {
-        method: "POST",
-        body: JSON.stringify({ drink_id: drink_id, updated_quantity: updated_quantity }),
-    }).then((_res) => {
-        window.location.href = "/cart";
-    });
-
-    update_total();
 })
 
 
