@@ -133,9 +133,37 @@ function update_total() {
     }
     document.getElementById('subtotal').innerHTML = "$" + subtotal.toFixed(2).toString();
 
-    var tax = subtotal * 0.0775;
-    document.getElementById('tax').innerHTML = "$" + tax.toFixed(2).toString();
+    // var tax = subtotal * 0.0775;
+    // document.getElementById('tax').innerHTML = "$" + tax.toFixed(2).toString();
 
-    var total = tax + subtotal;
-    document.getElementById('total').innerHTML = "$" + total.toFixed(2).toString();
+    // var total = tax + subtotal;
+    // document.getElementById('total').innerHTML = "$" + total.toFixed(2).toString();
 }
+
+
+// var stripe = Stripe('pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7RZkGhfoSNKJBLkpF0WE6A5GNGedvZ8VyzpVFb5NF5tdPJRqXmfvmu003iF1LG6k');
+//     var checkout_button = document.getElementById('checkout');
+
+//     checkout_button.addEventListener('click', function() {
+//     // Create a new Checkout Session 
+//     fetch('/checkout-session', {
+//         method: 'POST',
+//     })
+//     .then(function(response) {
+//         return response.json();
+//     })
+//     .then(function(session) {
+//         return stripe.redirectToCheckout({ sessionId: session.id });
+//     })
+//     .then(function(result) {
+//         // If `redirectToCheckout` fails due to a browser or network
+//         // error, you should display the localized error message to your
+//         // customer using `error.message`.
+//         if (result.error) {
+//             alert(result.error.message);
+//         }
+//     })
+//     .catch(function(error) {
+//         console.error('Error:', error);
+//     });
+// });
