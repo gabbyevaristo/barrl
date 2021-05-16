@@ -22,19 +22,21 @@
     <nav class="navbar fixed-top navbar-expand navbar-light bg-light">
       <a class="navbar-brand text-uppercase font-weight-bold" href="/"> Barrl </a>
 
-      <div class="navbar-collapse collapse">
-        <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/menu"> Menu </a>
-          </li>
-        </ul>
-        <p class="nav-item my-0 my-lg-0">
-          {% block cart_quantity %} {% endblock %} 
-          <a href="/cart" role="button" class="fa-lg cart-icon">
-            <i class="fas fa-shopping-cart"></i>
-          </a>
-        </p>
-      </div>
+      {% if show %}
+        <div class="navbar-collapse collapse">
+          <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/menu"> Menu </a>
+              </li>
+          </ul>
+          <p class="nav-item my-0 my-lg-0">
+            {% block cart_quantity %} {% endblock %} 
+            <a href="/cart" role="button" class="fa-lg cart-icon">
+              <i class="fas fa-shopping-cart"></i>
+            </a>
+          </p>
+        </div>
+      {% endif %}
 
     </nav>
 

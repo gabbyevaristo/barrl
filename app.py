@@ -23,17 +23,17 @@ def index():
 @app.route('/menu', methods=["GET", "POST"])
 def menu():
     if "shopping_cart" not in session:
-        return render_template('menu.html', drinks=drinks, cart_quantity=None)
+        return render_template('menu.html', drinks=drinks, cart_quantity=None, show=True)
     else:
-        return render_template('menu.html', drinks=drinks, cart_quantity=session["cart_quantity"])
+        return render_template('menu.html', drinks=drinks, cart_quantity=session["cart_quantity"], show=True)
 
 
 @app.route('/cart')
 def cart():
     if "shopping_cart" not in session:
-        return render_template('cart.html', drinks={}, cart_quantity=None)
+        return render_template('cart.html', drinks={}, cart_quantity=None, show=True)
     else:
-        return render_template('cart.html', drinks=session["shopping_cart"], cart_quantity=session["cart_quantity"])
+        return render_template('cart.html', drinks=session["shopping_cart"], cart_quantity=session["cart_quantity"], show=True)
 
 
 @app.route('/pour-portal')
@@ -45,9 +45,9 @@ def pour_portal():
         session.pop("cart_quantity", None)
 
     if "pour_items" not in session:
-        return render_template('pour_portal.html', drinks={}, cart_quantity=None)
+        return render_template('pour_portal.html', drinks={}, cart_quantity=None, show=True)
     else:
-        return render_template('pour_portal.html', drinks=session["pour_items"], cart_quantity=None)
+        return render_template('pour_portal.html', drinks=session["pour_items"], cart_quantity=None, show=False)
 
 
 @app.route('/add-to-cart', methods=['POST'])
