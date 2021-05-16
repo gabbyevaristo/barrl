@@ -7,7 +7,7 @@ import stripe
 
 
 app = Flask(__name__)
-app.secret_key = 'barrl'
+app.secret_key = 'barrrl'
 app.permanent_session_lifetime = timedelta(hours=30)
 
 app.config['STRIPE_PUBLIC_KEY'] = "pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7RZkGhfoSNKJBLkpF0WE6A5GNGedvZ8VyzpVFb5NF5tdPJRqXmfvmu003iF1LG6k"
