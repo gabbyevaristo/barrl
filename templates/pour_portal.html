@@ -4,9 +4,68 @@
 
 {% block content %}
 
+
+{% if drinks %}
+
 <div class="pt-5 mt-2 text-center">
-    <h2 class="my-3"> Pour </h2>
+    <h2 class="my-3"> Pour Portal </h2>
 </div>
 
+<!-- Pour portal -->
+<div class="container">
+    <div id="pour-portal" class="list-group list-group-flush">
+
+    {% for drink in drinks.keys(): %}
+
+        {% set outer_loop = loop %}
+        {% for _ in range(drinks[drink]["quantity"] | int): %}
+            {% set drink_index = [ outer_loop.index, loop.index ] | join("-") %}
+
+            <div id="pour-item-{{ drink_index }}" data-index="{{ drink_index }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                <div class="row ml-2">
+                    <div class="col-1 pour-drink-img-col">
+                        <img class="cart-drink-img" src={{ drinks[drink]["image"] }}>
+                    </div>
+                    <div class="col-6 ml-3">
+                        <div class="d-flex w-100 justify-content-between">
+                        <p class="font-weight-bold mt-3 mb-1 pour-drink-name">{{ drinks[drink]["name"] }}</p>
+                        </div>
+                    </div>
+                    <div class="col ml-4">
+                        <button id="pour-button-{{ drink_index }}" data-index="{{ drink_index }}" data-id={{ drink }} class="btn btn-dark btn-sm mt-2 mb-1 pour-btn" type="button"> Pour </button>
+                    </div>
+                </div>
+            </div>
+
+        {% endfor %}
+    {% endfor %}
+
+    </div>
+</div>
+
+
+{% else %}
+
+
+<div class="thank-you-container">
+    <div class="jumbotron jumbotron-fluid thank-you-margin">
+        <div class="container">
+            <h4 class="display text-center"> Thank you for your purchase </h4>
+            <p class="lead text-center"> Barrl </p>
+        </div>
+    </div>
+</div>
+
+
+
+{% endif %}
+
+
+{% endblock %}
+
+
+{% block page_scripts %} 
+
+<script src="{{ url_for('static', filename='pour_portal.js') }}"></script>
 
 {% endblock %}

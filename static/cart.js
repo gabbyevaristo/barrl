@@ -131,13 +131,8 @@ function update_total() {
         var quantity = cart_item.getElementsByClassName('cart-qty')[0].innerHTML;
         subtotal = subtotal + (price * quantity);
     }
+    
     document.getElementById('subtotal').innerHTML = "$" + subtotal.toFixed(2).toString();
-
-    // var tax = subtotal * 0.0775;
-    // document.getElementById('tax').innerHTML = "$" + tax.toFixed(2).toString();
-
-    // var total = tax + subtotal;
-    // document.getElementById('total').innerHTML = "$" + total.toFixed(2).toString();
 }
 
 

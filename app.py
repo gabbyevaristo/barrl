@@ -8,11 +8,12 @@ import stripe
 
 app = Flask(__name__)
 app.secret_key = 'barrl'
-app.permanent_session_lifetime = timedelta(minutes=5)
+app.permanent_session_lifetime = timedelta(hours=30)
 
 app.config['STRIPE_PUBLIC_KEY'] = "pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7RZkGhfoSNKJBLkpF0WE6A5GNGedvZ8VyzpVFb5NF5tdPJRqXmfvmu003iF1LG6k"
 app.config['STRIPE_SECRET_KEY'] = "sk_test_51IrKAPEx3ZnFyUF0xExm1uVSSm9XzTELrGlQwLnioL1PZ7N2OnuQbxy6IkJj7Jb1j7j1PTvvsI2rR0ISXC2ypBXI00VKnWo9Cm"
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
+
 
 @app.route('/', methods=["GET"])
 def index():
@@ -33,6 +34,20 @@ def cart():
         return render_template('cart.html', drinks={}, cart_quantity=None)
     else:
         return render_template('cart.html', drinks=session["shopping_cart"], cart_quantity=session["cart_quantity"])
+
+
+@app.route('/pour-portal')
+def pour_portal():
+    # Clear shopping cart and cart quantity session when user first enters portal
+    if "shopping_cart" in session:
+        session["pour_items"] = session["shopping_cart"].copy()
+        session.pop("shopping_cart", None)
+        session.pop("cart_quantity", None)
+
+    if "pour_items" not in session:
+        return render_template('pour_portal.html', drinks={}, cart_quantity=None)
+    else:
+        return render_template('pour_portal.html', drinks=session["pour_items"], cart_quantity=None)
 
 
 @app.route('/add-to-cart', methods=['POST'])
@@ -92,11 +107,6 @@ def remove_from_cart():
     return jsonify({})
 
 
-@app.route('/pour-portal')
-def pour_portal():
-    return render_template('pour_portal.html')
-
-
 @app.route('/checkout-session', methods=['POST'])
 def checkout_session():
     cart_items = get_cart_items()
@@ -106,13 +116,9 @@ def checkout_session():
         line_items=cart_items,
             mode='payment',
             allow_promotion_codes=True,
-            success_url=url_for('pour_portal', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
-            cancel_url=url_for('menu', _external=True),
+            success_url=url_for('pour_portal', _external=True),
+            cancel_url=url_for('cart', _external=True),
     )
-
-    session["pour_items"] = session["shopping_cart"].copy()
-    session.pop("shopping_cart", None)
-    session.pop("cart_quantity", None)
 
     return jsonify(id=checkout_session.id, public_key=app.config['STRIPE_PUBLIC_KEY'])
 
@@ -144,6 +150,30 @@ def stripe_webhook():
         session = event['data']['object']
 
     return {}
+
+
+@app.route('/pour-drink', methods=['POST'])
+def pour_drink():
+    data = json.loads(request.data)
+    drink_id = data['drink_id'] # This id is used to determine which drink to pour
+    print(drinks[drink_id]['name'] + " poured!")
+
+    session.modified = True
+
+    new_quantity = int(session["pour_items"][drink_id]['quantity']) - 1
+
+    # Delete drink from pour_items session if quantity reaches 0, else 
+    # set the new quantity to old quantity minus 1
+    if new_quantity == 0:
+        del session["pour_items"][drink_id]
+    else:
+        session["pour_items"][drink_id]['quantity'] = str(new_quantity)
+    
+    # Remove pour_items session if there are no more drinks on the pour page
+    if len(session["pour_items"]) == 0:
+        session.pop("pour_items", None)
+    
+    return jsonify({})
 
 
 def get_cart_quantity():

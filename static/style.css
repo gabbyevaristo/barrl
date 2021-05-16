@@ -163,3 +163,25 @@
 .drink-name {
     margin-bottom: .1rem !important;
 }
+
+
+/* Pour portal styles */
+
+.pour-drink-img-col {
+    padding-left: 6px !important;
+}
+
+.pour-drink-name {
+    font-size: 0.98rem !important;
+}
+
+.thank-you-container {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.thank-you-margin {
+    margin-bottom: 0rem !important;
+}
