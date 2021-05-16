@@ -107,6 +107,30 @@ def remove_from_cart():
     return jsonify({})
 
 
+@app.route('/pour-drink', methods=['POST'])
+def pour_drink():
+    data = json.loads(request.data)
+    drink_id = data['drink_id'] # This id is used to determine which drink to pour
+    print(drinks[drink_id]['name'] + " poured!")
+
+    session.modified = True
+
+    new_quantity = int(session["pour_items"][drink_id]['quantity']) - 1
+
+    # Delete drink from pour_items session if quantity reaches 0, else 
+    # set the new quantity to old quantity minus 1
+    if new_quantity == 0:
+        del session["pour_items"][drink_id]
+    else:
+        session["pour_items"][drink_id]['quantity'] = str(new_quantity)
+    
+    # Remove pour_items session if there are no more drinks on the pour page
+    if len(session["pour_items"]) == 0:
+        session.pop("pour_items", None)
+    
+    return jsonify({})
+
+
 @app.route('/checkout-session', methods=['POST'])
 def checkout_session():
     cart_items = get_cart_items()
@@ -152,30 +176,6 @@ def stripe_webhook():
     return {}
 
 
-@app.route('/pour-drink', methods=['POST'])
-def pour_drink():
-    data = json.loads(request.data)
-    drink_id = data['drink_id'] # This id is used to determine which drink to pour
-    print(drinks[drink_id]['name'] + " poured!")
-
-    session.modified = True
-
-    new_quantity = int(session["pour_items"][drink_id]['quantity']) - 1
-
-    # Delete drink from pour_items session if quantity reaches 0, else 
-    # set the new quantity to old quantity minus 1
-    if new_quantity == 0:
-        del session["pour_items"][drink_id]
-    else:
-        session["pour_items"][drink_id]['quantity'] = str(new_quantity)
-    
-    # Remove pour_items session if there are no more drinks on the pour page
-    if len(session["pour_items"]) == 0:
-        session.pop("pour_items", None)
-    
-    return jsonify({})
-
-
 def get_cart_quantity():
     if "shopping_cart" in session:
         return str(sum(int(drink['quantity']) for drink in session["shopping_cart"].values()))
@@ -195,4 +195,4 @@ def get_cart_items():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=4455)
+    app.run(debug=True, host='0.0.0.0')

@@ -1,4 +1,4 @@
-// Load click handler on page render 
+// Load cart total on page render 
 window.onload = update_total;
 
 
