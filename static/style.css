@@ -176,12 +176,17 @@
 }
 
 .thank-you-container {
-    height: 90vh;
+    height: 93vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.thank-you-margin {
-    margin-bottom: 0rem !important;
+.thank-you-box {
+    background-color: #EFEFEF;
+}
+
+.cheers-img {
+    width: 75px; 
+    height: 90px;
 }
