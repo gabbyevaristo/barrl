@@ -1,11 +1,187 @@
 {% extends "layout.html" %}
 
-{% block title %} Checkout {% endblock %}
+{% block title %} Shopping Cart {% endblock %}
 
-{% block head %}
-  {{ super() }}
+{% block cart_quantity %} 
+
+{% if cart_quantity %}
+  {{ cart_quantity }} 
+{% endif %}
+
+
 {% endblock %}
 
 {% block content %}
-  <p> Checkout </p>
+
+<div class="pt-5 mt-2 pb-3 text-center">
+    <h2 class="my-3"> Shopping Cart </h2>
+</div>
+
+<!-- Show cart items if they exist -->
+{% if drinks %}
+
+<!-- Shopping cart header row -->
+<div class="container">
+  <div class="list-group list-group-flush">
+    <div class="list-group-item list-group-item-action flex-column align-items-start">
+      <div class="row">
+        <div class="col-1 cart-drink-img-col">
+          Items
+        </div>
+        <div class="col-6">
+        </div>
+        <div id="cart-drink-price-header" class="col-1">
+          Price
+        </div>
+        <div id="cart-drink-quantity-header" class="col-4">
+          Quantity
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Shopping cart-->
+<div class="container mb-4">
+  <div id="cart" class="list-group">
+
+    <!-- Shopping cart items -->
+    {% for drink in drinks.keys(): %}
+      <div id="cart-item-{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start cart-item">
+        <div class="row">
+
+          <div class="col-1 cart-drink-img-col">
+            <img src={{ drinks[drink]["image"] }} class="cart-drink-img">
+          </div>
+
+          <div class="col-6">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="font-weight-bold drink-name"> {{ drinks[drink]["name"] }} </h6>
+            </div>
+            <div class="small-text">
+              <p class="mb-1"><small> {{ drinks[drink]["ingredients"] }} </small></p>
+            </div>
+          </div>
+
+          <div id="cart-price-{{ loop.index }}" class="col-1 cart-drink-price-col">
+            <p class="cart-price"> {{ drinks[drink]["price"] }} </p>
+          </div>
+
+          <div class="col-4 cart-drink-quantity-col">
+            <div>
+              <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> {{ drinks[drink]["quantity"] }} </span>
+              <div class="pull-right">
+                <button data-index="{{ loop.index }}" class="btn btn-xs ml-3 edit-btn cart-btn" type="button">
+                  <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                </button>
+                <button data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-xs ml-1 trash-btn cart-btn" type="button">
+                  <i class="fa fa-trash" aria-hidden="true"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Edit cart modal -->
+      <div id="modal-cart-{{ loop.index }}" class="modal fade modal-cart" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title font-weight-bold"> {{ drinks[drink]["name"] }} </h5>
+              <button type="button" class="close reset-modal" data-index="{{ loop.index }}" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div class="text-center"> 
+
+                <!-- Input quantity-->
+                <div class="form-group row">
+                  <div class="input-group justify-content-center">
+                    <div class="input-group-prepend mr-2">
+                      <button id="minus-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="minus" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
+                    </div>
+                    <p id="modal-cart-quantity-{{ loop.index }}" class="qty-value"> </p>
+                    <div class="input-group-append ml-2">
+                      <button id="plus-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="plus" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+                  
+            <div class="modal-footer">
+              <button data-index="{{ loop.index }}" data-id={{ drink }} type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn"> 
+                <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span> 
+                <span id="modal-cart-price-{{ loop.index }}" class="pull-right"> </span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    {% endfor %}
+
+  </div>
+</div>
+
+
+<!-- Order summary-->
+<div class="container pt-3 pb-5">
+  <div class="col">
+
+    <div class="rounded-pill bg-light text-uppercase font-weight-bold px-4 py-1 text-center"> Order Summary </div>
+
+    <div class="p-3 order-totals">
+      <ul class="list-unstyled mb-4">
+        <li class="d-flex justify-content-between border-bottom py-2 px-3">
+          <strong class="text-muted"> Order Subtotal </strong><strong id="subtotal"> </strong>
+        </li>
+      </ul>
+      <div class="text-center">
+        <button id="checkout" class="btn btn-dark btn-sm rounded-pill py-1"> Proceed to checkout </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- Show empty cart -->
+{% else %}
+
+<div class="empty-cart-container">
+  <div>
+    <div id="empty-cart-icon">
+      <button class="btn fa-3x" disabled> <i class="bi bi-cart-x"></i> </button>
+    </div>
+    <div class="text-center">
+      <h5 id="empty-cart-text"> Cart is empty </h5>
+    </div>
+    <p class="mt-4">
+      <a id="add-items-to-cart-link" class="font-weight-bold" href="/menu"> Add items to cart </a>
+    </p>
+    <p id="subtotal" hidden> </p>
+    <button id="checkout" hidden> </button>
+  </div>
+</div>
+
+
+{% endif %}        
+
+
+{% endblock %}
+
+
+{% block page_scripts %} 
+
+<script src="https://js.stripe.com/v3/"></script>
+<script src="{{ url_for('static', filename='cart.js') }}"></script>
+
 {% endblock %}

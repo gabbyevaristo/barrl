@@ -2,7 +2,7 @@
 <html>
 
   <head>
-    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
@@ -15,12 +15,12 @@
 
   <body>
   
-    <div class="container" id="brand-name-container">
-      <h1 class="text-center text-uppercase" id="brand-name"> Barrl </h1>
+    <div id="brand-name-container" class="container">
+      <h1 id="brand-name" class="text-center text-uppercase"> Barrl </h1>
     </div>
 
-    <div class="container d-flex justify-content-center" id="menu-button-container">
-      <a href="/menu"><button type="button" class="btn btn-light" data-mdb-ripple-color="blue" id="menu-button"> Menu </button></a>
+    <div id="menu-button-container" class="container d-flex justify-content-center">
+      <a href="/menu"><button id="menu-button" type="button" class="btn btn-light" data-mdb-ripple-color="blue"> Menu </button></a>
     </div>
 
     <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>

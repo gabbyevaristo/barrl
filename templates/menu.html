@@ -1,78 +1,110 @@
-
-
-
 {% extends "layout.html" %}
 
 {% block title %} Menu {% endblock %}
 
-{% block head %}
-  {{ super() }}
+{% block cart_quantity %} 
+
+{% if cart_quantity %}
+  {{ cart_quantity }} 
+{% endif %}
+
 {% endblock %}
+
 
 {% block content %}
 
-<!-- Drink list group -->
-<div class="container">
-  <div class="list-group list-group-flush">
+<div class="pt-5 mt-2 text-center">
+  <!-- Item added to cart success alert
+  <div>
+    <div id="add-to-cart-alert" class="alert alert-success alert-dismissible rounded-pill d-none" role="alert">
+      <a href="#" class="close" data-dismiss="alert" aria-label="close"> &times; </a>
+      Item has been added to cart
+    </div>
+  </div> -->
+  <h2 class="my-3"> Menu </h2>
+</div>
 
-    {% for drink in drinks.keys(): %}
-      <button type="button" id={{ drink + "-button" }} onclick="myFunction(this.id, {{ drinks[drink] }});" class="list-group-item list-group-item-action flex-column align-items-start">
-        <div class="row">
 
-          <div class=column>
-            <img src={{ drinks[drink]["image"] }} id="menu-drink-image">
-          </div>
+<!-- Menu list -->
+<div id="menu" class="list-group list-group-flush">
 
-          <div class=column id="drink-div">
+  <!-- Menu items -->
+  {% for drink in drinks.keys(): %}
+    <button id="menu-item-{{ drink }}" type="button" data-index="{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start item-btn">
+      <div class="row menu-drink-row ml-2">
+        <div class="menu-drink-img-col" class="col-2">
+          <img class="menu-drink-img" src={{ drinks[drink]["image"] }}>
+        </div>
+        <div class="col">
             <div class="d-flex w-100 justify-content-between">
-              <h6 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h6>
+              <h5 class="font-weight-bold mb-1">{{ drinks[drink]["name"] }}</h5>
             </div>
-            <div id="drink-properties-div">
-              <p class="mb-1"> {{ drinks[drink]["ingredients"] }} </p>
-              <small> {{ drinks[drink]["price"] }} </small>
+            <div class="small-text">
+              <p class="mb-1">{{ drinks[drink]["ingredients"] }}</p>
+              <small id="menu-price-{{ loop.index }}">{{ drinks[drink]["price"] }}</small>
             </div>
+        </div>
+      </div>
+    </button>
+
+
+    <!-- Add to cart modal -->
+    
+    <div id="modal-menu-{{ loop.index }}" class="modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title font-weight-bold"> {{ drinks[drink]["name"] }} </h5>
+            <button type="button" class="close" data-index="{{ loop.index }}" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+          <div class="modal-body">
+            
+            <p class="ml-1 modal-menu-ingredients"> {{ drinks[drink]["ingredients"] }} </p>
+
+              <div class="text-center">
+                <img src={{ drinks[drink]["image"] }} class="img-fluid mt-1 modal-menu-img"> 
+
+                <!-- Input quantity-->
+                <div class="form-group row">
+                  <div class="input-group justify-content-center">
+                    <div class="input-group-prepend mr-2">
+                      <button id="minus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="minus" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
+                    </div>
+                    <p id="modal-menu-quantity-{{ loop.index }}" class="qty-value"> 0 </p>
+                    <div class="input-group-append ml-2">
+                      <button id="plus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="plus" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+          </div>
+
+            
+          <div class="modal-footer">
+            <button id="add-to-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-dark btn-block add-to-cart-btn p-3 radius-remove"> 
+              <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span> 
+              <span id="modal-menu-price-{{ loop.index }}" class="pull-right"> </span>
+            </button>
+          </div>
+            
 
         </div>
-      </button>
-    {% endfor %}
-
-  </div>
-</div>
-
-
-<!-- Drink quantity modal -->
-<div class="modal fade" id="quantity-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title font-weight-bold" id="modal-title"> </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="text-center">
-          <img src="" id="modal-drink-image" class="img-fluid"> 
-
-          <!-- Input spinner -->
-          <div class="button-container" id="quantity-container">
-
-            <button class="btn btn-light btn-minus" type="button"> - </button>
-            <input type="text" id="quantity-input" value="0">
-            <button class="btn btn-light btn-plus" type="button"> + </button>
-
-          </div>
-          
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark btn-block p-3"> 
-          <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span> 
-          <span class="pull-right" id="modal-drink-price"> </span>
-        </button>
       </div>
     </div>
-  </div>
+    
+  {% endfor %}
+
 </div>
 
+
+{% endblock %}
+
+
+{% block page_scripts %} 
+
+<script src="{{ url_for('static', filename='menu.js') }}"></script>
 
 {% endblock %}
