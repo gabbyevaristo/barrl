@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %} Admin {% endblock %}
+
+{% block content %}
+
+<div class="pt-5 mt-2 text-center">
+  <h2 class="my-3"> Admin </h2>
+</div>
+
+
+<!-- Bottle Management -->
+<div id="bottles" class="list-group list-group-flush">
+
+  <!-- Bottles -->
+  <ol>
+    {% for id, bottle in bottles.items(): %}
+    <li>{{bottle['name']}}</li>
+    {% endfor %}
+  </ol>
+
+</div>
+
+
+{% endblock %}
+
+
+{% block page_scripts %}
+
+<script src="{{ url_for('static', filename='admin.js') }}"></script>
+
+{% endblock %}

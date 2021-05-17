@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, jsonify,url_for, abort
 from pi import pour_water
 from menu import drinks
+from bottles import bottles
 from datetime import timedelta
 import json
 import stripe
@@ -18,6 +19,32 @@ stripe.api_key = app.config['STRIPE_SECRET_KEY']
 @app.route('/', methods=["GET"])
 def index():
     return render_template('index.html')
+
+
+@app.route('/admin', methods=["GET", "POST"])
+def admin():
+    if request.method == "GET":
+        if 'admin_login' in session and session['admin_login'] == True:
+            return render_template('admin.html', bottles=bottles)
+        else:
+            return redirect('/admin_login')
+
+@app.route('/admin_login', methods=["GET","POST"])
+def admin_login():
+    if request.method == "GET":
+        return render_template('admin_login.html')
+    else:
+        # Confirm user has access code
+        if request.form.get('code') == "highball":
+            session['admin_login'] = True
+            return redirect('/admin')
+        else:
+            # Wrong Password
+            # TODO: Add alert for wrong PW?
+            session['admin_login'] = False
+            return redirect('/admin_login')
+
+
 
 
 @app.route('/menu', methods=["GET", "POST"])
@@ -62,13 +89,13 @@ def add_to_cart():
         session["cart_quantity"] = "0"
 
     # If drink is already in cart, update quantity
-    if drink_id not in session["shopping_cart"]:    
+    if drink_id not in session["shopping_cart"]:
         session["shopping_cart"][drink_id] = drinks[drink_id].copy()
         session["shopping_cart"][drink_id]['quantity'] = drink_quantity
     else:
         new_quantity = int(session["shopping_cart"][drink_id]['quantity']) + int(drink_quantity)
         session["shopping_cart"][drink_id]['quantity'] = str(new_quantity)
-    
+
     session["cart_quantity"] = get_cart_quantity()
     return jsonify({})
 
@@ -84,7 +111,7 @@ def edit_cart():
     # Update quantity
     session["shopping_cart"][drink_id]['quantity'] = updated_quantity
     session["cart_quantity"] = get_cart_quantity()
-    
+
     return jsonify({})
 
 
@@ -103,7 +130,7 @@ def remove_from_cart():
     if len(session["shopping_cart"]) == 0:
         session.pop("shopping_cart", None)
         session.pop("cart_quantity", None)
-    
+
     return jsonify({})
 
 
@@ -117,17 +144,17 @@ def pour_drink():
 
     new_quantity = int(session["pour_items"][drink_id]['quantity']) - 1
 
-    # Delete drink from pour_items session if quantity reaches 0, else 
+    # Delete drink from pour_items session if quantity reaches 0, else
     # set the new quantity to old quantity minus 1
     if new_quantity == 0:
         del session["pour_items"][drink_id]
     else:
         session["pour_items"][drink_id]['quantity'] = str(new_quantity)
-    
+
     # Remove pour_items session if there are no more drinks on the pour page
     if len(session["pour_items"]) == 0:
         session.pop("pour_items", None)
-    
+
     return jsonify({})
 
 
@@ -168,7 +195,7 @@ def stripe_webhook():
     except stripe.error.SignatureVertificationError as e:
         # Invalid signature
         return {}, 400
-    
+
     # Handle checkout session completed event
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
