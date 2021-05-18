@@ -44,10 +44,18 @@ def admin_login():
             session['admin_login'] = False
             return redirect('/admin_login')
 
+          
+@app.route('/mvp', methods=["GET", "POST"])
+def mvp():
+    if request.method == "POST":
+        pour_water.pour_water()
+        print("Pouring predetermined drink")
+        return redirect('/mvp')
+    else:
+        return render_template('mvp.html')
 
-
-
-@app.route('/menu', methods=["GET", "POST"])
+      
+@app.route('/menu')
 def menu():
     if "shopping_cart" not in session:
         return render_template('menu.html', drinks=drinks, cart_quantity=None, show=True)
