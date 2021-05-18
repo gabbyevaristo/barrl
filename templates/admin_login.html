@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %} Admin Access {% endblock %}
+
+{% block content %}
+
+<div class="pt-5 mt-2 text-center">
+  <h2 class="my-3"> Management </h2>
+</div>
+
+
+<!-- Sign In -->
+<div>
+  <form action="/admin_login" method="post">
+    <label for="code">Access Code:</label><br>
+    <input type="text" id="code" name="code"><br><br>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+{% endblock %}
+
+
+{% block page_scripts %}
+
+<script src="{{ url_for('static', filename='admin_login.js') }}"></script>
+
+{% endblock %}
