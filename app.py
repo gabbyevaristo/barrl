@@ -7,7 +7,7 @@ import stripe
 
 
 app = Flask(__name__)
-app.secret_key = 'barrrl'
+app.secret_key = 'barrrrrl'
 app.permanent_session_lifetime = timedelta(hours=30)
 
 app.config['STRIPE_PUBLIC_KEY'] = "pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7RZkGhfoSNKJBLkpF0WE6A5GNGedvZ8VyzpVFb5NF5tdPJRqXmfvmu003iF1LG6k"
@@ -48,16 +48,21 @@ def cart():
 
 @app.route('/pour-portal')
 def pour_portal():
-    # Clear shopping cart and cart quantity session when user first enters portal
-    if "shopping_cart" in session:
-        session["pour_items"] = session["shopping_cart"].copy()
-        session.pop("shopping_cart", None)
-        session.pop("cart_quantity", None)
+    if "has_paid" in session:
+        print("True")
+        # Clear shopping cart and cart quantity session when user first enters portal
+        if "shopping_cart" in session:
+            session["pour_items"] = session["shopping_cart"].copy()
+            session.pop("shopping_cart", None)
+            session.pop("cart_quantity", None)
 
-    if "pour_items" not in session:
-        return render_template('pour_portal.html', drinks={}, cart_quantity=None, show=True)
+        if "pour_items" not in session:
+            return render_template('pour_portal.html', drinks={}, cart_quantity=None, show=True)
+        else:
+            return render_template('pour_portal.html', drinks=session["pour_items"], cart_quantity=None, show=False)
     else:
-        return render_template('pour_portal.html', drinks=session["pour_items"], cart_quantity=None, show=False)
+        print("False")
+        return redirect('/menu')
 
 
 @app.route('/add-to-cart', methods=['POST'])
@@ -150,7 +155,7 @@ def checkout_session():
         line_items=cart_items,
             mode='payment',
             allow_promotion_codes=True,
-            success_url=url_for('pour_portal', _external=True),
+            success_url=url_for('pour_portal', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
             cancel_url=url_for('cart', _external=True),
     )
 
@@ -181,7 +186,11 @@ def stripe_webhook():
     
     # Handle checkout session completed event
     if event['type'] == 'checkout.session.completed':
-        session = event['data']['object']
+        checkout_session = event['data']['object']
+        session["has_paid"] = True
+
+    if "has_paid" in session:
+        print("True")
 
     return {}
 
