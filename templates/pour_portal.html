@@ -11,6 +11,24 @@
     <h2 class="my-3"> Pour Portal </h2>
 </div>
 
+
+<div class="pt-3 text-center">
+    <h6 class="my-3"> Place cup in dispenser before pour </h6>
+</div>
+
+
+
+<!-- Progress bar -->
+<div class="col-xs-12 col-sm-12 progress-container mb-5">
+    <div id="progress-container" class="progress progress-striped active position-relative">
+        <div id="progress-bar" class="progress-bar bg-dark">
+            <p id="current-mixer" class="justify-content-center d-flex position-absolute w-100"></p>
+        </div>
+    </div>
+</div>
+
+
+
 <!-- Pour portal -->
 <div class="container">
     <div id="pour-portal" class="list-group list-group-flush">
@@ -28,7 +46,7 @@
                     </div>
                     <div class="col-6 ml-3">
                         <div class="d-flex w-100 justify-content-between">
-                        <p class="font-weight-bold mt-3 mb-1 pour-drink-name">{{ drinks[drink]["name"] }}</p>
+                        <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name">{{ drinks[drink]["name"] }}</p>
                         </div>
                     </div>
                     <div class="col ml-4">

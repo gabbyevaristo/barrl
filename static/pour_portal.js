@@ -1,5 +1,7 @@
 window.onload = set_buttons;
 
+var wait_time = 5000;
+
 function set_buttons() {
     pour_buttons = document.getElementsByClassName('pour-btn');
 
@@ -13,22 +15,23 @@ function set_buttons() {
                 body: JSON.stringify({ drink_id: drink_id }),
             })
 
-            if (pour_buttons.length > 1) {
-                pour_buttons.forEach(function(pour_button) {
-                    pour_button.disabled = true;
-                    setTimeout(function() { 
-                        pour_button.disabled = false;
-                    }, 5000);
-                });
+            pour_buttons.forEach(function(pour_button) {
+                pour_button.disabled = true;
+                setTimeout(function() { 
+                    pour_button.disabled = false;
+                }, wait_time);
+            });
+
+            var drink_name = $('#drink-name-'.concat(i)).text();
+            $('#current-mixer').text('Mixing ' + drink_name);
+
+            $(".progress-bar").animate({
+                width: "100%"
+            }, wait_time);
                     
-                setTimeout(function(){
-                    window.location.reload();
-                }, 5000);
-            } else {
-                setTimeout(function(){
-                    window.location.reload();
-                }, 1000);
-            }
+            setTimeout(function(){
+                window.location.reload();
+            }, wait_time);
     
             $('#pour-item-'.concat(i)).remove();
         });
