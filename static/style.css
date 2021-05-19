@@ -15,12 +15,14 @@
     color: black;
 }
 
-/*
-.alerts {
-    position: fixed;
-    z-index: 999;
+.alert-container {
+    position: relative;
 }
-*/
+
+.alert-box {
+    position: absolute;
+    right: 0;
+}
 
 
 /* Menu styles */
@@ -193,4 +195,22 @@
 .cheers-img {
     width: 75px; 
     height: 90px;
+}
+
+.progress.active .progress-bar {
+    -webkit-transition: none !important;
+    transition: none !important;
+}
+
+#current-mixer {
+    font-size: 1.0rem;
+}
+
+#progress-container {
+    height: 29px;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 29px;
 }
