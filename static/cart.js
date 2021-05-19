@@ -1,6 +1,7 @@
 // Load cart total on page render 
 window.onload = update_total;
 
+var wait_time = 1200;
 
 // Remove item from cart
 $('.trash-btn').click(function() {
@@ -11,9 +12,17 @@ $('.trash-btn').click(function() {
     fetch("/remove-from-cart", {
         method: "POST",
         body: JSON.stringify({ drink_id: drink_id }),
-    }).then((_res) => {
-        window.location.href = "/cart";
-    });
+    })
+
+    $('#remove-from-cart-alert').show('fade');
+
+    setTimeout(function(){
+        $('#remove-from-cart-alert').hide('fade');
+    }, wait_time);
+
+    setTimeout(function(){
+        window.location.reload();
+    }, wait_time);
 
     $('#cart-item-'.concat(i)).remove();
     update_total();
@@ -55,9 +64,17 @@ $('.update-btn').click(function() {
     fetch("/edit-cart", {
         method: "POST",
         body: JSON.stringify({ drink_id: drink_id, updated_quantity: updated_quantity }),
-    }).then((_res) => {
-        window.location.href = "/cart";
-    });
+    })
+
+    $('#edited-from-cart-alert').show('fade');
+
+    setTimeout(function(){
+        $('#edited-from-cart-alert').hide('fade');
+    }, wait_time);
+
+    setTimeout(function(){
+        window.location.reload();
+    }, wait_time);
 
     update_total();
 })

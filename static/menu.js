@@ -1,3 +1,5 @@
+var wait_time = 800;
+
 // Open modal on menu page
 $('.item-btn').click(function() {
     var i = $(this).data('index');
@@ -14,15 +16,21 @@ $('.add-to-cart-btn').click(function() {
 
     $('#modal-menu-'.concat(i)).modal('hide');
     reset_modal(i);
-    // $('#add-to-cart-alert').removeClass('d-none');
+
+    $('#add-to-cart-alert').show('fade');
+
+    setTimeout(function(){
+        $('#add-to-cart-alert').hide('fade');
+    }, wait_time);
+
+    setTimeout(function(){
+        window.location.reload();
+    }, wait_time);
 
     fetch("/add-to-cart", {
         method: "POST",
         body: JSON.stringify({ drink_id: drink_id, drink_quantity: drink_quantity }),
     })
-    .then((_res) => {
-        window.location.href = "/menu";
-    });
 })
 
 

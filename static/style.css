@@ -15,12 +15,14 @@
     color: black;
 }
 
-/*
-.alerts {
-    position: fixed;
-    z-index: 999;
+.alert-container {
+    position: relative;
 }
-*/
+
+.alert-box {
+    position: absolute;
+    right: 0;
+}
 
 
 /* Menu styles */

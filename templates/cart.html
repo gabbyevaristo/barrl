@@ -13,7 +13,16 @@
 
 {% block content %}
 
-<div class="pt-5 mt-2 pb-3 text-center">
+
+<div class="pt-5 mt-2 text-center alert-container">
+  <div class="alert-box">
+    <div id="remove-from-cart-alert" class="alert alert-dark collapse rounded-pill center-block" role="alert">
+      Item has been removed from cart
+    </div>
+    <div id="edited-from-cart-alert" class="alert alert-dark collapse rounded-pill center-block" role="alert">
+      Item quantity has been changed
+    </div>
+  </div>
     <h2 class="my-3"> Shopping Cart </h2>
 </div>
 
