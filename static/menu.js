@@ -23,14 +23,14 @@ $('.add-to-cart-btn').click(function() {
         $('#add-to-cart-alert').hide('fade');
     }, wait_time);
 
-    setTimeout(function(){
-        window.location.reload();
-    }, wait_time);
-
     fetch("/add-to-cart", {
         method: "POST",
         body: JSON.stringify({ drink_id: drink_id, drink_quantity: drink_quantity }),
     })
+    .then(response => response.json())
+    .then(data => {
+        $('#nav-cart-quantity').text(data);
+    });
 })
 
 

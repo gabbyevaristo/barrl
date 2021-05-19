@@ -2,14 +2,8 @@
 
 {% block title %} Shopping Cart {% endblock %}
 
-{% block cart_quantity %} 
+{% block cart_quantity %} {{ cart_quantity }} {% endblock %}
 
-{% if cart_quantity %}
-  {{ cart_quantity }} 
-{% endif %}
-
-
-{% endblock %}
 
 {% block content %}
 
