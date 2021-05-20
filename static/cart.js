@@ -24,7 +24,7 @@ $('.trash-btn').click(function() {
         }
     });
 
-    $('#remove-from-cart-alert').show('fade');
+    $('#remove-from-cart-alert').show();
 
     setTimeout(function(){
         $('#remove-from-cart-alert').hide('fade');
@@ -76,7 +76,7 @@ $('.update-btn').click(function() {
         $('#nav-cart-quantity').text(data);
     });
 
-    $('#edited-from-cart-alert').show('fade');
+    $('#edited-from-cart-alert').show();
 
     setTimeout(function(){
         $('#edited-from-cart-alert').hide('fade');

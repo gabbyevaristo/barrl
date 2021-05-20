@@ -17,7 +17,7 @@ $('.add-to-cart-btn').click(function() {
     $('#modal-menu-'.concat(i)).modal('hide');
     reset_modal(i);
 
-    $('#add-to-cart-alert').show('fade');
+    $('#add-to-cart-alert').show();
 
     setTimeout(function(){
         $('#add-to-cart-alert').hide('fade');

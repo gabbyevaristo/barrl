@@ -9,11 +9,6 @@ function set_buttons() {
         pour_button.addEventListener('click', function(e) {
             var i = $(e.target).data('index');
             var drink_id = $(e.target).data('id');
-            
-            fetch("/pour-drink", {
-                method: "POST",
-                body: JSON.stringify({ drink_id: drink_id }),
-            })
 
             pour_buttons.forEach(function(pour_button) {
                 pour_button.disabled = true;
@@ -27,11 +22,24 @@ function set_buttons() {
 
             $(".progress-bar").animate({
                 width: "100%"
-            }, wait_time);
-                    
-            setTimeout(function(){
-                window.location.reload();
-            }, wait_time);
+            }, wait_time, function() {
+                $('.progress-bar').css("width","0%");
+                $('#current-mixer').text('');
+            });
+
+            fetch("/pour-drink", {
+                method: "POST",
+                body: JSON.stringify({ drink_id: drink_id }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Reload page if all items have been poured
+                if (data == '') {
+                    setTimeout(function(){
+                        window.location.reload();
+                    }, wait_time);
+                }
+            });
     
             $('#pour-item-'.concat(i)).remove();
         });
