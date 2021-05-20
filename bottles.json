@@ -1,0 +1,56 @@
+{
+    "1": {
+        "name": "Vodka",
+        "size": "750mL",
+        "ml": 750,
+        "brand": "Titos",
+        "type": "alcohol",
+        "estimated_fill": "50%",
+         "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg"
+    },
+    "2": {
+      "name": "Tequila",
+      "size": "1.75L",
+      "ml": 1750,
+      "brand": "Jose Cuervo",
+      "type": "alcohol",
+      "estimated_fill": "100%",
+       "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg"
+    },
+    "3": {
+      "name": "Soda Water",
+      "size": "2L",
+      "ml": 2000,
+      "brand": "Polar Spring",
+      "type": "mixer",
+      "estimated_fill": "70%",
+       "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg"
+    },
+    "4": {
+      "name": "Coke",
+      "size": "2L",
+      "ml": 2000,
+      "brand": "Coca-Cola",
+      "type": "mixer",
+      "estimated_fill": "50%",
+       "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg"
+    },
+    "5": {
+      "name": "Lemonade",
+      "size": "1L",
+      "ml": 1000,
+      "brand": "Simply",
+      "type": "mixer",
+      "estimated_fill": "30%",
+       "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg"
+    },
+    "6": {
+      "name": "Water",
+      "size": "1L",
+      "ml": 1000,
+      "brand": "Fiji",
+      "type": "mixer",
+      "estimated_fill": "80%",
+       "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg"
+    }
+}
