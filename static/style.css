@@ -16,12 +16,10 @@
 }
 
 .alert-container {
-    position: relative;
-}
-
-.alert-box {
-    position: absolute;
-    right: 0;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 999;
 }
 
 
