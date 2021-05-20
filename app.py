@@ -163,7 +163,8 @@ def pour_drink():
     # Remove pour_items session if there are no more drinks on the pour page
     if len(session["pour_items"]) == 0:
         session.pop("pour_items", None)
-
+        return jsonify('')
+    
     return jsonify({})
 
 
