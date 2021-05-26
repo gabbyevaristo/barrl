@@ -44,7 +44,7 @@ def admin_login():
             session['admin_login'] = False
             return redirect('/admin_login')
 
-          
+
 @app.route('/mvp', methods=["GET", "POST"])
 def mvp():
     if request.method == "POST":
@@ -54,7 +54,7 @@ def mvp():
     else:
         return render_template('mvp.html')
 
-      
+
 @app.route('/menu')
 def menu():
     if "shopping_cart" not in session:
@@ -139,7 +139,7 @@ def remove_from_cart():
         session.pop("shopping_cart", None)
         session.pop("cart_quantity", None)
         return jsonify('')
-    
+
     return jsonify(session["cart_quantity"])
 
 
@@ -164,7 +164,7 @@ def pour_drink():
     if len(session["pour_items"]) == 0:
         session.pop("pour_items", None)
         return jsonify('')
-    
+
     return jsonify({})
 
 

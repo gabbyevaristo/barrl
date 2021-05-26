@@ -15,7 +15,12 @@
   <!-- Bottles -->
   <ol>
     {% for id, bottle in bottles.items(): %}
-    <li>{{bottle['name']}}</li>
+    <li>
+      <form action="/update_bottles" method="post">
+        <input type="text" name="title" value="{{bottle['name']}}">
+        <input type="submit" name="add_sub" value="Save">
+      </form>
+    </li>
     {% endfor %}
   </ol>
 
