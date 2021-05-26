@@ -1,7 +1,7 @@
 # Barrl
 Never wait for a bartender again <br/>
 
-For more information about our project, check our our Wiki page [here.](https://github.com/tschelbs18/barrl/wiki)
+For more information about our project, check out our Wiki page [here.](https://github.com/tschelbs18/barrl/wiki)
 <br/> <br/>
 
 ## How to build a Barrl
