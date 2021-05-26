@@ -2,10 +2,10 @@
 Never wait for a bartender again
 
 ## How to build a Barrl
-An inventory of all the required hardware and the cost to build a Barrl unit can be found [here](https://docs.google.com/spreadsheets/u/1/d/1oeld_4YFFCOyfyVn-yoKrc7Vv1LyA8GUgOt9WdFAWWM/edit#gid=0).
+An inventory of all the required hardware and the cost to build a Barrl unit can be found [here.](https://docs.google.com/spreadsheets/u/1/d/1oeld_4YFFCOyfyVn-yoKrc7Vv1LyA8GUgOt9WdFAWWM/edit#gid=0).
 
 ## Required Software
-To run a Barrl instance you will need:
+To run a Barrl instance, you will need:
 - [Python](https://www.python.org/downloads/)
 - [Pip](https://pip.pypa.io/en/stable/installing/)
 
@@ -25,6 +25,6 @@ To run a Barrl instance you will need:
 2. In your terminal, run "flask run --host=0.0.0.0"
 
 ## Created By
-- Ted Schelble ([@tschelbs18](https://github.com/tschelbs18))
-- Gabrielle Evaristo ([@gabbyevaristo](https://github.com/gabbyevaristo))
 - Erik Delanois ([@JEDelanois](https://github.com/@JEDelanois))
+- Gabrielle Evaristo ([@gabbyevaristo](https://github.com/gabbyevaristo))
+- Ted Schelble ([@tschelbs18](https://github.com/tschelbs18))
