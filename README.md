@@ -17,4 +17,4 @@ A repository of project related content including presentations, reports, schedu
 
 ## To Run the instance on a Barrl Pi in Production
 - ssh into the local raspberry pi
-- in your terminal, run "flask run hostname=0.0.0.0"
+- in your terminal, run "flask run --host=0.0.0.0"
