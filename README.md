@@ -1,5 +1,8 @@
 # Barrl
-Never wait for a bartender again
+Never wait for a bartender again <br/>
+
+For more information about our project, check our our Wiki page [here.](https://github.com/tschelbs18/barrl/wiki)
+<br/> <br/>
 
 ## How to build a Barrl
 An inventory of all the required hardware and the cost to build a Barrl unit can be found [here.](https://docs.google.com/spreadsheets/u/1/d/1oeld_4YFFCOyfyVn-yoKrc7Vv1LyA8GUgOt9WdFAWWM/edit#gid=0).
