@@ -1,7 +1,7 @@
 # Barrl
 Never wait for a bartender again <br/>
 
-For more information about our project, check out our Wiki page [here.](https://github.com/tschelbs18/barrl/wiki)
+For more information about our project overview and goals, check out our Wiki page [here.](https://github.com/tschelbs18/barrl/wiki)
 <br/> <br/>
 
 ## How to build a Barrl
@@ -14,18 +14,18 @@ To run a Barrl instance, you will need:
 
 ## To set up a Barrl environment
 1. Clone the repository
-2. Using a virtual environment is recommended but not essential (skip if you are not using one)
-  1. In your terminal, run "pip install virtualenv"
-  2. In your terminal, run "virtualenv venv"
-  3. In your terminal, run "venv\\scripts\\activate" to activate the virtual environment
-3. In your terminal, run "pip install -r requirements.txt"
+2. Using a virtual environment is recommended but not essential (skip if you are not using one) <br/>
+&nbsp;&nbsp;&nbsp; 1. In your terminal, run ``` pip install virtualenv ```  <br/>
+&nbsp;&nbsp;&nbsp; 2. In your terminal, run ``` virtualenv venv ```  <br/>
+&nbsp;&nbsp;&nbsp; 3. In your terminal, run ``` venv\\scripts\\activate ``` to activate the virtual environment <br/>
+3. In your terminal, run ``` pip install -r requirements.txt ```
 
 ## To run the instance locally
-1. In your terminal, run "flask run"
+In your terminal, run ``` flask run ```
 
 ## To run the instance on a Barrl Pi in production
 1. ssh into the local Raspberry Pi
-2. In your terminal, run "flask run --host=0.0.0.0"
+2. In your terminal, run ``` flask run --host=0.0.0.0 ```
 
 ## Created By
 - Erik Delanois ([@JEDelanois](https://github.com/@JEDelanois))
