@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% block title %} Pour Portal {% endblock %}
+{% block title %} Pour Up {% endblock %}
 
 {% block content %}
 
@@ -8,12 +8,12 @@
 {% if drinks %}
 
 <div class="pt-5 mt-2 text-center">
-    <h2 class="my-3"> Pour Portal </h2>
+    <h2 class="my-3"> Pour Up </h2>
 </div>
 
 
 <div class="pt-3 text-center">
-    <h6 class="my-3"> Place cup in dispenser before pour </h6>
+    <h6 class="my-3"> Place cup in dispenser before you pour </h6>
 </div>
 
 
@@ -30,7 +30,7 @@
 
 
 <!-- Pour portal -->
-<div class="container">
+<div class="container mb-4">
     <div id="pour-portal" class="list-group list-group-flush">
 
     {% for drink in drinks.keys(): %}
@@ -49,7 +49,7 @@
                         <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name">{{ drinks[drink]["name"] }}</p>
                         </div>
                     </div>
-                    <div class="col ml-4">
+                    <div class="col">
                         <button id="pour-button-{{ drink_index }}" data-index="{{ drink_index }}" data-id={{ drink }} class="btn btn-dark btn-sm mt-2 mb-1 mr-4 pour-btn pull-right" type="button"> Pour </button>
                     </div>
                 </div>
