@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
-from pi import pour_water, jsonService, MenuService
+from pi import pour_water, jsonService
 from datetime import timedelta
 import json
 import stripe

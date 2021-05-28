@@ -229,6 +229,10 @@
   background-color: #555;
 }
 
+.admin-label {
+  background-color: transparent;
+}
+
 .collapsible:after {
   content: '\002B';
   color: white;
