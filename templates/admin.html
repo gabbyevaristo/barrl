@@ -11,7 +11,7 @@
 
 <!-- Bottle Management -->
 <button class="collapsible">Manage Bottles</button>
-<div class="bottle_manager">
+<div class="manager">
   <div id="bottles" class="list-group list-group-flush">
 
     <!-- Bottles -->
@@ -32,6 +32,27 @@
             {% endif %}
           </select>
           <input type="text" name="fill" value="{{bottle['estimated_fill']}}">
+          <input type="submit" value="Save">
+        </form>
+      </li>
+      {% endfor %}
+    </ol>
+
+  </div>
+</div>
+
+<button class="collapsible">Manage Menu</button>
+<div class="manager">
+  <div id="menu_items" class="list-group list-group-flush">
+    <!-- Menu -->
+    <ol>
+      {% for id, drink in drinks.items(): %}
+      <li>
+        <form action="/update_menu/{{id}}" method="post">
+          <input type="text" name="name" value="{{drink['name']}}">
+          <input type="text" name="price" value="{{drink['price']}}">
+          <input type="text" name="ingredients" value="{{drink['ingredients']}}">
+          <input type="text" name="image" value="{{drink['image']}}">
           <input type="submit" value="Save">
         </form>
       </li>

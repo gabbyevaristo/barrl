@@ -25,7 +25,7 @@ def index():
 def admin():
     if request.method == "GET":
         if 'admin_login' in session and session['admin_login'] == True:
-            return render_template('admin.html', bottles=bottles)
+            return render_template('admin.html', bottles=bottles, drinks=drinks)
         else:
             return redirect('/admin_login')
 
@@ -54,6 +54,16 @@ def update_bottles(id):
     bottles[id]['type'] = request.form.get('type')
     bottles[id]['estimated_fill'] = request.form.get('fill')
     jsonService.saveJson(bottles, "bottles.json")
+    return redirect('/admin')
+
+
+@app.route('/update_menu/<id>', methods=["POST"])
+def update_menu(id):
+    drinks[id]['name'] = request.form.get('name')
+    drinks[id]['price'] = request.form.get('price')
+    drinks[id]['ingredients'] = request.form.get('ingredients')
+    drinks[id]['image'] = request.form.get('image')
+    jsonService.saveJson(drinks, "menu.json")
     return redirect('/admin')
 
 
