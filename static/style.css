@@ -252,3 +252,9 @@
   transition: max-height 0.2s ease-out;
   background-color: #f1f1f1;
 }
+
+form.admin-form label,
+form.admin-form select,
+form.admin-form input {
+  display: block;
+}

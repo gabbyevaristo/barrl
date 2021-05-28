@@ -18,16 +18,16 @@
     <ol>
       {% for id, bottle in bottles.items(): %}
       <li>
-        <form action="/update_bottles/{{id}}" method="post">
-          <label class="admin-label" for="name">Content: </label>
+        <form class="admin-form" action="/update_bottles/{{id}}" method="post">
+          <label class="admin-label" for="name">Content </label>
           <input type="text" name="name" value="{{bottle['name']}}">
-          <label class="admin-label" for="size">Size: </label>
+          <label class="admin-label" for="size">Size </label>
           <input type="text" name="size" value="{{bottle['size']}}">
-          <label class="admin-label" for="ml">mL: </label>
+          <label class="admin-label" for="ml">mL </label>
           <input type="number" name="ml" value="{{bottle['ml']}}">
-          <label class="admin-label" for="brand">Brand: </label>
+          <label class="admin-label" for="brand">Brand </label>
           <input type="text" name="brand" value="{{bottle['brand']}}">
-          <label class="admin-label" for="type">Type: </label>
+          <label class="admin-label" for="type">Type </label>
           <select name="type" style="display:block">
             <option value="{{bottle['type']}}" selected>{{bottle['type']}}</option>
             {% if bottle['type'] == "mixer" %}
@@ -36,7 +36,7 @@
               <option value="mixer">mixer</option>
             {% endif %}
           </select>
-          <label class="admin-label" for="fill">Fill %: </label>
+          <label class="admin-label" for="fill">Fill % </label>
           <input type="text" name="fill" value="{{bottle['estimated_fill']}}">
           <input type="submit" value="Save">
         </form>
@@ -54,7 +54,7 @@
     <ol>
       {% for id, drink in drinks.items(): %}
       <li>
-        <form action="/update_menu/{{id}}" method="post">
+        <form class="admin-form" action="/update_menu/{{id}}" method="post">
           <label for="name">Name: </label>
           <input type="text" name="name" value="{{drink['name']}}">
           <label for="price">Price: </label>
