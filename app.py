@@ -1,7 +1,5 @@
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
-from pi import pour_water, jsonService
-from menu import drinks
-from bottles import bottles
+from pi import pour_water, jsonService, MenuService
 from datetime import timedelta
 import json
 import stripe
@@ -14,6 +12,8 @@ app.permanent_session_lifetime = timedelta(hours=30)
 app.config['STRIPE_PUBLIC_KEY'] = "pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7RZkGhfoSNKJBLkpF0WE6A5GNGedvZ8VyzpVFb5NF5tdPJRqXmfvmu003iF1LG6k"
 app.config['STRIPE_SECRET_KEY'] = "sk_test_51IrKAPEx3ZnFyUF0xExm1uVSSm9XzTELrGlQwLnioL1PZ7N2OnuQbxy6IkJj7Jb1j7j1PTvvsI2rR0ISXC2ypBXI00VKnWo9Cm"
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
+bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
+drinks = jsonService.loadJson(r'jsonFiles/menu.json')
 
 
 @app.route('/', methods=["GET"])
@@ -53,7 +53,7 @@ def update_bottles(id):
     bottles[id]['brand'] = request.form.get('brand')
     bottles[id]['type'] = request.form.get('type')
     bottles[id]['estimated_fill'] = request.form.get('fill')
-    jsonService.saveJson(bottles, "bottles.json")
+    jsonService.saveJson(bottles, r'jsonFiles/ingredients.json')
     return redirect('/admin')
 
 
@@ -63,7 +63,7 @@ def update_menu(id):
     drinks[id]['price'] = request.form.get('price')
     drinks[id]['ingredients'] = request.form.get('ingredients')
     drinks[id]['image'] = request.form.get('image')
-    jsonService.saveJson(drinks, "menu.json")
+    jsonService.saveJson(drinks, r"jsonFiles/menu.json")
     return redirect('/admin')
 
 
