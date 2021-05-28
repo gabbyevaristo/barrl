@@ -1,6 +1,6 @@
-@media (max-width: 1920px) { 
-    body { 
-        padding-top: 10px; 
+@media (max-width: 1920px) {
+    body {
+        padding-top: 10px;
     }
 }
 
@@ -26,7 +26,7 @@
 /* Menu styles */
 
 .menu-drink-img {
-    width: 50px; 
+    width: 50px;
     height: 67px;
 }
 
@@ -87,7 +87,7 @@
 }
 
 .modal-menu-img {
-    width: 110px; 
+    width: 110px;
     height: 140px;
 }
 
@@ -127,7 +127,7 @@
 }
 
 .cart-drink-img {
-    width: 37px; 
+    width: 37px;
     height: 54px;
 }
 
@@ -191,7 +191,7 @@
 }
 
 .cheers-img {
-    width: 75px; 
+    width: 75px;
     height: 90px;
 }
 
@@ -211,4 +211,40 @@
 #progress-bar {
     width: 0%;
     height: 29px;
+}
+
+.collapsible {
+  background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: #555;
+}
+
+.collapsible:after {
+  content: '\002B';
+  color: white;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+
+.active:after {
+  content: "\2212";
+}
+
+.bottle_manager {
+  padding: 0 18px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  background-color: #f1f1f1;
 }

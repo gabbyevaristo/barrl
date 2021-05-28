@@ -5,7 +5,7 @@ For more information about our project overview and goals, check out our Wiki pa
 <br/> <br/>
 
 ## How to build a Barrl
-An inventory of all the required hardware and the cost to build a Barrl unit can be found [here.](https://docs.google.com/spreadsheets/u/1/d/1oeld_4YFFCOyfyVn-yoKrc7Vv1LyA8GUgOt9WdFAWWM/edit#gid=0).
+An inventory of all the required hardware and the cost to build a Barrl unit can be found [here.](https://docs.google.com/spreadsheets/u/1/d/1oeld_4YFFCOyfyVn-yoKrc7Vv1LyA8GUgOt9WdFAWWM/edit#gid=0)
 
 ## Required Software
 To run a Barrl instance, you will need:
@@ -17,7 +17,7 @@ To run a Barrl instance, you will need:
 2. Using a virtual environment is recommended but not essential (skip if you are not using one) <br/>
 &nbsp;&nbsp;&nbsp; 1. In your terminal, run ``` pip install virtualenv ```  <br/>
 &nbsp;&nbsp;&nbsp; 2. In your terminal, run ``` virtualenv venv ```  <br/>
-&nbsp;&nbsp;&nbsp; 3. In your terminal, run ``` venv\\scripts\\activate ``` to activate the virtual environment <br/>
+&nbsp;&nbsp;&nbsp; 3. In your terminal, run ``` venv\scripts\activate ``` to activate the virtual environment <br/>
 3. In your terminal, run ``` pip install -r requirements.txt ```
 
 ## To run the instance locally

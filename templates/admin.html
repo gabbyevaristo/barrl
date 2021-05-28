@@ -10,23 +10,36 @@
 
 
 <!-- Bottle Management -->
-<div id="bottles" class="list-group list-group-flush">
+<button class="collapsible">Manage Bottles</button>
+<div class="bottle_manager">
+  <div id="bottles" class="list-group list-group-flush">
 
-  <!-- Bottles -->
-  <ol>
-    {% for id, bottle in bottles.items(): %}
-    <li>
-      <form action="/update_bottles" method="post">
-        <input type="text" name="title" value="{{bottle['name']}}">
-        <input type="submit" name="add_sub" value="Save">
-      </form>
-    </li>
-    {% endfor %}
-  </ol>
+    <!-- Bottles -->
+    <ol>
+      {% for id, bottle in bottles.items(): %}
+      <li>
+        <form action="/update_bottles/{{id}}" method="post">
+          <input type="text" name="name" value="{{bottle['name']}}">
+          <input type="text" name="size" value="{{bottle['size']}}">
+          <input type="number" name="ml" value="{{bottle['ml']}}">
+          <input type="text" name="brand" value="{{bottle['brand']}}">
+          <select name="type" style="display:block">
+            <option value="{{bottle['type']}}" selected>{{bottle['type']}}</option>
+            {% if bottle['type'] == "mixer" %}
+              <option value="alcohol">alcohol</option>
+            {% else %}
+              <option value="mixer">mixer</option>
+            {% endif %}
+          </select>
+          <input type="text" name="fill" value="{{bottle['estimated_fill']}}">
+          <input type="submit" value="Save">
+        </form>
+      </li>
+      {% endfor %}
+    </ol>
 
+  </div>
 </div>
-
-
 {% endblock %}
 
 

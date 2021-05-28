@@ -1,5 +1,5 @@
-from flask import Flask, render_template, redirect, request, session, jsonify,url_for, abort
-from pi import pour_water
+from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
+from pi import pour_water, jsonService
 from menu import drinks
 from bottles import bottles
 from datetime import timedelta
@@ -43,6 +43,18 @@ def admin_login():
             # TODO: Add alert for wrong PW?
             session['admin_login'] = False
             return redirect('/admin_login')
+
+
+@app.route('/update_bottles/<id>', methods=["POST"])
+def update_bottles(id):
+    bottles[id]['name'] = request.form.get('name')
+    bottles[id]['size'] = request.form.get('size')
+    bottles[id]['ml'] = request.form.get('ml')
+    bottles[id]['brand'] = request.form.get('brand')
+    bottles[id]['type'] = request.form.get('type')
+    bottles[id]['estimated_fill'] = request.form.get('fill')
+    jsonService.saveJson(bottles, "bottles.json")
+    return redirect('/admin')
 
 
 @app.route('/mvp', methods=["GET", "POST"])
