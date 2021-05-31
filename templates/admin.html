@@ -8,69 +8,83 @@
   <h2 class="my-3"> Admin </h2>
 </div>
 
+<!-- Admin Tabs -->
+<ul class="nav nav-tabs" id="admin-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="bottles-tab" data-toggle="tab" href="#bottles-content" role="tab" aria-selected="true"> Manage Bottles </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="menu-tab" data-toggle="tab" href="#menu-content" role="tab" aria-selected="false"> Manage Menu </a>
+  </li>
+</ul>
 
-<!-- Bottle Management -->
-<button class="collapsible">Manage Bottles</button>
-<div class="manager">
-  <div id="bottles" class="list-group list-group-flush">
+<div class="tab-content ml-4 mt-4 mr-4 mb-5" id="admin-content">
 
-    <!-- Bottles -->
-    <ol>
+  <!-- Bottles -->
+  <div class="tab-pane fade show active" id="bottles-content" role="tabpanel">
+
+    <div id="bottles" class="list-group">
       {% for id, bottle in bottles.items(): %}
-      <li>
-        <form class="admin-form" action="/update_bottles/{{id}}" method="post">
-          <label class="admin-label" for="name">Content </label>
-          <input type="text" name="name" value="{{bottle['name']}}">
-          <label class="admin-label" for="size">Size </label>
-          <input type="text" name="size" value="{{bottle['size']}}">
-          <label class="admin-label" for="ml">mL </label>
-          <input type="number" name="ml" value="{{bottle['ml']}}">
-          <label class="admin-label" for="brand">Brand </label>
-          <input type="text" name="brand" value="{{bottle['brand']}}">
-          <label class="admin-label" for="type">Type </label>
-          <select name="type" style="display:block">
-            <option value="{{bottle['type']}}" selected>{{bottle['type']}}</option>
-            {% if bottle['type'] == "mixer" %}
-              <option value="alcohol">alcohol</option>
-            {% else %}
-              <option value="mixer">mixer</option>
-            {% endif %}
-          </select>
-          <label class="admin-label" for="fill">Fill % </label>
-          <input type="text" name="fill" value="{{bottle['estimated_fill']}}">
-          <input type="submit" value="Save">
-        </form>
-      </li>
-      {% endfor %}
-    </ol>
 
+        <div class="list-group-item flex-column align-items-start">
+          <span class="titles"><u> Bottle {{ loop.index }} </u></span>
+          <form class="admin-form" action="/update-bottles/{{id}}" method="post">
+            <label class="admin-label mt-2" for="name"> Content </label>
+            <input type="text" name="name" value="{{ bottle['name'] }}">
+            <label class="admin-label mt-3" for="size"> Size </label>
+            <input type="text" name="size" value="{{ bottle['size'] }}">
+            <label class="admin-label mt-3" for="ml"> mL </label>
+            <input type="number" name="ml" value="{{ bottle['ml'] }}">
+            <label class="admin-label mt-3" for="brand"> Brand </label>
+            <input type="text" name="brand" value="{{ bottle['brand'] }}">
+            <label class="admin-label mt-3" for="type"> Type </label>
+            <select name="type" style="display: block">
+              <option value="{{ bottle['type'] }}" selected> {{ bottle['type'] }} </option>
+              {% if bottle['type'] == "mixer" %}
+                <option value="alcohol"> alcohol </option>
+              {% else %}
+                <option value="mixer"> mixer </option>
+              {% endif %}
+            </select>
+            <label class="admin-label mt-3" for="fill"> Fill % </label>
+            <input type="text" name="fill" value="{{ bottle['estimated_fill'] }}">
+            <input class="mt-3" type="submit" value="Save">
+          </form>
+        </div>
+  
+      {% endfor %}
+    </div>
   </div>
+
+  <!-- Menu -->
+  <div class="tab-pane fade" id="menu-content" role="tabpanel">
+
+    <div id="menu-items" class="list-group">
+        {% for id, drink in drinks.items(): %}
+
+          <div class="list-group-item flex-column align-items-start">
+            <span class="titles"><u> Drink {{ loop.index }} </u></span>
+            <form class="admin-form" action="/update-menu/{{id}}" method="post">
+              <label class="mt-2" for="name"> Name: </label>
+              <input type="text" name="name" value="{{ drink['name'] }}">
+              <label class="mt-3" for="price"> Price: </label>
+              <input type="number" name="price" value="{{ drink['price'] }}">
+              <label class="mt-3" for="ingredients"> Description: </label>
+              <input type="text" name="ingredients" value="{{ drink['ingredients'] }}">
+              <label class="mt-3" for="image"> Image URL: </label>
+              <input type="text" name="image" value="{{ drink['image'] }}">
+              <input class="mt-3" type="submit" value="Save">
+            </form>
+          </div>
+
+        {% endfor %}
+    </div>
+  </div>
+
+  
 </div>
 
-<button class="collapsible">Manage Menu</button>
-<div class="manager">
-  <div id="menu_items" class="list-group list-group-flush">
-    <!-- Menu -->
-    <ol>
-      {% for id, drink in drinks.items(): %}
-      <li>
-        <form class="admin-form" action="/update_menu/{{id}}" method="post">
-          <label for="name">Name: </label>
-          <input type="text" name="name" value="{{drink['name']}}">
-          <label for="price">Price: </label>
-          <input type="number" name="price" value="{{drink['price']}}">
-          <label for="ingredients">Description: </label>
-          <input type="text" name="ingredients" value="{{drink['ingredients']}}">
-          <label for="image">Image URL: </label>
-          <input type="text" name="image" value="{{drink['image']}}">
-          <input type="submit" value="Save">
-        </form>
-      </li>
-      {% endfor %}
-    </ol>
 
-  </div>
-</div>
 {% endblock %}
 
 

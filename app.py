@@ -38,7 +38,7 @@ def admin_login():
         else:
             return render_template('admin_login.html')
 
-            
+
 @app.route('/admin', methods=["GET", "POST"])
 def admin():
     if request.method == "GET":
@@ -55,7 +55,7 @@ def logout():
     return jsonify({})
 
 
-@app.route('/update_bottles/<id>', methods=["POST"])
+@app.route('/update-bottles/<id>', methods=["POST"])
 def update_bottles(id):
     bottles[id]['name'] = request.form.get('name')
     bottles[id]['size'] = request.form.get('size')
@@ -67,7 +67,7 @@ def update_bottles(id):
     return redirect('/admin')
 
 
-@app.route('/update_menu/<id>', methods=["POST"])
+@app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
     drinks[id]['name'] = request.form.get('name')
     drinks[id]['price'] = request.form.get('price')
