@@ -34,10 +34,8 @@ def generateRandomDrink(maxIngredient=4, maxMl=100):
     return drink
    
 
-
 # ings - dictionary with {"ing guid":ml of ing}
 def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufilePath):
-
     allIngs = IngredientService.getAllIngredients()
     drink = {}
     drink["name"] = name
@@ -57,6 +55,34 @@ def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufile
     menu = jsonService.loadJson(menuFilePath)
     if guid in menu:
         print("collision in guid when adding drink to menu")
+    menu[guid] = drink
+    jsonService.saveJson(menu, menuFilePath)
+
+    print("Added drink to menu")
+    print(drink)
+    print(guid)
+
+def modifyDrink(guid, name, ings, price=0.0, image="", menuFilePath=defaultMenufilePath):
+    allIngs = IngredientService.getAllIngredients()
+    drink = {}
+    drink["name"] = name
+    drink["price"] = price
+    drink["image"] = image
+    drink["ings"] = {}
+    
+    for ing in ings:
+        if ing in allIngs:
+            drink["ings"][ing] = float(ings[ing])
+        else:
+            print("when adding drink ingredient not in ingredient database, skipping ingredient")
+            print(ing)
+
+
+    menu = jsonService.loadJson(menuFilePath)
+    if guid not in menu:
+        print("Attempted to modify drink not in munue")
+        return 
+
     menu[guid] = drink
     jsonService.saveJson(menu, menuFilePath)
 
