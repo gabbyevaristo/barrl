@@ -11,12 +11,12 @@ import pi.MenuService as MenuService
 
 # get mapping of pump numbers to pins
 pumpToPin = {
-    0:36
-    ,1:22
-    ,2:18
-    ,3:11
-    ,4:13
-    ,5:15
+    0: 36, 
+    1: 22, 
+    2: 18,
+    3: 11,
+    4: 13,
+    5: 15
 }
 
 # get the reverse mapping
@@ -34,7 +34,7 @@ for pin in pinToPump:
 def pourFromPump(pumpNumber, amount):
     global pumpToPin
     if pumpNumber not in pumpToPin:
-        print("tried to pour a liquid from a pump thats not in the pin map")
+        print("Tried to pour a liquid from a pump that is not in the pin map")
         print(pumpNumber)
         print(type(pumpNumber))
         return
@@ -48,7 +48,6 @@ def pourFromPump(pumpNumber, amount):
     print("Pin OFF %d" % pinNumber)
 
 
-
 def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredientfilePath=IngredientService.defaultIngredientfilePath, pumMapfilePath=IngredientService.defaultPumpMapfilePath):
     if not MenuService.isValidDrinkToPour(drinkGuid, menuFilePath=menuFilePath, ingredientfilePath=ingredientfilePath, pumMapfilePath=pumMapfilePath):
         print("Skipping drink to pour due to invalid drink enty")
@@ -58,7 +57,6 @@ def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredien
     drink = menu[drinkGuid]
     pumpMap = IngredientService.getPumpMap()
 
-    for ing,amount in drink["ings"].items():
+    for ing, amount in drink["ings"].items():
         pumpNum = pumpMap[ing]
         pourFromPump(pumpNum, amount)
-
