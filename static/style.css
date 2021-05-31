@@ -213,6 +213,15 @@
     height: 29px;
 }
 
+
+/* Admin styles */
+
+#logout {
+    font-size: 1.0rem;
+}
+
+/*
+
 .collapsible {
   background-color: #777;
   color: white;
@@ -258,3 +267,5 @@ form.admin-form select,
 form.admin-form input {
   display: block;
 }
+
+*/

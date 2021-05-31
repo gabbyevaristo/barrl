@@ -12,3 +12,18 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+
+// Log admin out
+$('#logout').click(function() {
+  console.log("Hi")
+  fetch("/logout", {
+      method: "POST"
+  })
+  .then(response => response.json())
+  .then(data => {
+      setTimeout(function(){
+          window.location.reload();
+      }, 100);
+  });
+})
