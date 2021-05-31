@@ -110,6 +110,38 @@ def addIngredient(name="", pumpNumber=-1, size= "1L", ml=1000, brand= "", drinkT
     print(guid)
     print(ing)
 
+def modifyIngredient(guid, name="", pumpNumber=-1, size= "1L", ml=1000, brand= "", drinkType= "", estimated_fill= "", image= "", ingredientfilePath=defaultIngredientfilePath, **kwargs):
+    ing = { 
+            "name":name \
+            ,"size":size \
+            ,"ml":ml \
+            ,"brand": brand \
+            ,"type": drinkType \
+            ,"estimated_fill":estimated_fill \
+            ,"image":image \
+            # ,"pumpNumber":pumpNumber \
+          }
+
+    for key,value in kwargs.items():
+        ing[key] = value
+
+
+    allIngs = jsonService.loadJson(ingredientfilePath)
+    if guid not in allIngs:
+        print("Attempted to modify ingredient that is not in database")
+        return 
+
+    allIngs[guid] = ing
+
+    if isValidPumpNumber(pumpNumber):
+        modifyPumpMapp(guid, pumpNumber)
+
+    jsonService.saveJson(allIngs, ingredientfilePath) 
+
+    print("Modified Ingredient")
+    print(guid)
+    print(ing)
+
 def removeIngredientByGuid(guid, ingredientfilePath=defaultIngredientfilePath):
     allIngs = jsonService.loadJson(ingredientfilePath)
     if guid in allIngs:
