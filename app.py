@@ -1,5 +1,5 @@
+from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
-from pi import pour_water, jsonService
 from datetime import timedelta
 import json
 import stripe
@@ -59,13 +59,15 @@ def logout():
 def update_bottles(id):
     bottles[id]['name'] = request.form.get('name')
     bottles[id]['size'] = request.form.get('size')
-    bottles[id]['ml'] = request.form.get('ml')
+    bottles[id]['ml'] = int(request.form.get('ml'))
     bottles[id]['brand'] = request.form.get('brand')
     bottles[id]['type'] = request.form.get('type')
     bottles[id]['estimated_fill'] = request.form.get('fill')
     jsonService.saveJson(bottles, r'jsonFiles/ingredients.json')
     return redirect('/admin')
 
+# Need route for removing ingredient from a pump
+# Need for route for adding a new ingredient when <6 have a bottle
 
 @app.route('/update_menu/<id>', methods=["POST"])
 def update_menu(id):
@@ -76,6 +78,19 @@ def update_menu(id):
     jsonService.saveJson(drinks, r'jsonFiles/menu.json')
     return redirect('/admin')
 
+@app.route('/add_drink', methods=["POST"])
+def add_drink():
+    global drinks
+    MenuService.addDrinkToMenu(request.form.get('name'), request.form.get('ingredients'), request.form.get('price'), request.form.get('image'))
+    drinks = MenuService.getMenu()
+    return redirect('/admin')
+
+@app.route('/delete_drink/<id>', methods=["POST"])
+def delete_drink(id):
+    if id in drinks:
+        del drinks[id]
+    MenuService.removeDrinkByGuid(id)
+    return redirect('/admin')
 
 @app.route('/mvp', methods=["GET", "POST"])
 def mvp():
