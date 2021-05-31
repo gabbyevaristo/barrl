@@ -18,7 +18,7 @@ function set_buttons() {
             });
 
             var drink_name = $('#drink-name-'.concat(i)).text();
-            $('#current-mixer').text('Mixing ' + drink_name);
+            $('#current-mixer').text('Pouring ' + drink_name);
 
             $(".progress-bar").animate({
                 width: "100%"
