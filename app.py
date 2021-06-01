@@ -89,17 +89,6 @@ def update_bottles(id):
         bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
-'''
-@app.route('/set-pump/<id>', methods=["POST"])
-def set_pump(id):
-    global pump_map
-    pump_num = int(request.form.get('pump_num'))
-    if IngredientService.isValidPumpNumber(pump_num):
-        IngredientService.modifyPumpMapp(id, pump_num)
-        pump_map = IngredientService.getPumpMap()
-    return redirect('/admin')
-'''
-
 @app.route('/add-ingredient', methods=["POST"])
 def add_ingredient():
     global bottles
