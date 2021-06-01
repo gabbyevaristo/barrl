@@ -34,7 +34,7 @@
               <h5 class="font-weight-bold mb-1">{{ drinks[drink]["name"] }}</h5>
             </div>
             <div class="small-text">
-              <p class="mb-1">{{ drinks[drink]["ingredients"] }}</p>
+              <p class="mb-1">{{ drinks[drink]["description"] }}</p>
               <small id="menu-price-{{ loop.index }}">{{ drinks[drink]["price"] }}</small>
             </div>
         </div>
@@ -43,7 +43,7 @@
 
 
     <!-- Add to cart modal -->
-    
+
     <div id="modal-menu-{{ loop.index }}" class="modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -54,11 +54,11 @@
             </button>
           </div>
           <div class="modal-body">
-            
-            <p class="ml-1 modal-menu-ingredients"> {{ drinks[drink]["ingredients"] }} </p>
+
+            <p class="ml-1 modal-menu-ingredients"> {{ drinks[drink]["description"] }} </p>
 
               <div class="text-center">
-                <img src={{ drinks[drink]["image"] }} class="img-fluid mt-1 modal-menu-img"> 
+                <img src={{ drinks[drink]["image"] }} class="img-fluid mt-1 modal-menu-img">
 
                 <!-- Input quantity-->
                 <div class="form-group row">
@@ -76,19 +76,19 @@
               </div>
           </div>
 
-            
+
           <div class="modal-footer">
-            <button id="add-to-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-dark btn-block add-to-cart-btn p-3 radius-remove"> 
-              <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span> 
+            <button id="add-to-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-dark btn-block add-to-cart-btn p-3 radius-remove">
+              <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span>
               <span id="modal-menu-price-{{ loop.index }}" class="pull-right"> </span>
             </button>
           </div>
-            
+
 
         </div>
       </div>
     </div>
-    
+
   {% endfor %}
 
 </div>
@@ -97,7 +97,7 @@
 {% endblock %}
 
 
-{% block page_scripts %} 
+{% block page_scripts %}
 
 <script src="{{ url_for('static', filename='menu.js') }}"></script>
 

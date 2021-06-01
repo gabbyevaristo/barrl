@@ -225,6 +225,10 @@
   border-color: #C43E21;
 }
 
+#set-pump-button {
+  background-color: mediumseagreen;
+}
+
 .titles {
     font-size: 1.0rem;
 }

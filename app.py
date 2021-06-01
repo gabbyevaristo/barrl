@@ -15,7 +15,21 @@ app.config['STRIPE_SECRET_KEY'] = 'sk_test_51IrKAPEx3ZnFyUF0xExm1uVSSm9XzTELrGlQ
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
 drinks = jsonService.loadJson(r'jsonFiles/menu.json')
+pump_map = IngredientService.getPumpMap()
 
+def order_bottles(bottles, pump_map):
+    new_bottles = {}
+    # this is a mess and I need to clean it up but it works and its 4AM
+    sort = [0 for x in range(1,7)]
+    for key, value in bottles.items():
+        if key in pump_map:
+            sort[pump_map[key]] = key
+    for key in sort:
+        new_bottles[key] = bottles[key]
+    for key, value in bottles.items():
+        if key not in pump_map:
+            new_bottles[key] = value
+    return new_bottles
 
 @app.route('/', methods=["GET"])
 def index():
@@ -44,7 +58,7 @@ def admin_login():
 def admin():
     if request.method == "GET":
         if 'admin_login' in session:
-            return render_template('admin.html', bottles=bottles, drinks=drinks, show='admin')
+            return render_template('admin.html', bottles=order_bottles(bottles, pump_map), drinks=drinks, pump_map=pump_map, show='admin')
         else:
             return redirect('/admin_login')
 
@@ -55,21 +69,44 @@ def logout():
         session.pop('admin_login', None)
     return jsonify({})
 
-
 @app.route('/update-bottles/<id>', methods=["POST"])
 def update_bottles(id):
     global bottles
+    global pump_map
     name = request.form.get('name')
     mL = int(request.form.get('ml'))
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
     estimated_fill = int(request.form.get('fill'))
-    IngredientService.modifyIngredient(id, name, 1, mL, brand, drink_type, estimated_fill)
+    pump_num = IngredientService.getPumpMap().get(id)
+    pump_num = -1 if not pump_num else pump_num
+    IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
     bottles = IngredientService.getAllIngredients()
+    bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
-# Need route for removing ingredient from a pump
-# Need for route for adding a new ingredient when <6 have a bottle
+@app.route('/set-pump/<id>', methods=["POST"])
+def set_pump(id):
+    global pump_map
+    pump_num = int(request.form.get('pump_num'))
+    if IngredientService.isValidPumpNumber(pump_num):
+        IngredientService.modifyPumpMapp(id, pump_num)
+        pump_map = IngredientService.getPumpMap()
+    return redirect('/admin')
+
+@app.route('/add-ingredient', methods=["POST"])
+def add_ingredient():
+    global bottles
+    global pump_map
+    name = request.form.get('name')
+    mL = int(request.form.get('ml'))
+    brand = request.form.get('brand')
+    drink_type = request.form.get('type')
+    estimated_fill = int(request.form.get('fill'))
+    IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
+    bottles = IngredientService.getAllIngredients()
+    bottles = order_bottles(bottles, pump_map)
+    return redirect('/admin')
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
@@ -84,8 +121,15 @@ def update_menu(id):
 @app.route('/add-drink', methods=["POST"])
 def add_drink():
     global drinks
-    MenuService.addDrinkToMenu(request.form.get('name'), request.form.get('ingredients'), request.form.get('price'), request.form.get('image'))
-    drinks = MenuService.getMenu()
+    ingredients = {}
+    for x in range(1,7):
+        id = request.form.get(f'ing{x}')
+        ml = request.form.get(f'ml{x}')
+        if id and id != "none" and ml != 0:
+            ingredients[id] = ml
+    if ingredients:
+        MenuService.addDrinkToMenu(request.form.get('name'), ingredients, request.form.get('description'), float(request.form.get('price')), request.form.get('image'))
+        drinks = MenuService.getMenu()
     return redirect('/admin')
 
 

@@ -9,7 +9,7 @@ defaultMenufilePath = "./jsonFiles/menu.json"
 
 def clearMenu(menuFilePath=defaultMenufilePath):
     jsonService.saveJson({}, menuFilePath)
-        
+
 
 randDrinkNumber = 0
 def generateRandomDrink(maxIngredient=4, maxMl=100):
@@ -32,17 +32,18 @@ def generateRandomDrink(maxIngredient=4, maxMl=100):
     drink["ings"] = ings
 
     return drink
-   
+
 
 # ings - dictionary with {"ing guid": ml of ing}
-def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufilePath):
+def addDrinkToMenu(name, ings, description="", price=0.0, image="", menuFilePath=defaultMenufilePath):
     allIngs = IngredientService.getAllIngredients()
     drink = {}
     drink["name"] = name
+    drink["description"] = description
     drink["price"] = price
     drink["image"] = image
     drink["ings"] = {}
-    
+
     for ing in ings:
         if ing in allIngs:
             drink["ings"][ing] = float(ings[ing])
@@ -69,7 +70,7 @@ def modifyDrink(guid, name, ings, price=0.0, image="", menuFilePath=defaultMenuf
     drink["price"] = price
     drink["image"] = image
     drink["ings"] = {}
-    
+
     for ing in ings:
         if ing in allIngs:
             drink["ings"][ing] = float(ings[ing])
@@ -81,7 +82,7 @@ def modifyDrink(guid, name, ings, price=0.0, image="", menuFilePath=defaultMenuf
     menu = jsonService.loadJson(menuFilePath)
     if guid not in menu:
         print("Attempted to modify drink not in munue")
-        return 
+        return
 
     menu[guid] = drink
     jsonService.saveJson(menu, menuFilePath)
