@@ -64,7 +64,7 @@ def update_bottles(id):
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
     estimated_fill = int(request.form.get('fill'))
-    pump_num = IngredientService.getPumpMap.get(id)
+    pump_num = IngredientService.getPumpMap().get(id)
     pump_num = -1 if not pump_num else pump_num
     IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
     bottles = IngredientService.getAllIngredients()
@@ -95,8 +95,15 @@ def update_menu(id):
 @app.route('/add_drink', methods=["POST"])
 def add_drink():
     global drinks
-    MenuService.addDrinkToMenu(request.form.get('name'), request.form.get('ingredients'), request.form.get('price'), request.form.get('image'))
-    drinks = MenuService.getMenu()
+    ingredients = {}
+    for x in range(1,7):
+        id = request.form.get(f'ing{x}')
+        ml = request.form.get(f'ml{x}')
+        if id and id != "none" and ml != 0:
+            ingredients[id] = ml
+    if ingredients:
+        MenuService.addDrinkToMenu(request.form.get('name'), ingredients, request.form.get('description'), float(request.form.get('price')), request.form.get('image'))
+        drinks = MenuService.getMenu()
     return redirect('/admin')
 
 

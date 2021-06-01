@@ -1,82 +1,19 @@
 {
-    "3f58dd75-bb21-11eb-8145-b831b5854dfb": {
+    "3d5eeec6-c2b7-11eb-b63a-9cb6d091f27c": {
+        "description": "",
         "image": "",
-        "ingredients": "",
-        "ings": {
-            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 9.0,
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 3.0,
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 2.0,
-            "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 3.0
-        },
-        "name": "Random Drink 0",
-        "price": "9"
+        "ings": {},
+        "name": "Shot of Vodka",
+        "price": 4.99
     },
-    "3f59519c-bb21-11eb-960c-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
-        "ings": {
-            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 91.0,
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 28.0,
-            "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 94.0
-        },
-        "name": "Random Drink 1",
-        "price": "10"
-    },
-    "3f5ad75c-bb21-11eb-95ba-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
-        "ings": {
-            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 38.0
-        },
-        "name": "Random Drink 2",
-        "price": "8"
-    },
-    "3f5c0e6a-bb21-11eb-ae98-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
-        "ings": {
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 97.0,
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 8.0
-        },
-        "name": "Random Drink 3",
-        "price": "4"
-    },
-    "3f5d93de-bb21-11eb-898f-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
-        "ings": {
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 8.0
-        },
-        "name": "Random Drink 4",
-        "price": "1"
-    },
-    "3f5ea4a7-bb21-11eb-9ac8-b831b5854dfb": {
+    "ea70a1a7-c2b9-11eb-98d4-9cb6d091f27c": {
+        "description": "Vodka mixed with orange juice",
         "image": "",
         "ings": {
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 27.0,
-            "3f529f02-bb21-11eb-a2ae-b831b5854dfb": 31.0
+            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
+            "d261a66e-c2b3-11eb-b026-9cb6d091f27c": 150.0
         },
-        "name": "Random Drink 5",
-        "price": 2.7386868453482425
-    },
-    "3f604e55-bb21-11eb-b883-b831b5854dfb": {
-        "image": "",
-        "ings": {
-            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 96.0,
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 52.0,
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 1.0,
-            "3f529f02-bb21-11eb-a2ae-b831b5854dfb": 10.0
-        },
-        "name": "Random Drink 6",
-        "price": 6.717340750084291
-    },
-    "3f618606-bb21-11eb-9940-b831b5854dfb": {
-        "image": "",
-        "ings": {
-            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 74.0,
-            "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 18.0
-        },
-        "name": "Random Drink 7",
-        "price": 4.05829684636199
+        "name": "Screwdriver",
+        "price": 6.99
     }
 }

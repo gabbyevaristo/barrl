@@ -64,7 +64,7 @@
               <h6 class="font-weight-bold drink-name"> {{ drinks[drink]["name"] }} </h6>
             </div>
             <div class="small-text">
-              <p class="mb-1"><small> {{ drinks[drink]["ingredients"] }} </small></p>
+              <p class="mb-1"><small> {{ drinks[drink]["description"] }} </small></p>
             </div>
           </div>
 
@@ -101,7 +101,7 @@
             </div>
 
             <div class="modal-body">
-              <div class="text-center"> 
+              <div class="text-center">
 
                 <!-- Input quantity-->
                 <div class="form-group row">
@@ -118,10 +118,10 @@
 
               </div>
             </div>
-                  
+
             <div class="modal-footer">
-              <button data-index="{{ loop.index }}" data-id={{ drink }} type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn"> 
-                <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span> 
+              <button data-index="{{ loop.index }}" data-id={{ drink }} type="button" class="btn btn-dark btn-block p-3 radius-remove update-btn">
+                <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span>
                 <span id="modal-cart-price-{{ loop.index }}" class="pull-right"> </span>
               </button>
             </div>
@@ -180,13 +180,13 @@
 </div>
 
 
-{% endif %}        
+{% endif %}
 
 
 {% endblock %}
 
 
-{% block page_scripts %} 
+{% block page_scripts %}
 
 <script src="https://js.stripe.com/v3/"></script>
 <script src="{{ url_for('static', filename='cart.js') }}"></script>
