@@ -20,7 +20,7 @@
         "estimated_fill": 70,
         "image": "",
         "ml": 2000,
-        "name": "Soda Water",
+        "name": "Club Soda",
         "type": "mixer"
     },
     "3f50301e-bb21-11eb-bf8d-b831b5854dfb": {
@@ -47,12 +47,44 @@
         "name": "Water",
         "type": "mixer"
     },
+    "72492eaa-c2c2-11eb-b1fc-9cb6d091f27c": {
+        "brand": "Cherry",
+        "estimated_fill": 50,
+        "image": "",
+        "ml": 500,
+        "name": "Grenadine",
+        "type": "mixer"
+    },
+    "798ec626-c2c2-11eb-bd83-9cb6d091f27c": {
+        "brand": "Standard",
+        "estimated_fill": 80,
+        "image": "",
+        "ml": 1000,
+        "name": "Triple Sec",
+        "type": "alcohol"
+    },
     "d261a66e-c2b3-11eb-b026-9cb6d091f27c": {
         "brand": "Simply",
         "estimated_fill": 100,
         "image": "",
         "ml": 1000,
         "name": "Orange Juice",
+        "type": "mixer"
+    },
+    "d6d8ea62-c2c1-11eb-8416-9cb6d091f27c": {
+        "brand": "Sprite",
+        "estimated_fill": 100,
+        "image": "",
+        "ml": 2000,
+        "name": "Sprite",
+        "type": "mixer"
+    },
+    "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": {
+        "brand": "Simply",
+        "estimated_fill": 80,
+        "image": "",
+        "ml": 1000,
+        "name": "Lime Juice",
         "type": "mixer"
     }
 }

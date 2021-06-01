@@ -1,10 +1,114 @@
 {
-    "3d5eeec6-c2b7-11eb-b63a-9cb6d091f27c": {
+    "0f9fd061-c2c2-11eb-8bcb-9cb6d091f27c": {
+        "description": "Vodka mixed with club soda",
+        "image": "",
+        "ings": {
+            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
+            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 150.0
+        },
+        "name": "Vodka Soda",
+        "price": 6.99
+    },
+    "2524c0a3-c2c2-11eb-b50a-9cb6d091f27c": {
+        "description": "Vodka with lime juice",
+        "image": "",
+        "ings": {
+            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
+            "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": 100.0
+        },
+        "name": "Vodka & Lime",
+        "price": 6.99
+    },
+    "372a7e5f-c2c2-11eb-aa21-9cb6d091f27c": {
+        "description": "Vodka mixed with Sprite",
+        "image": "",
+        "ings": {
+            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
+            "d6d8ea62-c2c1-11eb-8416-9cb6d091f27c": 150.0
+        },
+        "name": "Vodka Sprite",
+        "price": 6.99
+    },
+    "54c893cb-c2c2-11eb-8ae6-9cb6d091f27c": {
+        "description": "Tequila mixed with Sprite",
+        "image": "",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
+            "d6d8ea62-c2c1-11eb-8416-9cb6d091f27c": 150.0
+        },
+        "name": "Tequila Sprite",
+        "price": 6.99
+    },
+    "68471355-c2c2-11eb-8e32-9cb6d091f27c": {
+        "description": "Tequila mixed with club soda",
+        "image": "",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
+            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 150.0
+        },
+        "name": "Tequila Soda",
+        "price": 6.99
+    },
+    "99ce0ca0-c2c1-11eb-859c-9cb6d091f27c": {
         "description": "A standard shot of vodka",
         "image": "",
-        "ings": {},
+        "ings": {
+            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0
+        },
         "name": "Shot of Vodka",
         "price": 4.99
+    },
+    "9b8a9605-c2c2-11eb-a698-9cb6d091f27c": {
+        "description": "Tequila mixed with OJ and grenadine",
+        "image": "",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
+            "72492eaa-c2c2-11eb-b1fc-9cb6d091f27c": 50.0,
+            "d261a66e-c2b3-11eb-b026-9cb6d091f27c": 150.0
+        },
+        "name": "Tequila Sunrise",
+        "price": 7.99
+    },
+    "b19592df-c2c2-11eb-8d94-9cb6d091f27c": {
+        "description": "Tequila with lime juice",
+        "image": "",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
+            "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": 100.0
+        },
+        "name": "Tequila & Lime",
+        "price": 6.99
+    },
+    "b1c90b91-c2c1-11eb-a8b2-9cb6d091f27c": {
+        "description": "A standard shot of tequila",
+        "image": "",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0
+        },
+        "name": "Shot of Tequila",
+        "price": 4.99
+    },
+    "c912e482-c2c2-11eb-8e4a-9cb6d091f27c": {
+        "description": "A classic margarita with tequila, lime juice, and triple sec",
+        "image": "",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
+            "798ec626-c2c2-11eb-bd83-9cb6d091f27c": 50.0,
+            "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": 100.0
+        },
+        "name": "Margarita",
+        "price": 8.99
+    },
+    "dfb5405d-c2c2-11eb-96f3-9cb6d091f27c": {
+        "description": "Vodka mixed with OJ and grenadine",
+        "image": "",
+        "ings": {
+            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
+            "72492eaa-c2c2-11eb-b1fc-9cb6d091f27c": 50.0,
+            "d261a66e-c2b3-11eb-b026-9cb6d091f27c": 150.0
+        },
+        "name": "Vodka Sunrise",
+        "price": 7.99
     },
     "ea70a1a7-c2b9-11eb-98d4-9cb6d091f27c": {
         "description": "Vodka mixed with orange juice",
