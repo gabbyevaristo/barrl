@@ -81,7 +81,7 @@ def update_menu(id):
     return redirect('/admin')
 
 
-@app.route('/add_drink', methods=["POST"])
+@app.route('/add-drink', methods=["POST"])
 def add_drink():
     global drinks
     MenuService.addDrinkToMenu(request.form.get('name'), request.form.get('ingredients'), request.form.get('price'), request.form.get('image'))
