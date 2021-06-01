@@ -22,12 +22,7 @@
         "estimated_fill": "100",
         "image": null,
         "ml": 2000,
-<<<<<<< HEAD
-        "name": "Sprite",
-        "size": "2 L",
-=======
         "name": "Club Soda",
->>>>>>> main
         "type": "mixer"
     },
     "61e7cc1d-c30d-11eb-8735-b831b5854dfb": {
@@ -35,28 +30,6 @@
         "estimated_fill": "100",
         "image": null,
         "ml": 2000,
-<<<<<<< HEAD
-        "name": "Club Soda",
-        "size": "2 L",
-        "type": "mixer"
-    },
-    "61ea3b6b-c30d-11eb-ac7b-b831b5854dfb": {
-        "brand": "Minute Made",
-        "estimated_fill": "100",
-        "image": null,
-        "ml": 3785,
-        "name": "Orange Juice",
-        "size": "1 G",
-        "type": "mixer"
-    },
-    "61ecabed-c30d-11eb-97a6-b831b5854dfb": {
-        "brand": "Real Lime",
-        "estimated_fill": "100",
-        "image": null,
-        "ml": 1000,
-        "name": "Lime Juice",
-        "size": "1 Q",
-=======
         "name": "Coke",
         "type": "mixer"
     },
@@ -114,7 +87,6 @@
         "image": "",
         "ml": 1000,
         "name": "Lime Juice",
->>>>>>> main
         "type": "mixer"
     }
 }

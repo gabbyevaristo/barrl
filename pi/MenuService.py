@@ -35,11 +35,7 @@ def generateRandomDrink(maxIngredient=4, maxMl=100):
 
 
 # ings - dictionary with {"ing guid": ml of ing}
-<<<<<<< HEAD
-def addDrinkToMenu(name, ings, price=0.0, image="", description="", menuFilePath=defaultMenufilePath):
-=======
 def addDrinkToMenu(name, ings, description="", price=0.0, image="", menuFilePath=defaultMenufilePath):
->>>>>>> main
     allIngs = IngredientService.getAllIngredients()
     drink = {}
     drink["name"] = name
