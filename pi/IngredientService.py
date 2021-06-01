@@ -3,10 +3,12 @@ import os
 import uuid
 import pi.jsonService as jsonService
 
-if os.environ['ENV'] == "dev":
-    import pi.MockGpio as GPIO
-else:
-    import RPi.GPIO as GPIO
+import pi.MockGpio as GPIO
+
+# if os.environ['ENV'] == "development":
+#     import pi.MockGpio as GPIO
+# else:
+#     import RPi.GPIO as GPIO
 
 defaultIngredientfilePath = "./jsonFiles/ingredients.json"
 defaultPumpMapfilePath = "./jsonFiles/pumpMap.json"
