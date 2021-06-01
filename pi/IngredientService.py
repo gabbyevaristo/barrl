@@ -109,6 +109,7 @@ def addIngredient(name="", pumpNumber=-1, ml=1000, brand= "", drinkType= "", est
     print("Added Ingredient")
     print(guid)
     print(ing)
+    return guid
 
 def modifyIngredient(guid, name="", pumpNumber=-1, ml=1000, brand= "", drinkType= "", estimated_fill= "", image= "", ingredientfilePath=defaultIngredientfilePath, **kwargs):
     ing = {

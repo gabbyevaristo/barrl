@@ -1,82 +1,100 @@
 {
-    "3f58dd75-bb21-11eb-8145-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
+    "61f18d5d-c30d-11eb-ae5c-b831b5854dfb": {
+        "description": "A standard shot of vodka",
+        "image": null,
         "ings": {
-            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 9.0,
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 3.0,
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 2.0,
-            "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 3.0
+            "61e1b275-c30d-11eb-b452-b831b5854dfb": 50.0
         },
-        "name": "Random Drink 0",
-        "price": "9"
+        "name": "Vodka Shot",
+        "price": 4.99
     },
-    "3f59519c-bb21-11eb-960c-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
+    "61f18d5e-c30d-11eb-bff8-b831b5854dfb": {
+        "description": "A standard shot of tequila",
+        "image": null,
         "ings": {
-            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 91.0,
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 28.0,
-            "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 94.0
+            "61e2eafa-c30d-11eb-9952-b831b5854dfb": 50.0
         },
-        "name": "Random Drink 1",
-        "price": "10"
+        "name": "Tequila Shot",
+        "price": 4.99
     },
-    "3f5ad75c-bb21-11eb-95ba-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
+    "61f2c560-c30d-11eb-b494-b831b5854dfb": {
+        "description": "Vodka mixed with club soda",
+        "image": null,
         "ings": {
-            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 38.0
+            "61e1b275-c30d-11eb-b452-b831b5854dfb": 50.0,
+            "61e7cc1d-c30d-11eb-8735-b831b5854dfb": 150.0
         },
-        "name": "Random Drink 2",
-        "price": "8"
+        "name": "Vodka Soda",
+        "price": 6.99
     },
-    "3f5c0e6a-bb21-11eb-ae98-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
+    "61f535fa-c30d-11eb-a677-b831b5854dfb": {
+        "description": "Vodka mixed with orange juice",
+        "image": null,
         "ings": {
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 97.0,
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 8.0
+            "61e1b275-c30d-11eb-b452-b831b5854dfb": 50.0,
+            "61ea3b6b-c30d-11eb-ac7b-b831b5854dfb": 150.0
         },
-        "name": "Random Drink 3",
-        "price": "4"
+        "name": "Screwdriver",
+        "price": 6.99
     },
-    "3f5d93de-bb21-11eb-898f-b831b5854dfb": {
-        "image": "",
-        "ingredients": "",
+    "61f66fdd-c30d-11eb-a789-b831b5854dfb": {
+        "description": "Vodka mixed with lime",
+        "image": null,
         "ings": {
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 8.0
+            "61e1b275-c30d-11eb-b452-b831b5854dfb": 50.0,
+            "61ecabed-c30d-11eb-97a6-b831b5854dfb": 100.0
         },
-        "name": "Random Drink 4",
-        "price": "1"
+        "name": "Vodka and Lime",
+        "price": 6.99
     },
-    "3f5ea4a7-bb21-11eb-9ac8-b831b5854dfb": {
-        "image": "",
+    "61f7a684-c30d-11eb-b0c2-b831b5854dfb": {
+        "description": "Vodka mixed with Sprite",
+        "image": null,
         "ings": {
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 27.0,
-            "3f529f02-bb21-11eb-a2ae-b831b5854dfb": 31.0
+            "61e1b275-c30d-11eb-b452-b831b5854dfb": 50.0,
+            "61e55a4e-c30d-11eb-8a96-b831b5854dfb": 150.0
         },
-        "name": "Random Drink 5",
-        "price": 2.7386868453482425
+        "name": "Vodka and Sprite",
+        "price": 6.99
     },
-    "3f604e55-bb21-11eb-b883-b831b5854dfb": {
-        "image": "",
+    "61f8df53-c30d-11eb-82d4-b831b5854dfb": {
+        "description": "Tequila mixed with Sprite",
+        "image": null,
         "ings": {
-            "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 96.0,
-            "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 52.0,
-            "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 1.0,
-            "3f529f02-bb21-11eb-a2ae-b831b5854dfb": 10.0
+            "61e2eafa-c30d-11eb-9952-b831b5854dfb": 50.0,
+            "61e55a4e-c30d-11eb-8a96-b831b5854dfb": 150.0
         },
-        "name": "Random Drink 6",
-        "price": 6.717340750084291
+        "name": "Tequila and Sprite",
+        "price": 6.99
     },
-    "3f618606-bb21-11eb-9940-b831b5854dfb": {
-        "image": "",
+    "61fa1718-c30d-11eb-88eb-b831b5854dfb": {
+        "description": "Tequila mixed with club soda",
+        "image": null,
         "ings": {
-            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 74.0,
-            "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 18.0
+            "61e2eafa-c30d-11eb-9952-b831b5854dfb": 50.0,
+            "61e7cc1d-c30d-11eb-8735-b831b5854dfb": 150.0
         },
-        "name": "Random Drink 7",
-        "price": 4.05829684636199
+        "name": "Tequila Soda",
+        "price": 6.99
+    },
+    "61fc87bc-c30d-11eb-a937-b831b5854dfb": {
+        "description": "tequila mixed with orange juice",
+        "image": null,
+        "ings": {
+            "61e2eafa-c30d-11eb-9952-b831b5854dfb": 50.0,
+            "61ea3b6b-c30d-11eb-ac7b-b831b5854dfb": 150.0
+        },
+        "name": "Tequila Sunrise",
+        "price": 7.99
+    },
+    "61fdbff7-c30d-11eb-b3ef-b831b5854dfb": {
+        "description": "Tequila mixed with lime",
+        "image": null,
+        "ings": {
+            "61e2eafa-c30d-11eb-9952-b831b5854dfb": 50.0,
+            "61ecabed-c30d-11eb-97a6-b831b5854dfb": 100.0
+        },
+        "name": "Tequila and Lime",
+        "price": 6.99
     }
 }

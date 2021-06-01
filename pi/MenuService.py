@@ -35,12 +35,13 @@ def generateRandomDrink(maxIngredient=4, maxMl=100):
    
 
 # ings - dictionary with {"ing guid": ml of ing}
-def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufilePath):
+def addDrinkToMenu(name, ings, price=0.0, image="", description="", menuFilePath=defaultMenufilePath):
     allIngs = IngredientService.getAllIngredients()
     drink = {}
     drink["name"] = name
     drink["price"] = price
     drink["image"] = image
+    drink["description"] = description
     drink["ings"] = {}
     
     for ing in ings:
@@ -61,6 +62,7 @@ def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufile
     print("Added drink to menu")
     print(drink)
     print(guid)
+    return guid
 
 def modifyDrink(guid, name, ings, price=0.0, image="", menuFilePath=defaultMenufilePath):
     allIngs = IngredientService.getAllIngredients()
