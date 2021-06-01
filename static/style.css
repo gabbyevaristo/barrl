@@ -224,6 +224,10 @@
   background-color: darkred;
 }
 
+#set-pump-button {
+  background-color: mediumseagreen;
+}
+
 .titles {
     font-size: 1.0rem;
 }

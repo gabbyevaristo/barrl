@@ -70,6 +70,18 @@
                   <input type="number" name="fill" value="{{ bottle['estimated_fill'] }}">
                   <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Save">
                 </form>
+                {% if id not in pump_map %}
+                <form class="admin-form" action="/set-pump/{{id}}" method="post">
+                  <label class="admin-label mt-3" for="pump_num"> Pump # </label>
+                  <select name="pump_num" style="display: block">
+                    <option value=-1> </option>
+                    {% for x in range(0,6): %}
+                    <option value="{{x}}"> {{x}} </option>
+                    {% endfor %}
+                  </select>
+                  <input id="set-pump-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Set Pump">
+                </form>
+                {% endif %}
               </div>
 
             </div>

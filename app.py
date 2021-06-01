@@ -15,6 +15,7 @@ app.config['STRIPE_SECRET_KEY'] = 'sk_test_51IrKAPEx3ZnFyUF0xExm1uVSSm9XzTELrGlQ
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
 drinks = jsonService.loadJson(r'jsonFiles/menu.json')
+pump_map = IngredientService.getPumpMap()
 
 
 @app.route('/', methods=["GET"])
@@ -44,7 +45,7 @@ def admin_login():
 def admin():
     if request.method == "GET":
         if 'admin_login' in session:
-            return render_template('admin.html', bottles=bottles, drinks=drinks, show='admin')
+            return render_template('admin.html', bottles=bottles, drinks=drinks, pump_map=pump_map, show='admin')
         else:
             return redirect('/admin_login')
 
@@ -54,7 +55,6 @@ def logout():
     if 'admin_login' in session:
         session.pop('admin_login', None)
     return jsonify({})
-
 
 @app.route('/update-bottles/<id>', methods=["POST"])
 def update_bottles(id):
@@ -68,6 +68,15 @@ def update_bottles(id):
     pump_num = -1 if not pump_num else pump_num
     IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
     bottles = IngredientService.getAllIngredients()
+    return redirect('/admin')
+
+@app.route('/set-pump/<id>', methods=["POST"])
+def set_pump(id):
+    global pump_map
+    pump_num = request.form.get('pump_number')
+    if IngredientService.isValidPumpNumber(pump_num):
+        IngredientService.modifyPumpMapp(id, pump_num)
+        pump_map = IngredientService.getPumpMap()
     return redirect('/admin')
 
 @app.route('/add-ingredient', methods=["POST"])
