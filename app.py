@@ -17,19 +17,6 @@ bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
 drinks = jsonService.loadJson(r'jsonFiles/menu.json')
 pump_map = IngredientService.getPumpMap()
 
-def order_bottles(bottles, pump_map):
-    new_bottles = {}
-    # this is a mess and I need to clean it up but it works and its 4AM
-    sort = [0 for x in range(1,7)]
-    for key, value in bottles.items():
-        if key in pump_map:
-            sort[pump_map[key]] = key
-    for key in sort:
-        new_bottles[key] = bottles[key]
-    for key, value in bottles.items():
-        if key not in pump_map:
-            new_bottles[key] = value
-    return new_bottles
 
 @app.route('/', methods=["GET"])
 def index():
@@ -69,6 +56,7 @@ def logout():
         session.pop('admin_login', None)
     return jsonify({})
 
+
 @app.route('/update-bottles/<id>', methods=["POST"])
 def update_bottles(id):
     global bottles
@@ -89,6 +77,7 @@ def update_bottles(id):
         bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
+
 @app.route('/add-ingredient', methods=["POST"])
 def add_ingredient():
     global bottles
@@ -103,6 +92,7 @@ def add_ingredient():
         bottles = IngredientService.getAllIngredients()
         bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
+
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
@@ -156,10 +146,11 @@ def mvp():
 
 @app.route('/menu')
 def menu():
+    filtered_drinks = {k:v for k,v in drinks.items() if MenuService.isValidDrinkToPour(k)}
     if 'shopping_cart' not in session:
-        return render_template('menu.html', drinks=drinks, cart_quantity='', show='user')
+        return render_template('menu.html', drinks=filtered_drinks, cart_quantity='', show='user')
     else:
-        return render_template('menu.html', drinks=drinks, cart_quantity=session['cart_quantity'], show='user')
+        return render_template('menu.html', drinks=filtered_drinks, cart_quantity=session['cart_quantity'], show='user')
 
 
 @app.route('/cart')
@@ -310,6 +301,21 @@ def stripe_webhook():
         checkout_session = event['data']['object']
 
     return {}
+
+
+def order_bottles(bottles, pump_map):
+    new_bottles = {}
+    # this is a mess and I need to clean it up but it works and its 4AM
+    sort = [0 for x in range(1,7)]
+    for key, value in bottles.items():
+        if key in pump_map:
+            sort[pump_map[key]] = key
+    for key in sort:
+        new_bottles[key] = bottles[key]
+    for key, value in bottles.items():
+        if key not in pump_map:
+            new_bottles[key] = value
+    return new_bottles
 
 
 def get_cart_quantity():

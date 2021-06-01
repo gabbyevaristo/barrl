@@ -77,7 +77,7 @@
                       {% endfor %}
                     </select>
                   {% endif %}
-                  <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Save">
+                  <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
                 </form>
               </div>
 
@@ -118,7 +118,7 @@
                   <textarea name="description" rows="2" cols="24">{{ drink['description'] }}</textarea>
                   <label class="mt-3" for="image"> Image URL: *</label>
                   <input type="text" name="image" required value="{{ drink['image'] }}">
-                   <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Save">
+                   <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
                 </form>
                 <form class="admin-form" action="/delete-drink/{{id}}" method="post">
                   <input id="delete-drink-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
@@ -166,7 +166,7 @@
           <input type="number" name="ml{{x}}" value="">
         {% endif %}
       {% endfor %}
-      <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Add Drink to Menu">
+      <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Add Drink to Menu">
     </form>
   </div>
 
@@ -186,7 +186,7 @@
       </select>
       <label class="admin-label mt-3" for="fill"> Fill % </label>
       <input type="number" name="fill" value="">
-      <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Add Ingredient">
+      <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Add Ingredient">
     </form>
   </div>
 
