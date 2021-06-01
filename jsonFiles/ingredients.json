@@ -31,22 +31,6 @@
         "name": "Coke",
         "type": "mixer"
     },
-    "3f529f02-bb21-11eb-a2ae-b831b5854dfb": {
-        "brand": "Simply",
-        "estimated_fill": 40,
-        "image": "",
-        "ml": 1000,
-        "name": "Lemonade",
-        "type": "mixer"
-    },
-    "3f555c3d-bb21-11eb-a34e-b831b5854dfb": {
-        "brand": "Fiji",
-        "estimated_fill": 80,
-        "image": "",
-        "ml": 1000,
-        "name": "Water",
-        "type": "mixer"
-    },
     "72492eaa-c2c2-11eb-b1fc-9cb6d091f27c": {
         "brand": "Cherry",
         "estimated_fill": 50,

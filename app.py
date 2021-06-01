@@ -93,6 +93,17 @@ def add_ingredient():
         bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
+@app.route('/delete-ingredient/<id>', methods=["POST"])
+def delete_ingredient(id):
+    global bottles
+    global pump_map
+    name = bottles[id]['name']
+    IngredientService.removeIngredientByGuid(id)
+    bottles = IngredientService.getAllIngredients()
+    pumpMap = IngredientService.getPumpMap()
+    bottles = order_bottles(bottles, pump_map)
+    flash(name + ' deleted')
+    return redirect('/admin')
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
@@ -129,6 +140,7 @@ def add_drink():
 
 @app.route('/delete-drink/<id>', methods=["POST"])
 def delete_drink(id):
+    global drinks
     if id in drinks:
         del drinks[id]
     MenuService.removeDrinkByGuid(id)
@@ -306,12 +318,14 @@ def stripe_webhook():
 def order_bottles(bottles, pump_map):
     new_bottles = {}
     # this is a mess and I need to clean it up but it works and its 4AM
-    sort = [0 for x in range(1,7)]
+    # this will break when less than 6 connected to the pump
+    sort = [-1 for x in range(1,7)]
     for key, value in bottles.items():
         if key in pump_map:
             sort[pump_map[key]] = key
     for key in sort:
-        new_bottles[key] = bottles[key]
+        if key != -1:
+            new_bottles[key] = bottles[key]
     for key, value in bottles.items():
         if key not in pump_map:
             new_bottles[key] = value

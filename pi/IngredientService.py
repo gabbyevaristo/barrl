@@ -55,11 +55,11 @@ def modifyPumpMapp(ingGuid, pumpNumber, pumpMapfilePath=defaultPumpMapfilePath):
         return
 
     # remove old entries if they exist so we can maintain two way dictionary
-    oldLiquid = pumpMap[str(pumpNumber)]
+    oldLiquid = pumpMap.get(str(pumpNumber))
     if oldLiquid is not None:
         del pumpMap[oldLiquid]
 
-    del pumpMap[str(pumpNumber)]
+    pumpMap.pop(str(pumpNumber), None)
 
     # pumpMap[str(pumpNumber)] = ingGuid
     pumpMap[str(pumpNumber)] = ingGuid
@@ -141,10 +141,16 @@ def modifyIngredient(guid, name="", pumpNumber=-1, ml=1000, brand= "", drinkType
     print(guid)
     print(ing)
 
-def removeIngredientByGuid(guid, ingredientfilePath=defaultIngredientfilePath):
+def removeIngredientByGuid(guid, ingredientfilePath=defaultIngredientfilePath, pumpMapfilePath=defaultPumpMapfilePath):
     allIngs = jsonService.loadJson(ingredientfilePath)
+    pump_map = jsonService.loadJson(pumpMapfilePath)
+    pump_num = pump_map.get(guid)
+    if pump_num != None:
+        del pump_map[str(pump_num)]
+        del pump_map[guid]
     if guid in allIngs:
         del allIngs[guid]
+    jsonService.saveJson(pump_map, pumpMapfilePath)
     jsonService.saveJson(allIngs, ingredientfilePath)
 
 def getIngredientByGuid(guid, ingredientfilePath=defaultIngredientfilePath):
