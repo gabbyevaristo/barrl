@@ -8,6 +8,18 @@
   <h2 class="my-3"> Admin </h2>
 </div>
 
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissable fade show messages" role="alert"> 
+        {{ message }} 
+      </div>
+    {% endfor%}
+  {% endif %}
+{% endwith %}
+
+
 <!-- Admin Tabs -->
 <ul class="nav nav-tabs" id="admin-tabs" role="tablist">
   <li class="nav-item">
