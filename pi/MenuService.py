@@ -34,10 +34,8 @@ def generateRandomDrink(maxIngredient=4, maxMl=100):
     return drink
    
 
-
-# ings - dictionary with {"ing guid":ml of ing}
+# ings - dictionary with {"ing guid": ml of ing}
 def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufilePath):
-
     allIngs = IngredientService.getAllIngredients()
     drink = {}
     drink["name"] = name
@@ -49,14 +47,14 @@ def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufile
         if ing in allIngs:
             drink["ings"][ing] = float(ings[ing])
         else:
-            print("when adding drink ingredient not in ingredient database, skipping ingredient")
+            print("When adding drink ingredient not in ingredient database, skipping ingredient")
             print(ing)
 
     guid = str(uuid.uuid1())
 
     menu = jsonService.loadJson(menuFilePath)
     if guid in menu:
-        print("collision in guid when adding drink to menu")
+        print("Collision in guid when adding drink to menu")
     menu[guid] = drink
     jsonService.saveJson(menu, menuFilePath)
 
@@ -65,7 +63,6 @@ def addDrinkToMenu(name, ings, price=0.0, image="", menuFilePath=defaultMenufile
     print(guid)
 
 def modifyDrink(guid, name, ings, price=0.0, image="", menuFilePath=defaultMenufilePath):
-
     allIngs = IngredientService.getAllIngredients()
     drink = {}
     drink["name"] = name
@@ -77,7 +74,7 @@ def modifyDrink(guid, name, ings, price=0.0, image="", menuFilePath=defaultMenuf
         if ing in allIngs:
             drink["ings"][ing] = float(ings[ing])
         else:
-            print("when adding drink ingredient not in ingredient database, skipping ingredient")
+            print("When adding drink ingredient not in ingredient database, skipping ingredient")
             print(ing)
 
 
@@ -155,7 +152,6 @@ def isValidDrinkToPour(drinkGuid, menuFilePath=defaultMenufilePath, ingredientfi
 
     return True
 
-    
 
 # if ingredients are not present, then creat file so everything doesnt break
 if not os.path.exists(defaultMenufilePath):

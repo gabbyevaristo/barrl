@@ -22,7 +22,7 @@
     <nav class="navbar fixed-top navbar-expand navbar-light bg-light">
       <a class="navbar-brand text-uppercase font-weight-bold" href="/"> Barrl </a>
 
-      {% if show %}
+      {% if show == "user" %}
         <div class="navbar-collapse collapse">
           <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
               <li class="nav-item">
@@ -36,13 +36,30 @@
             </a>
           </p>
         </div>
+      {% elif show == "admin" %}
+        <div class="navbar-collapse collapse">
+          <p class="nav-item my-0 my-lg-0 ml-auto">
+            <button id="logout" class="btn" type="button"> Logout </button>
+          </p>
+        </div>
       {% endif %}
 
     </nav>
 
-    </div>
-
     <div id="content">{% block content %} {% endblock %}</div>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-danger alert-dismissable fade show" role="alert"> 
+            {{ message }} 
+            <button type="button" class="close" data-dismiss="alert">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor%}
+      {% endif %}
+    {% endwith %}
 
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
