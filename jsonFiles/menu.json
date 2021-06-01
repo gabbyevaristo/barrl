@@ -1,5 +1,6 @@
 {
     "3f58dd75-bb21-11eb-8145-b831b5854dfb": {
+        "description": "",
         "image": "",
         "ingredients": "",
         "ings": {
@@ -9,7 +10,7 @@
             "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 3.0
         },
         "name": "Random Drink 0",
-        "price": "9"
+        "price": 14.0
     },
     "3f59519c-bb21-11eb-960c-b831b5854dfb": {
         "image": "",
