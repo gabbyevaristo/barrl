@@ -220,6 +220,10 @@
     font-size: 1.0rem;
 }
 
+#delete-drink-button {
+  background-color: darkred;
+}
+
 .titles {
     font-size: 1.0rem;
 }
@@ -228,4 +232,4 @@ form.admin-form label,
 form.admin-form select,
 form.admin-form input {
   display: block;
-} 
+}
