@@ -1,33 +1,62 @@
 {
-    "3f46c901-bb21-11eb-8cf3-b831b5854dfb": {
+    "61e1b275-c30d-11eb-b452-b831b5854dfb": {
         "brand": "Titos",
-        "estimated_fill": 100,
-        "image": "",
-        "ml": 750,
+        "estimated_fill": "100",
+        "image": null,
+        "ml": 1750,
         "name": "Vodka",
-        "type": "alcohol"
+        "size": "1.75 L",
+        "type": "alchool"
     },
-    "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": {
-        "brand": "Jose Cuervo",
-        "estimated_fill": 100,
-        "image": "",
+    "61e2eafa-c30d-11eb-9952-b831b5854dfb": {
+        "brand": "Patron",
+        "estimated_fill": "100",
+        "image": null,
         "ml": 1750,
         "name": "Tequila",
-        "type": "alcohol"
+        "size": "1.75 L",
+        "type": "alchool"
     },
-    "3f4d9943-bb21-11eb-82b3-b831b5854dfb": {
-        "brand": "Polar Spring",
-        "estimated_fill": 70,
-        "image": "",
+    "61e55a4e-c30d-11eb-8a96-b831b5854dfb": {
+        "brand": "Sprite",
+        "estimated_fill": "100",
+        "image": null,
         "ml": 2000,
+<<<<<<< HEAD
+        "name": "Sprite",
+        "size": "2 L",
+=======
         "name": "Club Soda",
+>>>>>>> main
         "type": "mixer"
     },
-    "3f50301e-bb21-11eb-bf8d-b831b5854dfb": {
-        "brand": "Coca-Cola",
-        "estimated_fill": 50,
-        "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg",
+    "61e7cc1d-c30d-11eb-8735-b831b5854dfb": {
+        "brand": "Canada Dry",
+        "estimated_fill": "100",
+        "image": null,
         "ml": 2000,
+<<<<<<< HEAD
+        "name": "Club Soda",
+        "size": "2 L",
+        "type": "mixer"
+    },
+    "61ea3b6b-c30d-11eb-ac7b-b831b5854dfb": {
+        "brand": "Minute Made",
+        "estimated_fill": "100",
+        "image": null,
+        "ml": 3785,
+        "name": "Orange Juice",
+        "size": "1 G",
+        "type": "mixer"
+    },
+    "61ecabed-c30d-11eb-97a6-b831b5854dfb": {
+        "brand": "Real Lime",
+        "estimated_fill": "100",
+        "image": null,
+        "ml": 1000,
+        "name": "Lime Juice",
+        "size": "1 Q",
+=======
         "name": "Coke",
         "type": "mixer"
     },
@@ -85,6 +114,7 @@
         "image": "",
         "ml": 1000,
         "name": "Lime Juice",
+>>>>>>> main
         "type": "mixer"
     }
 }
