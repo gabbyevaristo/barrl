@@ -58,23 +58,15 @@ def logout():
 
 @app.route('/update-bottles/<id>', methods=["POST"])
 def update_bottles(id):
-    bottles[id]['name'] = request.form.get('name')
-    bottles[id]['size'] = request.form.get('size')
-    bottles[id]['ml'] = int(request.form.get('ml'))
-    bottles[id]['brand'] = request.form.get('brand')
-    bottles[id]['type'] = request.form.get('type')
-    bottles[id]['estimated_fill'] = request.form.get('fill')
-    jsonService.saveJson(bottles, r'jsonFiles/ingredients.json')
+    global bottles
+    name = request.form.get('name')
+    mL = int(request.form.get('ml'))
+    brand = request.form.get('brand')
+    drink_type = request.form.get('type')
+    estimated_fill = int(request.form.get('fill'))
+    IngredientService.modifyIngredient(id, name, 1, mL, brand, drink_type, estimated_fill)
+    bottles = IngredientService.getAllIngredients()
     return redirect('/admin')
-
-    # name = request.form.get('name')
-    # size = request.form.get('size')
-    # mL = int(request.form.get('ml'))
-    # brand = request.form.get('brand')
-    # drink_type = request.form.get('type')
-    # estimated_fill = request.form.get('fill')
-    # IngredientService.modifyIngredient(id, name, 1, size, mL, brand, drink_type, estimated_fill)
-    # return redirect('/admin')
 
 # Need route for removing ingredient from a pump
 # Need for route for adding a new ingredient when <6 have a bottle
@@ -82,8 +74,8 @@ def update_bottles(id):
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
     drinks[id]['name'] = request.form.get('name')
-    drinks[id]['price'] = request.form.get('price')
-    drinks[id]['ingredients'] = request.form.get('ingredients')
+    drinks[id]['price'] = float(request.form.get('price'))
+    drinks[id]['description'] = request.form.get('description')
     drinks[id]['image'] = request.form.get('image')
     jsonService.saveJson(drinks, r'jsonFiles/menu.json')
     return redirect('/admin')
