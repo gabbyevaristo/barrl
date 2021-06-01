@@ -64,12 +64,23 @@ def update_bottles(id):
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
     estimated_fill = int(request.form.get('fill'))
-    IngredientService.modifyIngredient(id, name, 1, mL, brand, drink_type, estimated_fill)
+    pump_num = IngredientService.getPumpMap.get(id)
+    pump_num = -1 if not pump_num else pump_num
+    IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
     bottles = IngredientService.getAllIngredients()
     return redirect('/admin')
 
-# Need route for removing ingredient from a pump
-# Need for route for adding a new ingredient when <6 have a bottle
+@app.route('/add-ingredient', methods=["POST"])
+def add_ingredient():
+    global bottles
+    name = request.form.get('name')
+    mL = int(request.form.get('ml'))
+    brand = request.form.get('brand')
+    drink_type = request.form.get('type')
+    estimated_fill = int(request.form.get('fill'))
+    IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
+    bottles = IngredientService.getAllIngredients()
+    return redirect('/admin')
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):

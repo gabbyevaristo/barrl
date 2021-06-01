@@ -19,6 +19,9 @@
   <li class="nav-item">
     <a class="nav-link" id="add-drink-tab" data-toggle="tab" href="#add-drink-content" role="tab" aria-selected="false"> Add Drink </a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="add-ing-tab" data-toggle="tab" href="#add-ing-content" role="tab" aria-selected="false"> Add Ingredient </a>
+  </li>
 </ul>
 
 <div class="tab-content ml-4 mt-4 mr-4 mb-5" id="admin-content">
@@ -30,7 +33,11 @@
       {% for id, bottle in bottles.items(): %}
 
         <div class="list-group-item flex-column align-items-start">
+          {% if loop.index <= 6 %}
           <span class="titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
+          {% else %}
+          <span class="titles"> {{ bottle['name'] }} </span>
+          {% endif %}
           <button data-id="{{ id }}" class="btn btn-dark btn-sm mb-1 mr-4 edit-bottle-btn pull-right" type="button"> Edit </button>
         </div>
 
@@ -129,6 +136,26 @@
       <label class="mt-3" for="image"> Image URL: </label>
       <input type="text" name="image">
       <input class="mt-3" type="submit" value="Add Drink to Menu">
+    </form>
+  </div>
+
+  <!-- Add ingredient -->
+  <div class="tab-pane fade" id="add-ing-content" role="tabpanel">
+    <form class="admin-form" action="/add-ingredient" method="post">
+      <label class="admin-label mt-2" for="name"> Content </label>
+      <input type="text" name="name" value="">
+      <label class="admin-label mt-3" for="ml"> mL </label>
+      <input type="number" name="ml" value="">
+      <label class="admin-label mt-3" for="brand"> Brand </label>
+      <input type="text" name="brand" value="">
+      <label class="admin-label mt-3" for="type"> Type </label>
+      <select name="type" style="display: block">
+        <option value="alcohol"> alcohol </option>
+        <option value="mixer"> mixer </option>
+      </select>
+      <label class="admin-label mt-3" for="fill"> Fill % </label>
+      <input type="number" name="fill" value="">
+      <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Save">
     </form>
   </div>
 
