@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
 from datetime import timedelta
-from pi import jsonService
+from pi import jsonService, MenuService
 import json
 import stripe
 
