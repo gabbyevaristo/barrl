@@ -118,7 +118,7 @@ def update_menu(id):
     return redirect('/admin')
 
 
-@app.route('/add_drink', methods=["POST"])
+@app.route('/add-drink', methods=["POST"])
 def add_drink():
     global drinks
     ingredients = {}
