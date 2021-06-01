@@ -112,7 +112,7 @@ def update_menu(id):
     image = request.form.get('image')
     if name and price and image:
         drinks[id]['name'] = name
-        drinks[id]['price'] = price
+        drinks[id]['price'] = float(price)
         drinks[id]['description'] = request.form.get('description')
         drinks[id]['image'] = image
         jsonService.saveJson(drinks, r'jsonFiles/menu.json')
@@ -130,9 +130,9 @@ def add_drink():
             ingredients[id] = ml
     name = request.form.get('name')
     image = request.form.get('image')
-    price = float(request.form.get('price'))
+    price = request.form.get('price')
     if ingredients and name and image and price:
-        MenuService.addDrinkToMenu(name, ingredients, request.form.get('description'), price, image)
+        MenuService.addDrinkToMenu(name, ingredients, request.form.get('description'), float(price), image)
         drinks = MenuService.getMenu()
     return redirect('/admin')
 
