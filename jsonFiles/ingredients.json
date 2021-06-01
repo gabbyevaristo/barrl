@@ -22,8 +22,12 @@
         "estimated_fill": "100",
         "image": null,
         "ml": 2000,
+<<<<<<< HEAD
         "name": "Sprite",
         "size": "2 L",
+=======
+        "name": "Club Soda",
+>>>>>>> main
         "type": "mixer"
     },
     "61e7cc1d-c30d-11eb-8735-b831b5854dfb": {
@@ -31,6 +35,7 @@
         "estimated_fill": "100",
         "image": null,
         "ml": 2000,
+<<<<<<< HEAD
         "name": "Club Soda",
         "size": "2 L",
         "type": "mixer"
@@ -51,6 +56,65 @@
         "ml": 1000,
         "name": "Lime Juice",
         "size": "1 Q",
+=======
+        "name": "Coke",
+        "type": "mixer"
+    },
+    "3f529f02-bb21-11eb-a2ae-b831b5854dfb": {
+        "brand": "Simply",
+        "estimated_fill": 40,
+        "image": "https://media1.popsugar-assets.com/files/thumbor/4X8BdSItHe1jU8X82WXPNNoMWJs/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2014/11/14/759/n/1922729/a47fe337860c7f89_100153275/i/Rum-Coke.jpg",
+        "ml": "1000",
+        "name": "Lemonade",
+        "type": "mixer"
+    },
+    "3f555c3d-bb21-11eb-a34e-b831b5854dfb": {
+        "brand": "Fiji",
+        "estimated_fill": 80,
+        "image": "",
+        "ml": 1000,
+        "name": "Water",
+        "type": "mixer"
+    },
+    "72492eaa-c2c2-11eb-b1fc-9cb6d091f27c": {
+        "brand": "Cherry",
+        "estimated_fill": 50,
+        "image": "",
+        "ml": 500,
+        "name": "Grenadine",
+        "type": "mixer"
+    },
+    "798ec626-c2c2-11eb-bd83-9cb6d091f27c": {
+        "brand": "Standard",
+        "estimated_fill": 80,
+        "image": "",
+        "ml": 1000,
+        "name": "Triple Sec",
+        "type": "alcohol"
+    },
+    "d261a66e-c2b3-11eb-b026-9cb6d091f27c": {
+        "brand": "Simply",
+        "estimated_fill": 100,
+        "image": "",
+        "ml": 1000,
+        "name": "Orange Juice",
+        "type": "mixer"
+    },
+    "d6d8ea62-c2c1-11eb-8416-9cb6d091f27c": {
+        "brand": "Sprite",
+        "estimated_fill": 100,
+        "image": "",
+        "ml": 2000,
+        "name": "Sprite",
+        "type": "mixer"
+    },
+    "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": {
+        "brand": "Simply",
+        "estimated_fill": 80,
+        "image": "",
+        "ml": 1000,
+        "name": "Lime Juice",
+>>>>>>> main
         "type": "mixer"
     }
 }
