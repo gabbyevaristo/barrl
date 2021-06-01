@@ -3,22 +3,24 @@ import os
 import uuid
 import pi.jsonService as jsonService
 
-if os.environ['ENV'] == "dev":
-    import pi.MockGpio as GPIO
-else:
-    import RPi.GPIO as GPIO
+import pi.MockGpio as GPIO
+
+# if os.environ['ENV'] == "development":
+#     import pi.MockGpio as GPIO
+# else:
+#     import RPi.GPIO as GPIO
 
 defaultIngredientfilePath = "./jsonFiles/ingredients.json"
 defaultPumpMapfilePath = "./jsonFiles/pumpMap.json"
 
 # in ml per second
 pumpRate = {
-    0:80.0/60.0
-    , 1:80.0/60.0
-    , 2:80.0/60.0
-    , 3:80.0/60.0
-    , 4:80.0/60.0
-    , 5:80.0/60.0
+    0: 80.0/60.0, 
+    1: 80.0/60.0,
+    2: 80.0/60.0,
+    3: 80.0/60.0,
+    4: 80.0/60.0,
+    5: 80.0/60.0
 }
 
 def convertBottlesToIngredients(bottlesFilePath="./bottles.json"):
@@ -32,7 +34,6 @@ def convertBottlesToIngredients(bottlesFilePath="./bottles.json"):
             pumpNumber += 1
         if pumpNumber >= 6:
             pumpNumber = -1
-
 
 
 def clearIngredients(ingredientfilePath=defaultIngredientfilePath):
@@ -78,21 +79,21 @@ def getPumpMap(pumpMapfilePath=defaultPumpMapfilePath):
 
     return pumpMap
         
-# add all these atributes to ingredient and assign int a guid
-# additional attributes can be addded throug kwargs
+# add all these atributes to ingredient and assign it a guid
+# additional attributes can be addded through kwargs
 def addIngredient(name="", pumpNumber=-1, size= "1L", ml=1000, brand= "", drinkType= "", estimated_fill= "", image= "", ingredientfilePath=defaultIngredientfilePath, **kwargs):
     ing = { 
-            "name":name \
-            ,"size":size \
-            ,"ml":ml \
+            "name": name \
+            ,"size": size \
+            ,"ml": ml \
             ,"brand": brand \
             ,"type": drinkType \
-            ,"estimated_fill":estimated_fill \
-            ,"image":image \
-            # ,"pumpNumber":pumpNumber \
+            ,"estimated_fill": estimated_fill \
+            ,"image": image \
+            # ,"pumpNumber": pumpNumber \
           }
 
-    for key,value in kwargs.items():
+    for key, value in kwargs.items():
         ing[key] = value
 
     guid = str(uuid.uuid1())
@@ -102,7 +103,7 @@ def addIngredient(name="", pumpNumber=-1, size= "1L", ml=1000, brand= "", drinkT
 
     allIngs = jsonService.loadJson(ingredientfilePath)
     if guid in allIngs:
-        print("collision in ID when adding ingredient")
+        print("Collision in ID when adding ingredient")
     allIngs[guid] = ing
     jsonService.saveJson(allIngs, ingredientfilePath) 
 
@@ -112,19 +113,18 @@ def addIngredient(name="", pumpNumber=-1, size= "1L", ml=1000, brand= "", drinkT
 
 def modifyIngredient(guid, name="", pumpNumber=-1, size= "1L", ml=1000, brand= "", drinkType= "", estimated_fill= "", image= "", ingredientfilePath=defaultIngredientfilePath, **kwargs):
     ing = { 
-            "name":name \
-            ,"size":size \
-            ,"ml":ml \
+            "name": name \
+            ,"size": size \
+            ,"ml": ml \
             ,"brand": brand \
             ,"type": drinkType \
-            ,"estimated_fill":estimated_fill \
-            ,"image":image \
-            # ,"pumpNumber":pumpNumber \
+            ,"estimated_fill": estimated_fill \
+            ,"image": image \
+            # ,"pumpNumber": pumpNumber \
           }
 
-    for key,value in kwargs.items():
+    for key, value in kwargs.items():
         ing[key] = value
-
 
     allIngs = jsonService.loadJson(ingredientfilePath)
     if guid not in allIngs:
@@ -163,9 +163,10 @@ def getAllIngredients(ingredientfilePath=defaultIngredientfilePath):
     allIngs = jsonService.loadJson(ingredientfilePath)
     return allIngs
 
-# if ingredients are not present, then creat file so everything doesnt break
+# if ingredients are not present, then create file so everything does not break
 if not os.path.exists(defaultIngredientfilePath):
     clearIngredients()
 
 if not os.path.exists(defaultPumpMapfilePath):
     clearPumpMap()
+    
