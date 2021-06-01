@@ -78,13 +78,18 @@ def update_bottles(id):
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
     estimated_fill = int(request.form.get('fill'))
-    pump_num = IngredientService.getPumpMap().get(id)
-    pump_num = -1 if not pump_num else pump_num
-    IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
-    bottles = IngredientService.getAllIngredients()
-    bottles = order_bottles(bottles, pump_map)
+    pump_num = pump_map.get(id)
+    if pump_num == None:
+        pump_num = int(request.form.get('pump_num'))
+    if name:
+        IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
+        IngredientService.modifyPumpMapp(id, pump_num)
+        pump_map = IngredientService.getPumpMap()
+        bottles = IngredientService.getAllIngredients()
+        bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
+'''
 @app.route('/set-pump/<id>', methods=["POST"])
 def set_pump(id):
     global pump_map
@@ -93,6 +98,7 @@ def set_pump(id):
         IngredientService.modifyPumpMapp(id, pump_num)
         pump_map = IngredientService.getPumpMap()
     return redirect('/admin')
+'''
 
 @app.route('/add-ingredient', methods=["POST"])
 def add_ingredient():
@@ -103,18 +109,24 @@ def add_ingredient():
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
     estimated_fill = int(request.form.get('fill'))
-    IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
-    bottles = IngredientService.getAllIngredients()
-    bottles = order_bottles(bottles, pump_map)
+    if name:
+        IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
+        bottles = IngredientService.getAllIngredients()
+        bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
-    drinks[id]['name'] = request.form.get('name')
-    drinks[id]['price'] = float(request.form.get('price'))
-    drinks[id]['description'] = request.form.get('description')
-    drinks[id]['image'] = request.form.get('image')
-    jsonService.saveJson(drinks, r'jsonFiles/menu.json')
+    global drinks
+    name = request.form.get('name')
+    price = request.form.get('price')
+    image = request.form.get('image')
+    if name and price and image:
+        drinks[id]['name'] = name
+        drinks[id]['price'] = price
+        drinks[id]['description'] = request.form.get('description')
+        drinks[id]['image'] = image
+        jsonService.saveJson(drinks, r'jsonFiles/menu.json')
     return redirect('/admin')
 
 
@@ -127,8 +139,11 @@ def add_drink():
         ml = request.form.get(f'ml{x}')
         if id and id != "none" and ml != 0:
             ingredients[id] = ml
-    if ingredients:
-        MenuService.addDrinkToMenu(request.form.get('name'), ingredients, request.form.get('description'), float(request.form.get('price')), request.form.get('image'))
+    name = request.form.get('name')
+    image = request.form.get('image')
+    price = float(request.form.get('price'))
+    if ingredients and name and image and price:
+        MenuService.addDrinkToMenu(name, ingredients, request.form.get('description'), price, image)
         drinks = MenuService.getMenu()
     return redirect('/admin')
 
