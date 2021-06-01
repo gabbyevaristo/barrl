@@ -1,6 +1,7 @@
 {
     "3f58dd75-bb21-11eb-8145-b831b5854dfb": {
         "image": "",
+        "ingredients": "",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 9.0,
             "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 3.0,
@@ -8,42 +9,46 @@
             "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 3.0
         },
         "name": "Random Drink 0",
-        "price": 5.297847615017478
+        "price": "9"
     },
     "3f59519c-bb21-11eb-960c-b831b5854dfb": {
         "image": "",
+        "ingredients": "",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 91.0,
             "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 28.0,
             "3f555c3d-bb21-11eb-a34e-b831b5854dfb": 94.0
         },
         "name": "Random Drink 1",
-        "price": 2.572427404946136
+        "price": "10"
     },
     "3f5ad75c-bb21-11eb-95ba-b831b5854dfb": {
         "image": "",
+        "ingredients": "",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 38.0
         },
         "name": "Random Drink 2",
-        "price": 3.712814457355421
+        "price": "8"
     },
     "3f5c0e6a-bb21-11eb-ae98-b831b5854dfb": {
         "image": "",
+        "ingredients": "",
         "ings": {
             "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 97.0,
             "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 8.0
         },
         "name": "Random Drink 3",
-        "price": 0.27996978664649563
+        "price": "4"
     },
     "3f5d93de-bb21-11eb-898f-b831b5854dfb": {
         "image": "",
+        "ingredients": "",
         "ings": {
             "3f50301e-bb21-11eb-bf8d-b831b5854dfb": 8.0
         },
         "name": "Random Drink 4",
-        "price": 1.5090714663598181
+        "price": "1"
     },
     "3f5ea4a7-bb21-11eb-9ac8-b831b5854dfb": {
         "image": "",

@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
 from datetime import timedelta
-from pi import jsonService
+from pi import jsonService, MenuService, IngredientService
 import json
 import stripe
 
@@ -67,6 +67,15 @@ def update_bottles(id):
     jsonService.saveJson(bottles, r'jsonFiles/ingredients.json')
     return redirect('/admin')
 
+    # name = request.form.get('name')
+    # size = request.form.get('size')
+    # mL = int(request.form.get('ml'))
+    # brand = request.form.get('brand')
+    # drink_type = request.form.get('type')
+    # estimated_fill = request.form.get('fill')
+    # IngredientService.modifyIngredient(id, name, 1, size, mL, brand, drink_type, estimated_fill)
+    # return redirect('/admin')
+
 # Need route for removing ingredient from a pump
 # Need for route for adding a new ingredient when <6 have a bottle
 
@@ -79,6 +88,7 @@ def update_menu(id):
     jsonService.saveJson(drinks, r'jsonFiles/menu.json')
     return redirect('/admin')
 
+
 @app.route('/add_drink', methods=["POST"])
 def add_drink():
     global drinks
@@ -86,12 +96,14 @@ def add_drink():
     drinks = MenuService.getMenu()
     return redirect('/admin')
 
-@app.route('/delete_drink/<id>', methods=["POST"])
+
+@app.route('/delete-drink/<id>', methods=["POST"])
 def delete_drink(id):
     if id in drinks:
         del drinks[id]
     MenuService.removeDrinkByGuid(id)
     return redirect('/admin')
+
 
 @app.route('/mvp', methods=["GET", "POST"])
 def mvp():
