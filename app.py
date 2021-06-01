@@ -17,6 +17,19 @@ bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
 drinks = jsonService.loadJson(r'jsonFiles/menu.json')
 pump_map = IngredientService.getPumpMap()
 
+def order_bottles(bottles, pump_map):
+    new_bottles = {}
+    # this is a mess and I need to clean it up but it works and its 4AM
+    sort = [0 for x in range(1,7)]
+    for key, value in bottles.items():
+        if key in pump_map:
+            sort[pump_map[key]] = key
+    for key in sort:
+        new_bottles[key] = bottles[key]
+    for key, value in bottles.items():
+        if key not in pump_map:
+            new_bottles[key] = value
+    return new_bottles
 
 @app.route('/', methods=["GET"])
 def index():
@@ -45,7 +58,7 @@ def admin_login():
 def admin():
     if request.method == "GET":
         if 'admin_login' in session:
-            return render_template('admin.html', bottles=bottles, drinks=drinks, pump_map=pump_map, show='admin')
+            return render_template('admin.html', bottles=order_bottles(bottles, pump_map), drinks=drinks, pump_map=pump_map, show='admin')
         else:
             return redirect('/admin_login')
 
@@ -59,6 +72,7 @@ def logout():
 @app.route('/update-bottles/<id>', methods=["POST"])
 def update_bottles(id):
     global bottles
+    global pump_map
     name = request.form.get('name')
     mL = int(request.form.get('ml'))
     brand = request.form.get('brand')
@@ -68,12 +82,13 @@ def update_bottles(id):
     pump_num = -1 if not pump_num else pump_num
     IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
     bottles = IngredientService.getAllIngredients()
+    bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
 @app.route('/set-pump/<id>', methods=["POST"])
 def set_pump(id):
     global pump_map
-    pump_num = request.form.get('pump_number')
+    pump_num = int(request.form.get('pump_num'))
     if IngredientService.isValidPumpNumber(pump_num):
         IngredientService.modifyPumpMapp(id, pump_num)
         pump_map = IngredientService.getPumpMap()
@@ -82,6 +97,7 @@ def set_pump(id):
 @app.route('/add-ingredient', methods=["POST"])
 def add_ingredient():
     global bottles
+    global pump_map
     name = request.form.get('name')
     mL = int(request.form.get('ml'))
     brand = request.form.get('brand')
@@ -89,6 +105,7 @@ def add_ingredient():
     estimated_fill = int(request.form.get('fill'))
     IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
     bottles = IngredientService.getAllIngredients()
+    bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
 
 @app.route('/update-menu/<id>', methods=["POST"])
