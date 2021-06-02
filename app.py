@@ -95,6 +95,7 @@ def add_ingredient():
         flash(name + ' ingredient added')
     return redirect('/admin')
 
+
 @app.route('/delete-ingredient/<id>', methods=["POST"])
 def delete_ingredient(id):
     global bottles
@@ -106,6 +107,7 @@ def delete_ingredient(id):
     bottles = order_bottles(bottles, pump_map)
     flash(name + ' deleted')
     return redirect('/admin')
+
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
