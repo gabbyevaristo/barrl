@@ -45,7 +45,7 @@
       {% for id, bottle in bottles.items(): %}
 
         <div class="list-group-item flex-column align-items-start">
-          {% if loop.index <= 6 %}
+          {% if loop.index <= pumps %}
           <span class="titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
           {% else %}
           <span class="titles"> {{ bottle['name'] }} </span>
@@ -90,6 +90,9 @@
                     </select>
                   {% endif %}
                   <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
+                </form>
+                <form class="admin-form" action="/delete-ingredient/{{id}}" method="post">
+                  <input id="delete-drink-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
                 </form>
               </div>
 

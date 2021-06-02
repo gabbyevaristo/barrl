@@ -44,7 +44,8 @@ def admin_login():
 def admin():
     if request.method == "GET":
         if 'admin_login' in session:
-            return render_template('admin.html', bottles=order_bottles(bottles, pump_map), drinks=drinks, pump_map=pump_map, show='admin')
+            return render_template('admin.html', bottles=order_bottles(bottles, pump_map),
+            drinks=drinks, pump_map=pump_map, pumps=(len(pump_map)/3), show='admin')
         else:
             return redirect('/admin_login')
 
@@ -61,15 +62,15 @@ def update_bottles(id):
     global bottles
     global pump_map
     name = request.form.get('name')
-    mL = int(request.form.get('ml'))
+    mL = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
-    estimated_fill = int(request.form.get('fill'))
+    estimated_fill = request.form.get('fill')
     pump_num = pump_map.get(id)
     if pump_num == None:
         pump_num = int(request.form.get('pump_num'))
     if name:
-        IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
+        IngredientService.modifyIngredient(id, name, pump_num , int(mL), brand, drink_type, int(estimated_fill))
         IngredientService.modifyPumpMapp(id, pump_num)
         pump_map = IngredientService.getPumpMap()
         bottles = IngredientService.getAllIngredients()
@@ -83,17 +84,28 @@ def add_ingredient():
     global bottles
     global pump_map
     name = request.form.get('name')
-    mL = int(request.form.get('ml'))
+    mL = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
-    estimated_fill = int(request.form.get('fill'))
+    estimated_fill = request.form.get('fill')
     if name:
-        IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
+        IngredientService.addIngredient(name, -1, int(mL), brand, drink_type, int(estimated_fill))
         bottles = IngredientService.getAllIngredients()
         bottles = order_bottles(bottles, pump_map)
         flash(name + ' ingredient added')
     return redirect('/admin')
 
+@app.route('/delete-ingredient/<id>', methods=["POST"])
+def delete_ingredient(id):
+    global bottles
+    global pump_map
+    name = bottles[id]['name']
+    IngredientService.removeIngredientByGuid(id)
+    bottles = IngredientService.getAllIngredients()
+    pump_map = IngredientService.getPumpMap()
+    bottles = order_bottles(bottles, pump_map)
+    flash(name + ' deleted')
+    return redirect('/admin')
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
@@ -132,6 +144,7 @@ def add_drink():
 
 @app.route('/delete-drink/<id>', methods=["POST"])
 def delete_drink(id):
+    global drinks
     name = drinks[id]['name']
     if id in drinks:
         del drinks[id]
@@ -310,13 +323,13 @@ def stripe_webhook():
 
 def order_bottles(bottles, pump_map):
     new_bottles = {}
-    # this is a mess and I need to clean it up but it works and its 4AM
-    sort = [0 for x in range(1,7)]
+    sort = [-1 for x in range(1,7)]
     for key, value in bottles.items():
         if key in pump_map:
             sort[pump_map[key]] = key
     for key in sort:
-        new_bottles[key] = bottles[key]
+        if key != -1:
+            new_bottles[key] = bottles[key]
     for key, value in bottles.items():
         if key not in pump_map:
             new_bottles[key] = value
