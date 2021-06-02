@@ -60,3 +60,17 @@ def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredien
     for ing, amount in drink["ings"].items():
         pumpNum = pumpMap[ing]
         pourFromPump(pumpNum, amount)
+
+
+# be sure user attaches water to the pumps before pumps are turned on
+# if pumpNumber is None, then all pumps are cleaned else only specified pump 
+def cleanPump(pumpNumber=None, amount=100):
+    if pumpNumber is not None:
+        if IngredientService.isValidPumpNumber(pumpNumber):
+            pourFromPump(pumpNumber, amount)
+        else:
+            print("Attempted to clean invalid pump number")
+    else:
+        for pump in pumpToPin:
+            pourFromPump(pump, amount)
+    
