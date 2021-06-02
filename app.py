@@ -274,7 +274,7 @@ def pour_drink():
     if len(session['pour_items']) == 0:
         session.pop('pour_items', None)
         return jsonify('')
-    
+    print(drink_id)
     PouringService.pourDrink(drink_id)
 
     return jsonify({})
