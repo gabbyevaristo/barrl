@@ -45,7 +45,8 @@ def admin_login():
 def admin():
     if request.method == "GET":
         if 'admin_login' in session:
-            return render_template('admin.html', bottles=order_bottles(bottles, pump_map), drinks=drinks, pump_map=pump_map, show='admin')
+            return render_template('admin.html', bottles=order_bottles(bottles, pump_map),
+            drinks=drinks, pump_map=pump_map, pumps=(len(pump_map)/3), show='admin')
         else:
             return redirect('/admin_login')
 
@@ -62,15 +63,15 @@ def update_bottles(id):
     global bottles
     global pump_map
     name = request.form.get('name')
-    mL = int(request.form.get('ml'))
+    mL = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
-    estimated_fill = int(request.form.get('fill'))
+    estimated_fill = request.form.get('fill')
     pump_num = pump_map.get(id)
     if pump_num == None:
         pump_num = int(request.form.get('pump_num'))
     if name:
-        IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
+        IngredientService.modifyIngredient(id, name, pump_num , int(mL), brand, drink_type, int(estimated_fill))
         IngredientService.modifyPumpMapp(id, pump_num)
         pump_map = IngredientService.getPumpMap()
         bottles = IngredientService.getAllIngredients()
@@ -83,12 +84,12 @@ def add_ingredient():
     global bottles
     global pump_map
     name = request.form.get('name')
-    mL = int(request.form.get('ml'))
+    mL = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
-    estimated_fill = int(request.form.get('fill'))
+    estimated_fill = request.form.get('fill')
     if name:
-        IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
+        IngredientService.addIngredient(name, -1, int(mL), brand, drink_type, int(estimated_fill))
         bottles = IngredientService.getAllIngredients()
         bottles = order_bottles(bottles, pump_map)
     return redirect('/admin')
@@ -100,7 +101,7 @@ def delete_ingredient(id):
     name = bottles[id]['name']
     IngredientService.removeIngredientByGuid(id)
     bottles = IngredientService.getAllIngredients()
-    pumpMap = IngredientService.getPumpMap()
+    pump_map = IngredientService.getPumpMap()
     bottles = order_bottles(bottles, pump_map)
     flash(name + ' deleted')
     return redirect('/admin')

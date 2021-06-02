@@ -33,7 +33,7 @@
       {% for id, bottle in bottles.items(): %}
 
         <div class="list-group-item flex-column align-items-start">
-          {% if loop.index <= 6 %}
+          {% if loop.index <= pumps %}
           <span class="titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
           {% else %}
           <span class="titles"> {{ bottle['name'] }} </span>
