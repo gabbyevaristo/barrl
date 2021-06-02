@@ -269,13 +269,14 @@ def pour_drink():
         del session['pour_items'][drink_id]
     else:
         session['pour_items'][drink_id]['quantity'] = str(new_quantity)
+    
+    print(drink_id)
+    PouringService.pourDrink(drink_id)
 
     # Remove pour_items session if there are no more drinks on the pour page
     if len(session['pour_items']) == 0:
         session.pop('pour_items', None)
         return jsonify('')
-    print(drink_id)
-    PouringService.pourDrink(drink_id)
 
     return jsonify({})
 
