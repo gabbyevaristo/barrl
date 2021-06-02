@@ -1,4 +1,3 @@
-from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
 from datetime import timedelta
 from pi import jsonService, MenuService, IngredientService
@@ -76,6 +75,7 @@ def update_bottles(id):
         pump_map = IngredientService.getPumpMap()
         bottles = IngredientService.getAllIngredients()
         bottles = order_bottles(bottles, pump_map)
+        flash(name + ' ingredient updated')
     return redirect('/admin')
 
 
@@ -92,6 +92,7 @@ def add_ingredient():
         IngredientService.addIngredient(name, -1, int(mL), brand, drink_type, int(estimated_fill))
         bottles = IngredientService.getAllIngredients()
         bottles = order_bottles(bottles, pump_map)
+        flash(name + ' ingredient added')
     return redirect('/admin')
 
 @app.route('/delete-ingredient/<id>', methods=["POST"])
@@ -118,6 +119,7 @@ def update_menu(id):
         drinks[id]['description'] = request.form.get('description')
         drinks[id]['image'] = image
         jsonService.saveJson(drinks, r'jsonFiles/menu.json')
+        flash(name + ' updated')
     return redirect('/admin')
 
 
@@ -136,15 +138,18 @@ def add_drink():
     if ingredients and name and image and price:
         MenuService.addDrinkToMenu(name, ingredients, request.form.get('description'), float(price), image)
         drinks = MenuService.getMenu()
+        flash(name + ' added')
     return redirect('/admin')
 
 
 @app.route('/delete-drink/<id>', methods=["POST"])
 def delete_drink(id):
     global drinks
+    name = drinks[id]['name']
     if id in drinks:
         del drinks[id]
     MenuService.removeDrinkByGuid(id)
+    flash(name + ' deleted')
     return redirect('/admin')
 
 
@@ -318,8 +323,6 @@ def stripe_webhook():
 
 def order_bottles(bottles, pump_map):
     new_bottles = {}
-    # this is a mess and I need to clean it up but it works and its 4AM
-    # this will break when less than 6 connected to the pump
     sort = [-1 for x in range(1,7)]
     for key, value in bottles.items():
         if key in pump_map:

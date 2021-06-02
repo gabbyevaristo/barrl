@@ -8,6 +8,18 @@
   <h2 class="my-3"> Admin </h2>
 </div>
 
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissable fade show messages" role="alert"> 
+        {{ message }} 
+      </div>
+    {% endfor%}
+  {% endif %}
+{% endwith %}
+
+
 <!-- Admin Tabs -->
 <ul class="nav nav-tabs" id="admin-tabs" role="tablist">
   <li class="nav-item">
@@ -53,8 +65,8 @@
                 <form class="admin-form" action="/update-bottles/{{id}}" method="post">
                   <label class="admin-label mt-2" for="name"> Ingredient *</label>
                   <input type="text" name="name" required value="{{ bottle['name'] }}">
-                  <label class="admin-label mt-3" for="ml"> mL </label>
-                  <input type="number" name="ml" value="{{ bottle['ml'] }}">
+                  <label class="admin-label mt-3" for="ml"> mL * </label>
+                  <input type="number" name="ml" required value="{{ bottle['ml'] }}">
                   <label class="admin-label mt-3" for="brand"> Brand </label>
                   <input type="text" name="brand" value="{{ bottle['brand'] }}">
                   <label class="admin-label mt-3" for="type"> Type </label>
@@ -66,8 +78,8 @@
                       <option value="mixer"> mixer </option>
                     {% endif %}
                   </select>
-                  <label class="admin-label mt-3" for="fill"> Fill % </label>
-                  <input type="number" name="fill" value="{{ bottle['estimated_fill'] }}">
+                  <label class="admin-label mt-3" for="fill"> Fill % * </label>
+                  <input type="number" name="fill" required value="{{ bottle['estimated_fill'] }}">
                   {% if id not in pump_map %}
                     <label class="admin-label mt-3" for="pump_num"> Pump # </label>
                     <select name="pump_num" style="display: block">
@@ -178,8 +190,8 @@
     <form class="admin-form" action="/add-ingredient" method="post">
       <label class="admin-label mt-2" for="name"> Ingredient *</label>
       <input type="text" name="name" required value="">
-      <label class="admin-label mt-3" for="ml"> mL </label>
-      <input type="number" name="ml" value="">
+      <label class="admin-label mt-3" for="ml"> mL * </label>
+      <input type="number" name="ml" required value="">
       <label class="admin-label mt-3" for="brand"> Brand </label>
       <input type="text" name="brand" value="">
       <label class="admin-label mt-3" for="type"> Type *</label>
@@ -187,8 +199,8 @@
         <option value="alcohol"> alcohol </option>
         <option value="mixer"> mixer </option>
       </select>
-      <label class="admin-label mt-3" for="fill"> Fill % </label>
-      <input type="number" name="fill" value="">
+      <label class="admin-label mt-3" for="fill"> Fill % * </label>
+      <input type="number" name="fill" required value="">
       <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Add Ingredient">
     </form>
   </div>
