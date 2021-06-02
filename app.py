@@ -1,4 +1,3 @@
-from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
 from datetime import timedelta
 from pi import jsonService, MenuService, IngredientService
@@ -17,19 +16,6 @@ bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
 drinks = jsonService.loadJson(r'jsonFiles/menu.json')
 pump_map = IngredientService.getPumpMap()
 
-def order_bottles(bottles, pump_map):
-    new_bottles = {}
-    # this is a mess and I need to clean it up but it works and its 4AM
-    sort = [0 for x in range(1,7)]
-    for key, value in bottles.items():
-        if key in pump_map:
-            sort[pump_map[key]] = key
-    for key in sort:
-        new_bottles[key] = bottles[key]
-    for key, value in bottles.items():
-        if key not in pump_map:
-            new_bottles[key] = value
-    return new_bottles
 
 @app.route('/', methods=["GET"])
 def index():
@@ -58,7 +44,8 @@ def admin_login():
 def admin():
     if request.method == "GET":
         if 'admin_login' in session:
-            return render_template('admin.html', bottles=order_bottles(bottles, pump_map), drinks=drinks, pump_map=pump_map, show='admin')
+            return render_template('admin.html', bottles=order_bottles(bottles, pump_map),
+            drinks=drinks, pump_map=pump_map, pumps=(len(pump_map)/3), show='admin')
         else:
             return redirect('/admin_login')
 
@@ -69,52 +56,72 @@ def logout():
         session.pop('admin_login', None)
     return jsonify({})
 
+
 @app.route('/update-bottles/<id>', methods=["POST"])
 def update_bottles(id):
     global bottles
     global pump_map
     name = request.form.get('name')
-    mL = int(request.form.get('ml'))
+    mL = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
-    estimated_fill = int(request.form.get('fill'))
-    pump_num = IngredientService.getPumpMap().get(id)
-    pump_num = -1 if not pump_num else pump_num
-    IngredientService.modifyIngredient(id, name, pump_num , mL, brand, drink_type, estimated_fill)
-    bottles = IngredientService.getAllIngredients()
-    bottles = order_bottles(bottles, pump_map)
-    return redirect('/admin')
-
-@app.route('/set-pump/<id>', methods=["POST"])
-def set_pump(id):
-    global pump_map
-    pump_num = int(request.form.get('pump_num'))
-    if IngredientService.isValidPumpNumber(pump_num):
+    estimated_fill = request.form.get('fill')
+    pump_num = pump_map.get(id)
+    if pump_num == None:
+        pump_num = int(request.form.get('pump_num'))
+    if name:
+        IngredientService.modifyIngredient(id, name, pump_num , int(mL), brand, drink_type, int(estimated_fill))
         IngredientService.modifyPumpMapp(id, pump_num)
         pump_map = IngredientService.getPumpMap()
+        bottles = IngredientService.getAllIngredients()
+        bottles = order_bottles(bottles, pump_map)
+        flash(name + ' ingredient updated')
     return redirect('/admin')
+
 
 @app.route('/add-ingredient', methods=["POST"])
 def add_ingredient():
     global bottles
     global pump_map
     name = request.form.get('name')
-    mL = int(request.form.get('ml'))
+    mL = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
-    estimated_fill = int(request.form.get('fill'))
-    IngredientService.addIngredient(name, -1, mL, brand, drink_type, estimated_fill)
-    bottles = IngredientService.getAllIngredients()
-    bottles = order_bottles(bottles, pump_map)
+    estimated_fill = request.form.get('fill')
+    if name:
+        IngredientService.addIngredient(name, -1, int(mL), brand, drink_type, int(estimated_fill))
+        bottles = IngredientService.getAllIngredients()
+        bottles = order_bottles(bottles, pump_map)
+        flash(name + ' ingredient added')
     return redirect('/admin')
+
+
+@app.route('/delete-ingredient/<id>', methods=["POST"])
+def delete_ingredient(id):
+    global bottles
+    global pump_map
+    name = bottles[id]['name']
+    IngredientService.removeIngredientByGuid(id)
+    bottles = IngredientService.getAllIngredients()
+    pump_map = IngredientService.getPumpMap()
+    bottles = order_bottles(bottles, pump_map)
+    flash(name + ' deleted')
+    return redirect('/admin')
+
 
 @app.route('/update-menu/<id>', methods=["POST"])
 def update_menu(id):
-    drinks[id]['name'] = request.form.get('name')
-    drinks[id]['price'] = float(request.form.get('price'))
-    drinks[id]['description'] = request.form.get('description')
-    drinks[id]['image'] = request.form.get('image')
-    jsonService.saveJson(drinks, r'jsonFiles/menu.json')
+    global drinks
+    name = request.form.get('name')
+    price = request.form.get('price')
+    image = request.form.get('image')
+    if name and price and image:
+        drinks[id]['name'] = name
+        drinks[id]['price'] = float(price)
+        drinks[id]['description'] = request.form.get('description')
+        drinks[id]['image'] = image
+        jsonService.saveJson(drinks, r'jsonFiles/menu.json')
+        flash(name + ' updated')
     return redirect('/admin')
 
 
@@ -127,17 +134,24 @@ def add_drink():
         ml = request.form.get(f'ml{x}')
         if id and id != "none" and ml != 0:
             ingredients[id] = ml
-    if ingredients:
-        MenuService.addDrinkToMenu(request.form.get('name'), ingredients, request.form.get('description'), float(request.form.get('price')), request.form.get('image'))
+    name = request.form.get('name')
+    image = request.form.get('image')
+    price = request.form.get('price')
+    if ingredients and name and image and price:
+        MenuService.addDrinkToMenu(name, ingredients, request.form.get('description'), float(price), image)
         drinks = MenuService.getMenu()
+        flash(name + ' added')
     return redirect('/admin')
 
 
 @app.route('/delete-drink/<id>', methods=["POST"])
 def delete_drink(id):
+    global drinks
+    name = drinks[id]['name']
     if id in drinks:
         del drinks[id]
     MenuService.removeDrinkByGuid(id)
+    flash(name + ' deleted')
     return redirect('/admin')
 
 
@@ -152,10 +166,11 @@ def mvp():
 
 @app.route('/menu')
 def menu():
+    filtered_drinks = {k:v for k,v in drinks.items() if MenuService.isValidDrinkToPour(k)}
     if 'shopping_cart' not in session:
-        return render_template('menu.html', drinks=drinks, cart_quantity='', show='user')
+        return render_template('menu.html', drinks=filtered_drinks, cart_quantity='', show='user')
     else:
-        return render_template('menu.html', drinks=drinks, cart_quantity=session['cart_quantity'], show='user')
+        return render_template('menu.html', drinks=filtered_drinks, cart_quantity=session['cart_quantity'], show='user')
 
 
 @app.route('/cart')
@@ -306,6 +321,21 @@ def stripe_webhook():
         checkout_session = event['data']['object']
 
     return {}
+
+
+def order_bottles(bottles, pump_map):
+    new_bottles = {}
+    sort = [-1 for x in range(1,7)]
+    for key, value in bottles.items():
+        if key in pump_map:
+            sort[pump_map[key]] = key
+    for key in sort:
+        if key != -1:
+            new_bottles[key] = bottles[key]
+    for key, value in bottles.items():
+        if key not in pump_map:
+            new_bottles[key] = value
+    return new_bottles
 
 
 def get_cart_quantity():

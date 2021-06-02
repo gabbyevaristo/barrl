@@ -8,6 +8,18 @@
   <h2 class="my-3"> Admin </h2>
 </div>
 
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-success alert-dismissable fade show messages" role="alert"> 
+        {{ message }} 
+      </div>
+    {% endfor%}
+  {% endif %}
+{% endwith %}
+
+
 <!-- Admin Tabs -->
 <ul class="nav nav-tabs" id="admin-tabs" role="tablist">
   <li class="nav-item">
@@ -33,7 +45,7 @@
       {% for id, bottle in bottles.items(): %}
 
         <div class="list-group-item flex-column align-items-start">
-          {% if loop.index <= 6 %}
+          {% if loop.index <= pumps %}
           <span class="titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
           {% else %}
           <span class="titles"> {{ bottle['name'] }} </span>
@@ -51,10 +63,10 @@
 
               <div class="modal-body">
                 <form class="admin-form" action="/update-bottles/{{id}}" method="post">
-                  <label class="admin-label mt-2" for="name"> Content </label>
-                  <input type="text" name="name" value="{{ bottle['name'] }}">
-                  <label class="admin-label mt-3" for="ml"> mL </label>
-                  <input type="number" name="ml" value="{{ bottle['ml'] }}">
+                  <label class="admin-label mt-2" for="name"> Ingredient *</label>
+                  <input type="text" name="name" required value="{{ bottle['name'] }}">
+                  <label class="admin-label mt-3" for="ml"> mL * </label>
+                  <input type="number" name="ml" required value="{{ bottle['ml'] }}">
                   <label class="admin-label mt-3" for="brand"> Brand </label>
                   <input type="text" name="brand" value="{{ bottle['brand'] }}">
                   <label class="admin-label mt-3" for="type"> Type </label>
@@ -66,22 +78,22 @@
                       <option value="mixer"> mixer </option>
                     {% endif %}
                   </select>
-                  <label class="admin-label mt-3" for="fill"> Fill % </label>
-                  <input type="number" name="fill" value="{{ bottle['estimated_fill'] }}">
-                  <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Save">
+                  <label class="admin-label mt-3" for="fill"> Fill % * </label>
+                  <input type="number" name="fill" required value="{{ bottle['estimated_fill'] }}">
+                  {% if id not in pump_map %}
+                    <label class="admin-label mt-3" for="pump_num"> Pump # </label>
+                    <select name="pump_num" style="display: block">
+                      <option value=-1> </option>
+                      {% for x in range(0,6): %}
+                      <option value="{{x}}"> {{x + 1}} </option>
+                      {% endfor %}
+                    </select>
+                  {% endif %}
+                  <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
                 </form>
-                {% if id not in pump_map %}
-                <form class="admin-form" action="/set-pump/{{id}}" method="post">
-                  <label class="admin-label mt-3" for="pump_num"> Pump # </label>
-                  <select name="pump_num" style="display: block">
-                    <option value=-1> </option>
-                    {% for x in range(0,6): %}
-                    <option value="{{x}}"> {{x + 1}} </option>
-                    {% endfor %}
-                  </select>
-                  <input id="set-pump-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Set Pump">
+                <form class="admin-form" action="/delete-ingredient/{{id}}" method="post">
+                  <input id="delete-drink-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
                 </form>
-                {% endif %}
               </div>
 
             </div>
@@ -113,15 +125,15 @@
 
               <div class="modal-body">
                 <form class="admin-form" action="/update-menu/{{id}}" method="post">
-                  <label class="mt-2" for="name"> Name: </label>
-                  <input type="text" name="name" value="{{ drink['name'] }}">
-                  <label class="mt-3" for="price"> Price: </label>
-                  <input type="number" name="price" value="{{ drink['price'] }}">
+                  <label class="mt-2" for="name"> Name: *</label>
+                  <input type="text" name="name" required value="{{ drink['name'] }}">
+                  <label class="mt-3" for="price"> Price: *</label>
+                  <input type="number" step="0.01" name="price" required value="{{ drink['price'] }}">
                   <label class="mt-3" for="description"> Description: </label>
-                  <input type="text" name="description" value="{{ drink['description'] }}">
-                  <label class="mt-3" for="image"> Image URL: </label>
-                  <input type="text" name="image" value="{{ drink['image'] }}">
-                   <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Save">
+                  <textarea name="description" rows="2" cols="24">{{ drink['description'] }}</textarea>
+                  <label class="mt-3" for="image"> Image URL: *</label>
+                  <input type="text" name="image" required value="{{ drink['image'] }}">
+                   <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
                 </form>
                 <form class="admin-form" action="/delete-drink/{{id}}" method="post">
                   <input id="delete-drink-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
@@ -139,16 +151,20 @@
   <!-- Add drink -->
   <div class="tab-pane fade" id="add-drink-content" role="tabpanel">
     <form class="admin-form" action="/add-drink" method="post">
-      <label class="mt-2" for="name"> Name: </label>
-      <input type="text" name="name">
-      <label class="mt-3" for="price"> Price: </label>
-      <input type="number" step="0.01" name="price">
+      <label class="mt-2" for="name"> Name: *</label>
+      <input type="text" required name="name">
+      <label class="mt-3" for="price"> Price: *</label>
+      <input type="number" required step="0.01" name="price">
       <label class="mt-3" for="description"> Description: </label>
-      <input type="text" name="description">
-      <label class="mt-3" for="image"> Image URL: </label>
-      <input type="text" name="image">
+      <textarea name="description" rows="2" cols="24"></textarea>
+      <label class="mt-3" for="image"> Image URL: *</label>
+      <input type="text" required name="image">
       {% for x in range(1,7): %}
-      <label class="admin-label mt-3" for="ing{{x}}"> Ingredient {{x}}: </label>
+        {% if x == 1 %}
+          <label class="admin-label mt-3" for="ing{{x}}"> Ingredient {{x}}: *</label>
+        {% else %}
+          <label class="admin-label mt-3" for="ing{{x}}"> Ingredient {{x}}: </label>
+        {% endif %}
       <select name="ing{{x}}" style="display: block">
         {% if x > 1 %}
           <option value="none">  </option>
@@ -157,30 +173,35 @@
           <option value={{id}}> {{bottle['name']}} </option>
         {% endfor %}
       </select>
-      <label class="admin-label mt-3" for="ml{{x}}"> mL: </label>
-      <input type="number" name="ml{{x}}" value="">
+        {% if x == 1 %}
+          <label class="admin-label mt-3" for="ml{{x}}"> mL: *</label>
+          <input type="number" name="ml{{x}}" required value="">
+        {% else %}
+          <label class="admin-label mt-3" for="ml{{x}}"> mL: </label>
+          <input type="number" name="ml{{x}}" value="">
+        {% endif %}
       {% endfor %}
-      <input class="mt-3" type="submit" value="Add Drink to Menu">
+      <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Add Drink to Menu">
     </form>
   </div>
 
   <!-- Add ingredient -->
   <div class="tab-pane fade" id="add-ing-content" role="tabpanel">
     <form class="admin-form" action="/add-ingredient" method="post">
-      <label class="admin-label mt-2" for="name"> Content </label>
-      <input type="text" name="name" value="">
-      <label class="admin-label mt-3" for="ml"> mL </label>
-      <input type="number" name="ml" value="">
+      <label class="admin-label mt-2" for="name"> Ingredient *</label>
+      <input type="text" name="name" required value="">
+      <label class="admin-label mt-3" for="ml"> mL * </label>
+      <input type="number" name="ml" required value="">
       <label class="admin-label mt-3" for="brand"> Brand </label>
       <input type="text" name="brand" value="">
-      <label class="admin-label mt-3" for="type"> Type </label>
-      <select name="type" style="display: block">
+      <label class="admin-label mt-3" for="type"> Type *</label>
+      <select name="type" required style="display: block">
         <option value="alcohol"> alcohol </option>
         <option value="mixer"> mixer </option>
       </select>
-      <label class="admin-label mt-3" for="fill"> Fill % </label>
-      <input type="number" name="fill" value="">
-      <input class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Save">
+      <label class="admin-label mt-3" for="fill"> Fill % * </label>
+      <input type="number" name="fill" required value="">
+      <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Add Ingredient">
     </form>
   </div>
 

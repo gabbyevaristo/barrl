@@ -8,6 +8,16 @@
   <h2 class="my-3"> Management </h2>
 </div>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-danger alert-dismissable fade show messages" role="alert"> 
+        {{ message }} 
+      </div>
+    {% endfor%}
+  {% endif %}
+{% endwith %}
+
 
 <!-- Sign In -->
 <div class="ml-4 mb-5">

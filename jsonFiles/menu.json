@@ -1,7 +1,7 @@
 {
- "0f9fd061-c2c2-11eb-8bcb-9cb6d091f27c": {
+    "0f9fd061-c2c2-11eb-8bcb-9cb6d091f27c": {
         "description": "Vodka mixed with club soda",
-        "image": "",
+        "image": "https://lh3.googleusercontent.com/proxy/fr6vkaArG8MQzCn9dCt6_p81GJEVPzVuQ9u0QdKvcUATKCwDYdvlWfi1V-kWyTpT03gWH0moghEyLt3iDtz53lSGt8Olnf0Dk--qV7glUg",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
             "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 150.0
@@ -11,7 +11,7 @@
     },
     "2524c0a3-c2c2-11eb-b50a-9cb6d091f27c": {
         "description": "Vodka with lime juice",
-        "image": "",
+        "image": "https://cdn.diffords.com/contrib/stock-images/2016/12/44/2016d7bf2b3735ae8e70b6dc5cf4ca88253a.jpg",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
             "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": 100.0
@@ -21,7 +21,7 @@
     },
     "372a7e5f-c2c2-11eb-aa21-9cb6d091f27c": {
         "description": "Vodka mixed with Sprite",
-        "image": "",
+        "image": "https://makemeacocktail.com/images/cocktails/5833/vodka_tonic.jpg",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
             "d6d8ea62-c2c1-11eb-8416-9cb6d091f27c": 150.0
@@ -31,7 +31,7 @@
     },
     "54c893cb-c2c2-11eb-8ae6-9cb6d091f27c": {
         "description": "Tequila mixed with Sprite",
-        "image": "",
+        "image": "https://us.inshaker.com/uploads/cocktail/promo/285/1542205201-Vodka-with-Sprite-_promo.jpg",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
             "d6d8ea62-c2c1-11eb-8416-9cb6d091f27c": 150.0
@@ -41,7 +41,7 @@
     },
     "68471355-c2c2-11eb-8e32-9cb6d091f27c": {
         "description": "Tequila mixed with club soda",
-        "image": "",
+        "image": "https://cdn.diffords.com/contrib/stock-images/2018/05/5af309b85f8e8.jpg",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
             "3f4d9943-bb21-11eb-82b3-b831b5854dfb": 150.0
@@ -49,9 +49,20 @@
         "name": "Tequila Soda",
         "price": 6.99
     },
+    "7438ec66-c336-11eb-bdc6-98e0d99896b3": {
+        "description": "Tequila mixed with orange juice and lime juice",
+        "image": "https://cdn.diffords.com/contrib/stock-images/2016/11/14/2016e70684bcb474df38eae7903acf61f2ce.jpg",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
+            "d261a66e-c2b3-11eb-b026-9cb6d091f27c": 100.0,
+            "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": 50.0
+        },
+        "name": "Citrus Tequila",
+        "price": 7.99
+    },
     "99ce0ca0-c2c1-11eb-859c-9cb6d091f27c": {
         "description": "A standard shot of vodka",
-        "image": "",
+        "image": "https://krin.co.uk/wp-content/uploads/2017/05/LSA-International-Bar-Vodka-Shot-Glass-Set-100ml-G311-04-991-glass-engraving.jpg",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0
         },
@@ -59,8 +70,8 @@
         "price": 4.99
     },
     "9b8a9605-c2c2-11eb-a698-9cb6d091f27c": {
-        "description": "Tequila mixed with OJ and grenadine",
-        "image": "",
+        "description": "Tequila mixed with orange juice and grenadine",
+        "image": "https://s3.amazonaws.com/commonwealthcocktailsimages/TfgnFAuBAxIHziuA-Tequila-Sunrise-IBA-commonwealthcocktails.png",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
             "72492eaa-c2c2-11eb-b1fc-9cb6d091f27c": 50.0,
@@ -69,9 +80,19 @@
         "name": "Tequila Sunrise",
         "price": 7.99
     },
+    "a9caa336-c333-11eb-a52f-98e0d99896b3": {
+        "description": "Tequila mixed with orange juice",
+        "image": "https://images.absolutdrinks.com/drink-images/Raw/Absolut/3ba40b15-f3a1-4457-ae8d-9fd43d80664b.jpg?imwidth=500",
+        "ings": {
+            "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
+            "d261a66e-c2b3-11eb-b026-9cb6d091f27c": 150.0
+        },
+        "name": "Tequila Screwdriver",
+        "price": 7.99
+    },
     "b19592df-c2c2-11eb-8d94-9cb6d091f27c": {
         "description": "Tequila with lime juice",
-        "image": "",
+        "image": "https://cdn.diffords.com/contrib/stock-images/2018/05/5af3181c612a3.jpg",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
             "ea60bea4-c2c1-11eb-807b-9cb6d091f27c": 100.0
@@ -81,7 +102,7 @@
     },
     "b1c90b91-c2c1-11eb-a8b2-9cb6d091f27c": {
         "description": "A standard shot of tequila",
-        "image": "",
+        "image": "https://img.freepik.com/free-photo/shot-vodka-isolated-white-surface_185193-32259.jpg?size=626&ext=jpg",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0
         },
@@ -90,7 +111,7 @@
     },
     "c912e482-c2c2-11eb-8e4a-9cb6d091f27c": {
         "description": "A classic margarita with tequila, lime juice, and triple sec",
-        "image": "",
+        "image": "https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1616527475-31ioBkcVUeL.jpg?crop=1xw:1xh;center,top&resize=480:*",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
             "798ec626-c2c2-11eb-bd83-9cb6d091f27c": 50.0,
@@ -100,8 +121,8 @@
         "price": 8.99
     },
     "dfb5405d-c2c2-11eb-96f3-9cb6d091f27c": {
-        "description": "Vodka mixed with OJ and grenadine",
-        "image": "",
+        "description": "Vodka mixed with orange juice and grenadine",
+        "image": "https://cdn.diffords.com/contrib/stock-images/2017/8/49/201746c438fdcb534ea73fd518baa2a0e386.jpg",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
             "72492eaa-c2c2-11eb-b1fc-9cb6d091f27c": 50.0,
@@ -112,12 +133,12 @@
     },
     "ea70a1a7-c2b9-11eb-98d4-9cb6d091f27c": {
         "description": "Vodka mixed with orange juice",
-        "image": "",
+        "image": "https://cdn.diffords.com/contrib/stock-images/2016/1/42/2016f9f668ba393c4d65892a8dcdf24bc30d.jpg",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
             "d261a66e-c2b3-11eb-b026-9cb6d091f27c": 150.0
         },
-        "name": "Screwdriver",
+        "name": "Vodka Screwdriver",
         "price": 6.99
     }
 }
