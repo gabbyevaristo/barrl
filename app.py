@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
 from datetime import timedelta
-from pi import jsonService, MenuService, IngredientService
+from pi import jsonService, MenuService, IngredientService, PouringService
 import json
 import stripe
 
@@ -274,6 +274,8 @@ def pour_drink():
     if len(session['pour_items']) == 0:
         session.pop('pour_items', None)
         return jsonify('')
+    
+    PouringService.pourDrink(drink_id)
 
     return jsonify({})
 
