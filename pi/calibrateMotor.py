@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 pinNum = 36
-timeSleep = 60 
+timeSleep = 10 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(pinNum, GPIO.OUT, initial=GPIO.HIGH)
 
