@@ -1,6 +1,6 @@
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
 from datetime import timedelta
-from pi import jsonService, MenuService, IngredientService
+from pi import jsonService, MenuService, IngredientService, PouringService
 import json
 import stripe
 
@@ -269,6 +269,9 @@ def pour_drink():
         del session['pour_items'][drink_id]
     else:
         session['pour_items'][drink_id]['quantity'] = str(new_quantity)
+    
+    print(drink_id)
+    PouringService.pourDrink(drink_id)
 
     # Remove pour_items session if there are no more drinks on the pour page
     if len(session['pour_items']) == 0:

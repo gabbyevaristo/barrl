@@ -1,6 +1,6 @@
 window.onload = set_buttons;
 
-var wait_time = 5000;
+var wait_time = 50000;
 
 function set_buttons() {
     pour_buttons = document.getElementsByClassName('pour-btn');
