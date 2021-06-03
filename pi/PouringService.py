@@ -1,6 +1,7 @@
 import time
 import pi.IngredientService as IngredientService
 import pi.MenuService as MenuService
+from joblib import Parallel, delayed
 
 import os 
 # if os.environ['ENV'] == "dev":
@@ -50,7 +51,8 @@ def pourFromPump(pumpNumber, amount):
     print("Pin OFF %d" % pinNumber)
 
 
-def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredientfilePath=IngredientService.defaultIngredientfilePath, pumMapfilePath=IngredientService.defaultPumpMapfilePath):
+# if n_jobs is -1 then standard serial pumping loop is excecuted
+def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredientfilePath=IngredientService.defaultIngredientfilePath, pumMapfilePath=IngredientService.defaultPumpMapfilePath, n_jobs=6):
     if not MenuService.isValidDrinkToPour(drinkGuid, menuFilePath=menuFilePath, ingredientfilePath=ingredientfilePath, pumMapfilePath=pumMapfilePath):
         print("Skipping drink to pour due to invalid drink enty")
         return
@@ -59,9 +61,13 @@ def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredien
     drink = menu[drinkGuid]
     pumpMap = IngredientService.getPumpMap()
 
-    for ing, amount in drink["ings"].items():
-        pumpNum = pumpMap[ing]
-        pourFromPump(pumpNum, amount)
+    if n_jobs == -1:
+        for ing, amount in drink["ings"].items():
+            pumpNum = pumpMap[ing]
+            pourFromPump(pumpNum, amount)
+    else:
+        Parallel(n_jobs=n_jobs)(delayed(pourFromPump)(pumpMap[ing], amount) for ing, amount in drink["ings"].items())
+
 
 
 # be sure user attaches water to the pumps before pumps are turned on
