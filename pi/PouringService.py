@@ -9,7 +9,8 @@ import os
 # else:
 #     import RPi.GPIO as GPIO
 
-import RPi.GPIO as GPIO
+import pi.MockGpio as GPIO
+# import RPi.GPIO as GPIO
 
 
 # get mapping of pump numbers to pins
