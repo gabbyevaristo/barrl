@@ -2,6 +2,7 @@
 
 {% block title %} Admin {% endblock %}
 
+
 {% block content %}
 
 <div class="pt-5 mt-2 mb-4 text-center">
@@ -12,65 +13,69 @@
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}
-      <div class="alert alert-success alert-dismissable fade show messages" role="alert"> 
-        {{ message }} 
+      <div class="alert alert-success alert-dismissable fade show messages" role="alert">
+        {{ message }}
       </div>
-    {% endfor%}
+    {% endfor %}
   {% endif %}
 {% endwith %}
 
 
-<!-- Admin Tabs -->
-<ul class="nav nav-tabs" id="admin-tabs" role="tablist">
+<!-- Admin tabs -->
+<ul id="admin-tabs" class="nav nav-tabs" role="tablist">
   <li class="nav-item">
-    <a class="nav-link active" id="bottles-tab" data-toggle="tab" href="#bottles-content" role="tab" aria-selected="true"> Manage Bottles </a>
+    <a id="bottles-tab" class="nav-link active" data-toggle="tab" href="#bottles-content" role="tab" aria-selected="true"> Manage Bottles </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="menu-tab" data-toggle="tab" href="#menu-content" role="tab" aria-selected="false"> Manage Menu </a>
+    <a id="menu-tab" class="nav-link" data-toggle="tab" href="#menu-content" role="tab" aria-selected="false"> Manage Menu </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="add-drink-tab" data-toggle="tab" href="#add-drink-content" role="tab" aria-selected="false"> Add Drink </a>
+    <a id="add-drink-tab" class="nav-link" data-toggle="tab" href="#add-drink-content" role="tab" aria-selected="false"> Add Drink </a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" id="add-ing-tab" data-toggle="tab" href="#add-ing-content" role="tab" aria-selected="false"> Add Ingredient </a>
+    <a id="add-ing-tab" class="nav-link" data-toggle="tab" href="#add-ing-content" role="tab" aria-selected="false"> Add Ingredient </a>
   </li>
 </ul>
 
-<div class="tab-content ml-4 mt-4 mr-4 mb-5" id="admin-content">
 
-  <!-- Bottles -->
-  <div class="tab-pane fade show active" id="bottles-content" role="tabpanel">
+<div id="admin-content" class="tab-content ml-4 mt-4 mr-4 mb-5">
 
+  <!-- Manage bottles -->
+  <div id="bottles-content" class="tab-pane fade show active" role="tabpanel">
     <div id="bottles" class="list-group">
       {% for id, bottle in bottles.items(): %}
 
+        <!-- Bottle items -->
         <div class="list-group-item flex-column align-items-start">
-          {% if loop.index <= pumps %}
-          <span class="titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
+          <!-- Only prefix item with "Bottle" if it is currenty connected to a pump -->
+          {% if loop.index <= pump_num %}
+            <span class="titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
           {% else %}
-          <span class="titles"> {{ bottle['name'] }} </span>
+            <span class="titles"> {{ bottle['name'] }} </span>
           {% endif %}
-          <button data-id="{{ id }}" class="btn btn-dark btn-sm mb-1 mr-4 edit-bottle-btn pull-right" type="button"> Edit </button>
+          <button data-id="{{ id }}" class="btn btn-dark btn-sm mb-1 mr-4 pull-right edit-bottle-btn" type="button"> Edit </button>
         </div>
 
-        <!-- Edit bottle modal -->
+
+        <!-- Edit bottle item modals -->
         <div id="modal-admin-bottle-{{ id }}" class="modal fade" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
+
               <div class="modal-header">
                 <h5 class="modal-title font-weight-bold"> {{ bottle['name'] }} </h5>
               </div>
 
               <div class="modal-body">
-                <form class="admin-form" action="/update-bottles/{{id}}" method="post">
-                  <label class="admin-label mt-2" for="name"> Ingredient *</label>
-                  <input type="text" name="name" required value="{{ bottle['name'] }}">
-                  <label class="admin-label mt-3" for="ml"> mL * </label>
-                  <input type="number" name="ml" required value="{{ bottle['ml'] }}">
-                  <label class="admin-label mt-3" for="brand"> Brand </label>
+                <form class="admin-form" action="/update-bottles/{{ id }}" method="post">
+                  <label class="admin-label mt-2" for="name"> Ingredient: <span class="asterisk">*</span></label>
+                  <input type="text" name="name" value="{{ bottle['name'] }}" required>
+                  <label class="admin-label mt-3" for="ml"> mL: <span class="asterisk">*</span></label>
+                  <input type="number" name="ml" value="{{ bottle['ml'] }}" required>
+                  <label class="admin-label mt-3" for="brand"> Brand: </label>
                   <input type="text" name="brand" value="{{ bottle['brand'] }}">
-                  <label class="admin-label mt-3" for="type"> Type </label>
-                  <select name="type">
+                  <label class="admin-label mt-3" for="type"> Type: <span class="asterisk">*</span></label>
+                  <select class="selector" name="type" required>
                     <option value="{{ bottle['type'] }}" selected> {{ bottle['type'] }} </option>
                     {% if bottle['type'] == "mixer" %}
                       <option value="alcohol"> alcohol </option>
@@ -78,21 +83,21 @@
                       <option value="mixer"> mixer </option>
                     {% endif %}
                   </select>
-                  <label class="admin-label mt-3" for="fill"> Fill % * </label>
-                  <input type="number" name="fill" required value="{{ bottle['estimated_fill'] }}">
+                  <label class="admin-label mt-3" for="fill"> Fill %: <span class="asterisk">*</span></label>
+                  <input type="number" name="fill" value="{{ bottle['estimated_fill'] }}" required>
                   {% if id not in pump_map %}
-                    <label class="admin-label mt-3" for="pump_num"> Pump # </label>
-                    <select name="pump_num" style="display: block">
+                    <label class="admin-label mt-3" for="pump_num"> Pump #: </label>
+                    <select class="selector" name="pump_num">
                       <option value=-1> </option>
-                      {% for x in range(0,6): %}
-                      <option value="{{x}}"> {{x + 1}} </option>
+                      {% for x in range(6): %}
+                        <option value="{{ x }}"> {{ x + 1 }} </option>
                       {% endfor %}
                     </select>
                   {% endif %}
                   <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
                 </form>
-                <form class="admin-form" action="/delete-ingredient/{{id}}" method="post">
-                  <input id="delete-drink-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
+                <form class="admin-form" action="/delete-ingredient/{{ id }}" method="post">
+                  <input id="delete-drink-btn" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
                 </form>
               </div>
 
@@ -104,39 +109,42 @@
     </div>
   </div>
 
-  <!-- Menu -->
-  <div class="tab-pane fade" id="menu-content" role="tabpanel">
 
-    <div id="menu-items" class="list-group">
+  <!-- Manage menu -->
+  <div id="menu-content" class="tab-pane fade" role="tabpanel">
+    <div class="list-group">
       {% for id, drink in drinks.items(): %}
 
+        <!-- Menu items -->
         <div class="list-group-item flex-column align-items-start">
           <span class="titles"> {{ drink['name'] }} </span>
           <button data-id="{{ id }}" class="btn btn-dark btn-sm mb-1 mr-4 edit-drink-btn pull-right" type="button"> Edit </button>
         </div>
 
-        <!-- Edit drink modal -->
+
+        <!-- Edit menu item modals -->
         <div id="modal-admin-menu-{{ id }}" class="modal fade" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
+
               <div class="modal-header">
                 <h5 class="modal-title font-weight-bold"> {{ drink['name'] }} </h5>
               </div>
 
               <div class="modal-body">
-                <form class="admin-form" action="/update-menu/{{id}}" method="post">
-                  <label class="mt-2" for="name"> Name: *</label>
-                  <input type="text" name="name" required value="{{ drink['name'] }}">
-                  <label class="mt-3" for="price"> Price: *</label>
-                  <input type="number" step="0.01" name="price" required value="{{ drink['price'] }}">
+                <form class="admin-form" action="/update-menu/{{ id }}" method="post">
+                  <label class="mt-2" for="name"> Name: <span class="asterisk">*</span></label>
+                  <input type="text" name="name" value="{{ drink['name'] }}" required>
+                  <label class="mt-3" for="price"> Price: <span class="asterisk">*</span></label>
+                  <input type="number" name="price" value="{{ drink['price'] }}" step="0.01" required >
                   <label class="mt-3" for="description"> Description: </label>
-                  <textarea name="description" rows="2" cols="24">{{ drink['description'] }}</textarea>
-                  <label class="mt-3" for="image"> Image URL: *</label>
-                  <input type="text" name="image" required value="{{ drink['image'] }}">
-                   <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
+                  <textarea name="description" rows="2" cols="24"> {{ drink['description'] }} </textarea>
+                  <label class="mt-3" for="image"> Image URL: <span class="asterisk">*</span></label>
+                  <input type="text" name="image" value="{{ drink['image'] }}" required>
+                  <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Save">
                 </form>
-                <form class="admin-form" action="/delete-drink/{{id}}" method="post">
-                  <input id="delete-drink-button" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
+                <form class="admin-form" action="/delete-drink/{{ id }}" method="post">
+                  <input id="delete-drink-btn" class="btn btn-dark btn-block radius-remove mt-4 mb-3" type="submit" value="Delete">
                 </form>
               </div>
 
@@ -148,65 +156,70 @@
     </div>
   </div>
 
+
   <!-- Add drink -->
-  <div class="tab-pane fade" id="add-drink-content" role="tabpanel">
+  <div id="add-drink-content" class="tab-pane fade" role="tabpanel">
     <form class="admin-form" action="/add-drink" method="post">
-      <label class="mt-2" for="name"> Name: *</label>
-      <input type="text" required name="name">
-      <label class="mt-3" for="price"> Price: *</label>
-      <input type="number" required step="0.01" name="price">
+      <label class="mt-2" for="name"> Name: <span class="asterisk">*</span></label>
+      <input type="text" name="name" required>
+      <label class="mt-3" for="price"> Price: <span class="asterisk">*</span></label>
+      <input type="number" name="price" step="0.01" required>
       <label class="mt-3" for="description"> Description: </label>
       <textarea name="description" rows="2" cols="24"></textarea>
-      <label class="mt-3" for="image"> Image URL: *</label>
-      <input type="text" required name="image">
+      <label class="mt-3" for="image"> Image URL: <span class="asterisk">*</span></label>
+      <input type="text" name="image" required>
+
+      <!-- Ingredient and mL fields -->
       {% for x in range(1,7): %}
+        <!-- Ingredient and mL field required for first ingredient -->
         {% if x == 1 %}
-          <label class="admin-label mt-3" for="ing{{x}}"> Ingredient {{x}}: *</label>
+          <label class="admin-label mt-3" for="ing{{ x }}"> Ingredient {{ x }}: <span class="asterisk">*</span></label>
+          <select class="selector" name="ing{{ x }}" required>
+            {% for id, bottle in bottles.items(): %}
+              <option value={{ id }}> {{ bottle['name'] }} </option>
+            {% endfor %}
+          </select>
+          <label class="admin-label mt-3" for="ml{{ x }}"> mL: <span class="asterisk">*</span></label>
+          <input type="number" name="ml{{ x }}" value="" required>
         {% else %}
-          <label class="admin-label mt-3" for="ing{{x}}"> Ingredient {{x}}: </label>
-        {% endif %}
-      <select name="ing{{x}}" style="display: block">
-        {% if x > 1 %}
-          <option value="none">  </option>
-        {% endif %}
-        {% for id, bottle in bottles.items(): %}
-          <option value={{id}}> {{bottle['name']}} </option>
-        {% endfor %}
-      </select>
-        {% if x == 1 %}
-          <label class="admin-label mt-3" for="ml{{x}}"> mL: *</label>
-          <input type="number" name="ml{{x}}" required value="">
-        {% else %}
-          <label class="admin-label mt-3" for="ml{{x}}"> mL: </label>
-          <input type="number" name="ml{{x}}" value="">
+          <label class="admin-label mt-3" for="ing{{ x }}"> Ingredient {{ x }}: </label>
+          <select class="selector" name="ing{{ x }}">
+            <option value="none"> </option>
+            {% for id, bottle in bottles.items(): %}
+              <option value={{ id }}> {{ bottle['name'] }} </option>
+            {% endfor %}
+          </select>
+          <label class="admin-label mt-3" for="ml{{ x }}"> mL: </label>
+          <input type="number" name="ml{{ x }}" value="">
         {% endif %}
       {% endfor %}
+
       <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Add Drink to Menu">
     </form>
   </div>
 
+
   <!-- Add ingredient -->
-  <div class="tab-pane fade" id="add-ing-content" role="tabpanel">
+  <div id="add-ing-content" class="tab-pane fade" role="tabpanel">
     <form class="admin-form" action="/add-ingredient" method="post">
-      <label class="admin-label mt-2" for="name"> Ingredient *</label>
-      <input type="text" name="name" required value="">
-      <label class="admin-label mt-3" for="ml"> mL * </label>
-      <input type="number" name="ml" required value="">
-      <label class="admin-label mt-3" for="brand"> Brand </label>
+      <label class="admin-label mt-2" for="name"> Ingredient: <span class="asterisk">*</span></label>
+      <input type="text" name="name" value="" required>
+      <label class="admin-label mt-3" for="ml"> mL: <span class="asterisk">*</span></label>
+      <input type="number" name="ml" value="" required>
+      <label class="admin-label mt-3" for="brand"> Brand: </label>
       <input type="text" name="brand" value="">
-      <label class="admin-label mt-3" for="type"> Type *</label>
-      <select name="type" required style="display: block">
+      <label class="admin-label mt-3" for="type"> Type: <span class="asterisk">*</span></label>
+      <select class="selector" name="type" required>
         <option value="alcohol"> alcohol </option>
         <option value="mixer"> mixer </option>
       </select>
-      <label class="admin-label mt-3" for="fill"> Fill % * </label>
-      <input type="number" name="fill" required value="">
+      <label class="admin-label mt-4" for="fill"> Fill %: <span class="asterisk">*</span></label>
+      <input type="number" name="fill" value="" required>
       <input class="btn btn-dark btn-block radius-remove mt-5 mb-3" type="submit" value="Add Ingredient">
     </form>
   </div>
 
 </div>
-
 
 {% endblock %}
 

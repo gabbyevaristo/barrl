@@ -7,82 +7,78 @@
 
 {% block content %}
 
-
+<!-- Item added to cart alert -->
 <div class="pt-5 mt-2 text-center alert-container">
   <div id="add-to-cart-alert" class="alert alert-dark collapse rounded-pill center-block" role="alert">
     Item added to cart
   </div>
 </div>
 
+
 <div class="pt-5 mt-2 text-center">
     <h2 class="my-3"> Menu </h2>
 </div>
 
 
-<!-- Menu list -->
 <div id="menu" class="list-group list-group-flush">
-
-  <!-- Menu items -->
   {% for drink in drinks.keys(): %}
-    <button id="menu-item-{{ drink }}" type="button" data-index="{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start item-btn">
+
+    <!-- Menu items -->
+    <button id="menu-item-{{ drink }}" data-index="{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start item-btn" type="button">
       <div class="row menu-drink-row ml-2">
         <div class="menu-drink-img-col" class="col-2">
-          <img class="menu-drink-img" src={{ drinks[drink]["image"] }}>
+          <img src={{ drinks[drink]["image"] }} class="menu-drink-img">
         </div>
         <div class="col">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="font-weight-bold mb-1">{{ drinks[drink]["name"] }}</h5>
+              <h5 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h5>
             </div>
             <div class="small-text">
-              <p class="mb-1">{{ drinks[drink]["description"] }}</p>
-              <small id="menu-price-{{ loop.index }}">{{ drinks[drink]["price"] }}</small>
+              <p class="mb-1"> {{ drinks[drink]["description"] }} </p>
+              <small id="menu-price-{{ loop.index }}"> {{ drinks[drink]["price"] }} </small>
             </div>
         </div>
       </div>
     </button>
 
 
-    <!-- Add to cart modal -->
+    <!-- Add to cart modals -->
     <div id="modal-menu-{{ loop.index }}" class="modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
+
           <div class="modal-header">
             <h5 class="modal-title font-weight-bold"> {{ drinks[drink]["name"] }} </h5>
-            <button type="button" class="close" data-index="{{ loop.index }}" data-dismiss="modal" aria-label="Close">
+            <button class="close" data-index="{{ loop.index }}" data-dismiss="modal" type="button" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+
           <div class="modal-body">
-
             <p class="ml-1 modal-menu-ingredients"> {{ drinks[drink]["description"] }} </p>
-
-              <div class="text-center">
-                <img src={{ drinks[drink]["image"] }} class="img-fluid mt-1 modal-menu-img">
-
-                <!-- Input quantity-->
-                <div class="form-group row">
-                  <div class="input-group justify-content-center">
-                    <div class="input-group-prepend mr-2">
-                      <button id="minus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="minus" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
-                    </div>
-                    <p id="modal-menu-quantity-{{ loop.index }}" class="qty-value"> 0 </p>
-                    <div class="input-group-append ml-2">
-                      <button id="plus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="plus" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
-                    </div>
+            <div class="text-center">
+              <img src={{ drinks[drink]["image"] }} class="img-fluid mt-1 modal-menu-img">
+              <!-- Input quantity selector -->
+              <div class="form-group row">
+                <div class="input-group justify-content-center">
+                  <div class="input-group-prepend mr-2">
+                    <button id="minus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="minus" class="btn btn-outline-secondary minus-btn" type="button"> - </button>
+                  </div>
+                  <p id="modal-menu-quantity-{{ loop.index }}" class="qty-value"> 0 </p>
+                  <div class="input-group-append ml-2">
+                    <button id="plus-menu-button-{{ loop.index }}" data-index="{{ loop.index }}" data-identifier="plus" class="btn btn-outline-secondary plus-btn" type="button"> + </button>
                   </div>
                 </div>
-
               </div>
+            </div>
           </div>
-
 
           <div class="modal-footer">
             <button id="add-to-cart-button-{{ loop.index }}" data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-dark btn-block add-to-cart-btn p-3 radius-remove">
-              <span class="pull-left"> <i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span>
+              <span class="pull-left"><i class="fas fa-shopping-cart"></i> &nbsp; Add to Cart </span>
               <span id="modal-menu-price-{{ loop.index }}" class="pull-right"> </span>
             </button>
           </div>
-
 
         </div>
       </div>
@@ -91,7 +87,6 @@
   {% endfor %}
 
 </div>
-
 
 {% endblock %}
 

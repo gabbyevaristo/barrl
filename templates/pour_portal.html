@@ -2,90 +2,88 @@
 
 {% block title %} Pour Up {% endblock %}
 
+
 {% block content %}
 
-
+<!-- If there are drinks that still need to be poured -->
 {% if drinks %}
 
-<div class="pt-5 mt-2 text-center">
-    <h2 class="my-3"> Pour Up </h2>
-</div>
+    <div class="pt-5 mt-2 text-center">
+        <h2 class="my-3"> Pour Up </h2>
+    </div>
 
 
-<div class="pt-3 text-center">
-    <h6 class="my-3"> Place cup in dispenser before you pour </h6>
-</div>
+    <div class="pt-3 text-center">
+        <h6 class="my-3"> Place cup in dispenser before you pour </h6>
+    </div>
 
 
-<!-- Progress bar -->
-<div class="col-xs-12 col-sm-12 progress-container mb-5">
-    <div id="progress-container" class="progress progress-striped active position-relative">
-        <div id="progress-bar" class="progress-bar bg-dark">
-            <p id="current-mixer" class="justify-content-center d-flex position-absolute w-100"></p>
+    <!-- Progress bar -->
+    <div class="col-xs-12 col-sm-12 progress-container mb-5">
+        <div id="progress-container" class="progress progress-striped active position-relative">
+            <div id="progress-bar" class="progress-bar bg-dark">
+                <p id="current-mixer" class="justify-content-center d-flex position-absolute w-100"></p>
+            </div>
         </div>
     </div>
-</div>
 
 
-<!-- Pour portal -->
-<div class="container mb-4">
-    <div id="pour-portal" class="list-group list-group-flush">
+    <!-- Pour container -->
+    <div class="container mb-4">
+        <div id="pour-portal" class="list-group list-group-flush">
 
-    {% for drink in drinks.keys(): %}
+        <!-- List of drinks that need to be poured -->
+        {% for drink in drinks.keys(): %}
+            {% set outer_loop = loop %}
+            {% for _ in range(drinks[drink]["quantity"] | int): %}
+                {% set drink_index = [ outer_loop.index, loop.index ] | join("-") %}
 
-        {% set outer_loop = loop %}
-        {% for _ in range(drinks[drink]["quantity"] | int): %}
-            {% set drink_index = [ outer_loop.index, loop.index ] | join("-") %}
-
-            <div id="pour-item-{{ drink_index }}" data-index="{{ drink_index }}" class="list-group-item list-group-item-action flex-column align-items-start">
-                <div class="row ml-2">
-                    <div class="col-1 pour-drink-img-col">
-                        <img class="cart-drink-img" src={{ drinks[drink]["image"] }}>
-                    </div>
-                    <div class="col-6 ml-3">
-                        <div class="d-flex w-100 justify-content-between">
-                        <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name">{{ drinks[drink]["name"] }}</p>
+                <div id="pour-item-{{ drink_index }}" data-index="{{ drink_index }}" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <div class="row ml-2">
+                        <div class="col-1 pour-drink-img-col">
+                            <img src={{ drinks[drink]["image"] }} class="cart-drink-img">
+                        </div>
+                        <div class="col-6 ml-3">
+                            <div class="d-flex w-100 justify-content-between">
+                                <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name"> {{ drinks[drink]["name"] }} </p>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button id="pour-button-{{ drink_index }}" data-index="{{ drink_index }}" data-id={{ drink }} class="btn btn-dark btn-sm mt-2 mb-1 mr-4 pour-btn pull-right" type="button"> Pour </button>
                         </div>
                     </div>
-                    <div class="col">
-                        <button id="pour-button-{{ drink_index }}" data-index="{{ drink_index }}" data-id={{ drink }} class="btn btn-dark btn-sm mt-2 mb-1 mr-4 pour-btn pull-right" type="button"> Pour </button>
-                    </div>
                 </div>
-            </div>
 
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
 
+        </div>
     </div>
-</div>
 
 
+<!-- If all drinks have already been poured -->
 {% else %}
 
-
-<div class="container pt-3 pb-5 thank-you-container">
-  <div class="col">
-
-    <div class="thank-you-box font-weight-bold px-4 py-1 text-center"> 
-        <div class="text-center"><i class="bi bi-check2-circle fa-5x"></i></div>
-        <h4 class="display text-center mb-5"> Thank you for ordering with Barrl! </h4>
+    <!-- Thank you container -->
+    <div class="container pt-3 pb-5 thank-you-container">
+        <div class="col">
+            <div class="thank-you-box font-weight-bold px-4 py-1 text-center">
+                <div class="text-center"><i class="bi bi-check2-circle fa-5x"></i></div>
+                <h4 class="display text-center mb-5"> Thank you for ordering with Barrl! </h4>
+            </div>
+            <div class="pt-4 text-center">
+                <img src="https://media.istockphoto.com/vectors/champagne-glass-vector-icon-vector-id1142467597?k=6&m=1142467597&s=612x612&w=0&h=B68x9_mGfyqhqawesePpvgfj9TMsaUTLddIPWOr2LS4=" class="cheers-img">
+                <h4> Cheers! </h4>
+            </div>
+        </div>
     </div>
-    <div class="pt-4 text-center">
-        <img class="cheers-img" src="https://media.istockphoto.com/vectors/champagne-glass-vector-icon-vector-id1142467597?k=6&m=1142467597&s=612x612&w=0&h=B68x9_mGfyqhqawesePpvgfj9TMsaUTLddIPWOr2LS4=">
-        <h4> Cheers! </h4>
-    </div>
-  </div>
-</div>
-
-
 
 {% endif %}
-
 
 {% endblock %}
 
 
-{% block page_scripts %} 
+{% block page_scripts %}
 
 <script src="{{ url_for('static', filename='pour_portal.js') }}"></script>
 

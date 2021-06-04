@@ -4,9 +4,8 @@ import pi.MenuService as MenuService
 import pi.PouringService as PouringService
 
 
-
 # IngredientService.clearPumpMap()
-# IngredientService.addIngredient(name="vodka", size= "1L", ml=1000, brand= "titos", type="alchool", estimated_fill= "50%", image= "here")
+# IngredientService.addIngredient(name="Vodka", ml=1000, brand="Titos", type="alcohol", estimated_fill="50", image="here")
 # IngredientService.clearIngredients()
 # IngredientService.convertBottlesToIngredients()
 

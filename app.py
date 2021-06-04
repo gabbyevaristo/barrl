@@ -1,17 +1,19 @@
 from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
-from datetime import timedelta
 from pi import jsonService, MenuService, IngredientService, PouringService
+from datetime import timedelta
 import json
 import stripe
 
 
 app = Flask(__name__)
-app.secret_key = 'barrrrrl'
-app.permanent_session_lifetime = timedelta(hours=30)
+app.secret_key = 'barrrrl'
+app.permanent_session_lifetime = timedelta(hours=4)
 
+# Configure Stripe API keys
 app.config['STRIPE_PUBLIC_KEY'] = 'pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7RZkGhfoSNKJBLkpF0WE6A5GNGedvZ8VyzpVFb5NF5tdPJRqXmfvmu003iF1LG6k'
 app.config['STRIPE_SECRET_KEY'] = 'sk_test_51IrKAPEx3ZnFyUF0xExm1uVSSm9XzTELrGlQwLnioL1PZ7N2OnuQbxy6IkJj7Jb1j7j1PTvvsI2rR0ISXC2ypBXI00VKnWo9Cm'
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
+
 bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
 drinks = jsonService.loadJson(r'jsonFiles/menu.json')
 pump_map = IngredientService.getPumpMap()
@@ -22,7 +24,7 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/admin_login', methods=["GET","POST"])
+@app.route('/admin-login', methods=["GET","POST"])
 def admin_login():
     if request.method == "POST":
         # Confirm correct access code was inputted
@@ -30,9 +32,8 @@ def admin_login():
             session['admin_login'] = True
             return redirect('/admin')
         else:
-            # Wrong access code
             flash('Incorrect access code')
-            return redirect('/admin_login')
+            return render_template('admin_login.html')
     else:
         if 'admin_login' in session:
             return redirect('/admin')
@@ -40,14 +41,13 @@ def admin_login():
             return render_template('admin_login.html')
 
 
-@app.route('/admin', methods=["GET", "POST"])
+@app.route('/admin', methods=["GET"])
 def admin():
-    if request.method == "GET":
-        if 'admin_login' in session:
-            return render_template('admin.html', bottles=order_bottles(bottles, pump_map),
-            drinks=drinks, pump_map=pump_map, pumps=(len(pump_map)/3), show='admin')
-        else:
-            return redirect('/admin_login')
+    if 'admin_login' in session:
+        return render_template('admin.html', bottles=order_bottles(bottles, pump_map), \
+            drinks=drinks, pump_map=pump_map, pump_num=(len(pump_map) / 3), show='admin')
+    else:
+        return redirect('/admin-login')
 
 
 @app.route('/logout', methods=["POST"])
@@ -168,17 +168,17 @@ def mvp():
 def menu():
     filtered_drinks = {k:v for k,v in drinks.items() if MenuService.isValidDrinkToPour(k)}
     if 'shopping_cart' not in session:
-        return render_template('menu.html', drinks=filtered_drinks, cart_quantity='', show='user')
+        return render_template('menu.html', drinks=filtered_drinks, cart_quantity='', show='customer')
     else:
-        return render_template('menu.html', drinks=filtered_drinks, cart_quantity=session['cart_quantity'], show='user')
+        return render_template('menu.html', drinks=filtered_drinks, cart_quantity=session['cart_quantity'], show='customer')
 
 
 @app.route('/cart')
 def cart():
     if 'shopping_cart' not in session:
-        return render_template('cart.html', drinks={}, cart_quantity='', show='user')
+        return render_template('cart.html', drinks={}, cart_quantity='', show='customer')
     else:
-        return render_template('cart.html', drinks=session['shopping_cart'], cart_quantity=session['cart_quantity'], show='user')
+        return render_template('cart.html', drinks=session['shopping_cart'], cart_quantity=session['cart_quantity'], show='customer')
 
 
 @app.route('/pour-portal')
@@ -190,7 +190,7 @@ def pour_portal():
         session.pop('cart_quantity', None)
 
     if 'pour_items' not in session:
-        return render_template('pour_portal.html', drinks={}, cart_quantity='', show='user')
+        return render_template('pour_portal.html', drinks={}, cart_quantity='', show='customer')
     else:
         return render_template('pour_portal.html', drinks=session['pour_items'], cart_quantity='')
 
@@ -269,7 +269,7 @@ def pour_drink():
         del session['pour_items'][drink_id]
     else:
         session['pour_items'][drink_id]['quantity'] = str(new_quantity)
-    
+
     print(drink_id)
     PouringService.pourDrink(drink_id)
 
@@ -360,4 +360,4 @@ def get_cart_items():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=3000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

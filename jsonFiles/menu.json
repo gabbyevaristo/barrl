@@ -10,7 +10,7 @@
         "price": 6.99
     },
     "2524c0a3-c2c2-11eb-b50a-9cb6d091f27c": {
-        "description": "Vodka with lime juice",
+        "description": "Vodka mixed with lime juice",
         "image": "https://cdn.diffords.com/contrib/stock-images/2016/12/44/2016d7bf2b3735ae8e70b6dc5cf4ca88253a.jpg",
         "ings": {
             "3f46c901-bb21-11eb-8cf3-b831b5854dfb": 50.0,
@@ -91,7 +91,7 @@
         "price": 7.99
     },
     "b19592df-c2c2-11eb-8d94-9cb6d091f27c": {
-        "description": "Tequila with lime juice",
+        "description": "Tequila mixed with lime juice",
         "image": "https://cdn.diffords.com/contrib/stock-images/2018/05/5af3181c612a3.jpg",
         "ings": {
             "3f4ac4b0-bb21-11eb-9695-b831b5854dfb": 50.0,
