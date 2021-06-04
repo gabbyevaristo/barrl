@@ -49,9 +49,9 @@
         <div class="list-group-item flex-column align-items-start">
           <!-- Only prefix item with "Bottle" if it is currenty connected to a pump -->
           {% if loop.index <= pump_num %}
-            <span class="titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
+            <span class="admin-titles"> Bottle {{ loop.index }}: {{ bottle['name'] }} </span>
           {% else %}
-            <span class="titles"> {{ bottle['name'] }} </span>
+            <span class="admin-titles"> {{ bottle['name'] }} </span>
           {% endif %}
           <button data-id="{{ id }}" class="btn btn-dark btn-sm mb-1 mr-4 pull-right edit-bottle-btn" type="button"> Edit </button>
         </div>
@@ -117,7 +117,7 @@
 
         <!-- Menu items -->
         <div class="list-group-item flex-column align-items-start">
-          <span class="titles"> {{ drink['name'] }} </span>
+          <span class="admin-titles"> {{ drink['name'] }} </span>
           <button data-id="{{ id }}" class="btn btn-dark btn-sm mb-1 mr-4 edit-drink-btn pull-right" type="button"> Edit </button>
         </div>
 

@@ -22,7 +22,7 @@
     <div class="col-xs-12 col-sm-12 progress-container mb-5">
         <div id="progress-container" class="progress progress-striped active position-relative">
             <div id="progress-bar" class="progress-bar bg-dark">
-                <p id="current-mixer" class="justify-content-center d-flex position-absolute w-100"></p>
+                <p id="poured-drink" class="justify-content-center d-flex position-absolute w-100"></p>
             </div>
         </div>
     </div>
@@ -41,7 +41,7 @@
                 <div id="pour-item-{{ drink_index }}" data-index="{{ drink_index }}" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="row ml-2">
                         <div class="col-1 pour-drink-img-col">
-                            <img src={{ drinks[drink]["image"] }} class="cart-drink-img">
+                            <img src={{ drinks[drink]["image"] }} class="pour-drink-img">
                         </div>
                         <div class="col-6 ml-3">
                             <div class="d-flex w-100 justify-content-between">

@@ -18,13 +18,13 @@ function set_buttons() {
             });
 
             var drink_name = $('#drink-name-'.concat(i)).text();
-            $('#current-mixer').text('Pouring ' + drink_name);
+            $('#poured-drink').text('Pouring ' + drink_name);
 
             $(".progress-bar").animate({
                 width: "100%"
             }, wait_time, function() {
                 $('.progress-bar').css("width","0%");
-                $('#current-mixer').text('');
+                $('#poured-drink').text('');
             });
 
             fetch("/pour-drink", {
