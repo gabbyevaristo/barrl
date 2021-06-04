@@ -1,28 +1,36 @@
 window.onload = set_buttons;
 
-var wait_time = 50000;
+var pour_time = 50000;
+
 
 function set_buttons() {
     pour_buttons = document.getElementsByClassName('pour-btn');
-
     pour_buttons.forEach(function(pour_button) {
+
+        // When pour button is clicked
         pour_button.addEventListener('click', function(e) {
             var i = $(e.target).data('index');
             var drink_id = $(e.target).data('id');
 
+            // Disable all other pour buttons for time equal to pour_time
             pour_buttons.forEach(function(pour_button) {
                 pour_button.disabled = true;
-                setTimeout(function() { 
+                setTimeout(function() {
                     pour_button.disabled = false;
-                }, wait_time);
+                }, pour_time);
             });
 
+            // Get currently poured drink name and set it as the value in
+            // the progress bar
             var drink_name = $('#drink-name-'.concat(i)).text();
             $('#poured-drink').text('Pouring ' + drink_name);
 
+            $('#pour-item-'.concat(i)).remove();
+
+            // Show progress bar animation for time equal to pour_time
             $(".progress-bar").animate({
                 width: "100%"
-            }, wait_time, function() {
+            }, pour_time, function() {
                 $('.progress-bar').css("width","0%");
                 $('#poured-drink').text('');
             });
@@ -37,11 +45,10 @@ function set_buttons() {
                 if (data == '') {
                     setTimeout(function(){
                         window.location.reload();
-                    }, wait_time);
+                    }, pour_time);
                 }
             });
-    
-            $('#pour-item-'.concat(i)).remove();
         });
+
     });
 }

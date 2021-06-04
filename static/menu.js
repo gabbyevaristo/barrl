@@ -1,27 +1,74 @@
-var wait_time = 800;
+var alert_time = 800;
+var min_quantity = 0;
+var max_quantity = 4;
 
-// Open modal on menu page
+
+// Open add to cart modal
 $('.item-btn').click(function() {
     var i = $(this).data('index');
+
+    // Reset modal to prevent previous attributes and values from populating
     reset_modal(i);
+
     $('#modal-menu-'.concat(i)).modal({backdrop: 'static', keyboard: false});
 })
 
 
-// When the user clicks on add to cart
+// Handle increment and decrement for add to cart modal quantity selector
+$('.plus-btn, .minus-btn').click(function() {
+    var i = $(this).data('index');
+    var sign = $(this).data('identifier');
+
+    var quantity_string = $('#modal-menu-quantity-'.concat(i)).text();
+    var quantity_int = parseInt(quantity_string);
+
+    // Update quantity accordingly
+    if (sign == "plus") {
+        $('#modal-menu-quantity-'.concat(i)).text((quantity_int + 1).toString());
+    } else {
+        $('#modal-menu-quantity-'.concat(i)).text((quantity_int - 1).toString());
+    }
+
+    // Get updated quantity
+    var updated_quantity = $('#modal-menu-quantity-'.concat(i)).text();
+
+    // Update button disabled attribute accordingly
+    if (sign == "plus") {
+        $('#minus-menu-button-'.concat(i)).prop('disabled', false);
+        $('#add-to-cart-button-'.concat(i)).prop('disabled', false);
+        $('#modal-menu-price-'.concat(i)).prop('hidden', false);
+        if (updated_quantity >= max_quantity) {
+            $('#plus-menu-button-'.concat(i)).prop('disabled', true);
+        }
+    } else {
+        $('#plus-menu-button-'.concat(i)).prop('disabled', false);
+        if (updated_quantity == min_quantity) {
+            $('#minus-menu-button-'.concat(i)).prop('disabled', true);
+            $('#add-to-cart-button-'.concat(i)).prop('disabled', true);
+            $('#modal-menu-price-'.concat(i)).prop('hidden', true);
+        }
+    }
+
+    // Update price value according to quantity
+    var drink_price = $('#menu-price-'.concat(i)).text();
+    var price = parseInt(updated_quantity) * parseFloat(drink_price);
+    $('#modal-menu-price-'.concat(i)).text("$" + price.toString());
+})
+
+
+// When add to cart button is clicked
 $('.add-to-cart-btn').click(function() {
     var i = $(this).data('index');
     var drink_id = $(this).data('id');
+
     var drink_quantity = $('#modal-menu-quantity-'.concat(i)).text();
-
     $('#modal-menu-'.concat(i)).modal('hide');
-    reset_modal(i);
 
+    // Show add to cart alert for time equal to alert_time
     $('#add-to-cart-alert').show();
-
     setTimeout(function(){
         $('#add-to-cart-alert').hide('fade');
-    }, wait_time);
+    }, alert_time);
 
     fetch("/add-to-cart", {
         method: "POST",
@@ -29,61 +76,17 @@ $('.add-to-cart-btn').click(function() {
     })
     .then(response => response.json())
     .then(data => {
+        // Set cart quantity
         $('#nav-cart-quantity').text(data);
     });
 })
 
 
-// Reset modal attributes when modal is exited
+// Reset modal attributes and values
 function reset_modal(i) {
-    $('#add-to-cart-button-'.concat(i)).prop('disabled', true);
-    $('#modal-menu-price-'.concat(i)).prop('hidden', true);
     $('#modal-menu-quantity-'.concat(i)).text("0");
     $('#minus-menu-button-'.concat(i)).prop('disabled', true);
     $('#plus-menu-button-'.concat(i)).prop('disabled', false);
+    $('#modal-menu-price-'.concat(i)).prop('hidden', true);
+    $('#add-to-cart-button-'.concat(i)).prop('disabled', true);
 }
-
-
-// Increment and decrement quantity for modal on menu page
-$('.plus-btn, .minus-btn').click(function() {
-    var i = $(this).data('index');  
-    var sign = $(this).data('identifier'); 
-
-    var quantity_string = $('#modal-menu-quantity-'.concat(i)).text();
-    var quantity_int = parseInt(quantity_string);
-
-    // Update quantity accordingly
-    if (sign == "plus") {
-        if (quantity_int < 4) {
-            $('#modal-menu-quantity-'.concat(i)).text((quantity_int + 1).toString());
-        } 
-    } else {
-        if (quantity_int >= 1) {
-            $('#modal-menu-quantity-'.concat(i)).text((quantity_int - 1).toString());
-        }
-    }
-
-    // Update button disabled attribute accordingly
-    if (sign == "plus") {
-        $('#minus-menu-button-'.concat(i)).prop('disabled', false);
-        $('#add-to-cart-button-'.concat(i)).prop('disabled', false);
-        $('#modal-menu-price-'.concat(i)).prop('hidden', false);
-        if (quantity_int > 2) {
-            $('#plus-menu-button-'.concat(i)).prop('disabled', true);
-        }
-    } else {
-        $('#plus-menu-button-'.concat(i)).prop('disabled', false);
-        // When quantity is 0 (technically)
-        if (quantity_int == 1) {
-            $('#minus-menu-button-'.concat(i)).prop('disabled', true);
-            $('#add-to-cart-button-'.concat(i)).prop('disabled', true);
-            $('#modal-menu-price-'.concat(i)).prop('hidden', true);
-        }
-    }
-
-    // Get updated quantity and update price value
-    var updated_quantity = $('#modal-menu-quantity-'.concat(i)).text();
-    var drink_price = $('#menu-price-'.concat(i)).text();
-    var price = parseInt(updated_quantity) * parseFloat(drink_price);
-    $('#modal-menu-price-'.concat(i)).text("$" + price.toString());
-})

@@ -1,11 +1,11 @@
+// Open last active tab
 $(document).ready(function(){
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         localStorage.setItem('activeTab', $(e.target).attr('href'));
     });
-    
-    var activeTab = localStorage.getItem('activeTab');
-    if (activeTab){
-        $('.nav-tabs a[href="' + activeTab + '"]').tab('show');
+    var active_tab = localStorage.getItem('activeTab');
+    if (active_tab){
+        $('.nav-tabs a[href="' + active_tab + '"]').tab('show');
     }
 });
 
@@ -24,14 +24,14 @@ $('#logout').click(function() {
 })
 
 
-// Set data for bottle modal
+// Open edit bottle modal
 $('.edit-bottle-btn').click(function() {
     var id = $(this).data('id');
     $('#modal-admin-bottle-'.concat(id)).modal({backdrop: 'static', keyboard: false});
 })
 
 
-// Set data for drink modal
+// Open edit drink modal
 $('.edit-drink-btn').click(function() {
     var id = $(this).data('id');
     $('#modal-admin-menu-'.concat(id)).modal({backdrop: 'static', keyboard: false});
