@@ -58,7 +58,7 @@ def admin_login():
 def admin():
     if 'admin_login' in session:
         return render_template('admin.html', bottles=order_bottles(bottles, pump_map), \
-            drinks=drinks, pump_map=pump_map, pump_num=(len(pump_map) / 3), show='admin')
+            drinks=drinks, pump_map=pump_map, pump_num=(len(pump_map) / 3), nav_bar='admin')
     else:
         return redirect('/admin-login')
 
@@ -175,9 +175,9 @@ def menu():
     # Get only the drinks that are pourable
     filtered_drinks = {id: drink for id, drink in drinks.items() if MenuService.isValidDrinkToPour(id)}
     if 'shopping_cart' not in session:
-        return render_template('menu.html', menu=filtered_drinks, show='customer')
+        return render_template('menu.html', menu=filtered_drinks, nav_bar='customer')
     else:
-        return render_template('menu.html', menu=filtered_drinks, cart_quantity=session['cart_quantity'], show='customer')
+        return render_template('menu.html', menu=filtered_drinks, cart_quantity=session['cart_quantity'], nav_bar='customer')
 
 
 @app.route('/cart', methods=['GET'])
@@ -185,7 +185,7 @@ def cart():
     if 'shopping_cart' not in session:
         return render_template('cart.html', cart={}, show='customer')
     else:
-        return render_template('cart.html', cart=session['shopping_cart'], cart_quantity=session['cart_quantity'], show='customer')
+        return render_template('cart.html', cart=session['shopping_cart'], cart_quantity=session['cart_quantity'], nav_bar='customer')
 
 
 @app.route('/pour-portal', methods=['GET'])
@@ -197,7 +197,7 @@ def pour_portal():
         session.pop('cart_quantity', None)
 
     if 'pour_items' not in session:
-        return render_template('pour_portal.html', pour_drinks={}, show='customer')
+        return render_template('pour_portal.html', pour_drinks={}, nav_bar='customer')
     else:
         return render_template('pour_portal.html', pour_drinks=session['pour_items'])
 

@@ -25,7 +25,7 @@
       <a href="/" class="navbar-brand text-uppercase font-weight-bold"> Barrl </a>
 
       <!-- Customer navigation bar -->
-      {% if show == "customer" %}
+      {% if nav_bar == "customer" %}
         <div class="navbar-collapse collapse">
           <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
               <li class="nav-item">
@@ -40,7 +40,7 @@
           </p>
         </div>
       <!-- Admin navigation bar -->
-      {% elif show == "admin" %}
+      {% elif nav_bar == "admin" %}
         <div class="navbar-collapse collapse">
           <p class="nav-item my-0 my-lg-0 ml-auto">
             <button id="logout" class="btn" type="button"> Logout </button>
