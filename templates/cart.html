@@ -24,7 +24,7 @@
 
 
 <!-- If there is at least one item in the cart -->
-{% if drinks %}
+{% if cart %}
 
   <!-- Shopping cart table header -->
   <div class="container">
@@ -52,34 +52,34 @@
     <div id="cart" class="list-group">
 
       <!-- Shopping cart items -->
-      {% for drink in drinks.keys(): %}
+      {% for drink in cart.keys(): %}
         <div id="cart-item-{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start cart-item">
           <div class="row">
 
             <!-- Image column -->
             <div class="col-1 cart-drink-img-col">
-              <img src={{ drinks[drink]["image"] }} class="cart-drink-img">
+              <img src={{ cart[drink]["image"] }} class="cart-drink-img">
             </div>
 
             <!-- Name and description column -->
             <div class="col-6">
               <div class="d-flex w-100 justify-content-between">
-                <h6 class="font-weight-bold cart-drink-name"> {{ drinks[drink]["name"] }} </h6>
+                <h6 class="font-weight-bold cart-drink-name"> {{ cart[drink]["name"] }} </h6>
               </div>
               <div class="small-text">
-                <p class="mb-1"><small> {{ drinks[drink]["description"] }} </small></p>
+                <p class="mb-1"><small> {{ cart[drink]["description"] }} </small></p>
               </div>
             </div>
 
             <!-- Price column -->
             <div id="cart-price-{{ loop.index }}" class="col-1 cart-drink-price-col">
-              <p class="cart-price"> {{ drinks[drink]["price"] }} </p>
+              <p class="cart-price"> {{ cart[drink]["price"] }} </p>
             </div>
 
             <!-- Quantity and edit/remove column -->
             <div class="col-4 cart-drink-quantity-col">
               <div>
-                <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> {{ drinks[drink]["quantity"] }} </span>
+                <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> {{ cart[drink]["quantity"] }} </span>
                 <div class="pull-right">
                   <button data-index="{{ loop.index }}" class="btn btn-xs ml-3 edit-btn cart-btn" type="button">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
@@ -101,7 +101,7 @@
             <div class="modal-content">
 
               <div class="modal-header">
-                <h5 class="font-weight-bold"> {{ drinks[drink]["name"] }} </h5>
+                <h5 class="font-weight-bold"> {{ cart[drink]["name"] }} </h5>
                 <button class="close reset-modal" data-index="{{ loop.index }}" data-dismiss="modal" type="button" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

@@ -59,9 +59,9 @@ $('.plus-btn, .minus-btn').click(function() {
 // When add to cart button is clicked
 $('.add-to-cart-btn').click(function() {
     var i = $(this).data('index');
-    var drink_id = $(this).data('id');
+    var id = $(this).data('id');
 
-    var drink_quantity = $('#modal-menu-quantity-'.concat(i)).text();
+    var quantity = $('#modal-menu-quantity-'.concat(i)).text();
     $('#modal-menu-'.concat(i)).modal('hide');
 
     // Show add to cart alert for time equal to alert_time
@@ -72,7 +72,7 @@ $('.add-to-cart-btn').click(function() {
 
     fetch("/add-to-cart", {
         method: "POST",
-        body: JSON.stringify({ drink_id: drink_id, drink_quantity: drink_quantity }),
+        body: JSON.stringify({ id: id, quantity: quantity }),
     })
     .then(response => response.json())
     .then(data => {

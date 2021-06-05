@@ -6,7 +6,7 @@
 {% block content %}
 
 <!-- If there are drinks that still need to be poured -->
-{% if drinks %}
+{% if pour_drinks %}
 
     <div class="pt-5 mt-2 text-center">
         <h2 class="my-3"> Pour Up </h2>
@@ -33,19 +33,19 @@
         <div id="pour-portal" class="list-group list-group-flush">
 
         <!-- List of drinks that need to be poured -->
-        {% for drink in drinks.keys(): %}
+        {% for drink in pour_drinks.keys(): %}
             {% set outer_loop = loop %}
-            {% for _ in range(drinks[drink]["quantity"] | int): %}
+            {% for _ in range(pour_drinks[drink]["quantity"] | int): %}
                 {% set drink_index = [ outer_loop.index, loop.index ] | join("-") %}
 
                 <div id="pour-item-{{ drink_index }}" data-index="{{ drink_index }}" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="row ml-2">
                         <div class="col-1 pour-drink-img-col">
-                            <img src={{ drinks[drink]["image"] }} class="pour-drink-img">
+                            <img src={{ pour_drinks[drink]["image"] }} class="pour-drink-img">
                         </div>
                         <div class="col-6 ml-3">
                             <div class="d-flex w-100 justify-content-between">
-                                <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name"> {{ drinks[drink]["name"] }} </p>
+                                <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name"> {{ pour_drinks[drink]["name"] }} </p>
                             </div>
                         </div>
                         <div class="col">

@@ -10,7 +10,7 @@ function set_buttons() {
         // When pour button is clicked
         pour_button.addEventListener('click', function(e) {
             var i = $(e.target).data('index');
-            var drink_id = $(e.target).data('id');
+            var id = $(e.target).data('id');
 
             // Disable all other pour buttons for time equal to pour_time
             pour_buttons.forEach(function(pour_button) {
@@ -37,7 +37,7 @@ function set_buttons() {
 
             fetch("/pour-drink", {
                 method: "POST",
-                body: JSON.stringify({ drink_id: drink_id }),
+                body: JSON.stringify({ id: id }),
             })
             .then(response => response.json())
             .then(data => {

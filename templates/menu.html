@@ -21,21 +21,21 @@
 
 
 <div id="menu" class="list-group list-group-flush">
-  {% for drink in drinks.keys(): %}
+  {% for drink in menu.keys(): %}
 
     <!-- Menu items -->
     <button id="menu-item-{{ drink }}" data-index="{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start item-btn" type="button">
       <div class="row menu-drink-row ml-2">
         <div class="menu-drink-img-col" class="col-2">
-          <img src={{ drinks[drink]["image"] }} class="menu-drink-img">
+          <img src={{ menu[drink]["image"] }} class="menu-drink-img">
         </div>
         <div class="col">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="font-weight-bold mb-1"> {{ drinks[drink]["name"] }} </h5>
+              <h5 class="font-weight-bold mb-1"> {{ menu[drink]["name"] }} </h5>
             </div>
             <div class="small-text">
-              <p class="mb-1"> {{ drinks[drink]["description"] }} </p>
-              <small id="menu-price-{{ loop.index }}"> {{ drinks[drink]["price"] }} </small>
+              <p class="mb-1"> {{ menu[drink]["description"] }} </p>
+              <small id="menu-price-{{ loop.index }}"> {{ menu[drink]["price"] }} </small>
             </div>
         </div>
       </div>
@@ -48,16 +48,16 @@
         <div class="modal-content">
 
           <div class="modal-header">
-            <h5 class="modal-title font-weight-bold"> {{ drinks[drink]["name"] }} </h5>
+            <h5 class="modal-title font-weight-bold"> {{ menu[drink]["name"] }} </h5>
             <button class="close" data-index="{{ loop.index }}" data-dismiss="modal" type="button" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
           <div class="modal-body">
-            <p class="ml-1 modal-menu-ingredients"> {{ drinks[drink]["description"] }} </p>
+            <p class="ml-1 modal-menu-ingredients"> {{ menu[drink]["description"] }} </p>
             <div class="text-center">
-              <img src={{ drinks[drink]["image"] }} class="img-fluid mt-1 modal-menu-img">
+              <img src={{ menu[drink]["image"] }} class="img-fluid mt-1 modal-menu-img">
               <!-- Input quantity selector -->
               <div class="form-group row">
                 <div class="input-group justify-content-center">

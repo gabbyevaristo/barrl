@@ -6,7 +6,7 @@ import stripe
 
 
 app = Flask(__name__)
-app.secret_key = 'barrrrl'
+app.secret_key = 'barrrrrl'
 app.permanent_session_lifetime = timedelta(hours=4)
 
 # Configure Stripe API keys
@@ -24,6 +24,18 @@ pump_map = IngredientService.getPumpMap()
 def index():
     return render_template('index.html')
 
+
+@app.route('/mvp', methods=['GET', 'POST'])
+def mvp():
+    if request.method == 'POST':
+        print('Pouring predetermined drink')
+        return redirect('/mvp')
+    else:
+        return render_template('mvp.html')
+
+
+
+''' Admin routes '''
 
 @app.route('/admin-login', methods=['GET','POST'])
 def admin_login():
@@ -136,7 +148,7 @@ def add_drink():
     for x in range(1,7):
         id = request.form.get(f'ing{x}')
         ml = request.form.get(f'ml{x}')
-        if id and id != "none" and ml != 0:
+        if id and id != 'none' and ml != 0:
             ingredients[id] = ml
 
     MenuService.addDrinkToMenu(name, ingredients, description, float(price), image)
@@ -155,64 +167,59 @@ def delete_drink(id):
     return redirect('/admin')
 
 
-@app.route('/mvp', methods=['GET', 'POST'])
-def mvp():
-    if request.method == 'POST':
-        print('Pouring predetermined drink')
-        return redirect('/mvp')
-    else:
-        return render_template('mvp.html')
 
+''' Customer routes '''
 
-@app.route('/menu')
+@app.route('/menu', methods=['GET'])
 def menu():
-    filtered_drinks = {k:v for k,v in drinks.items() if MenuService.isValidDrinkToPour(k)}
+    # Get only the drinks that are pourable
+    filtered_drinks = {id: drink for id, drink in drinks.items() if MenuService.isValidDrinkToPour(id)}
     if 'shopping_cart' not in session:
-        return render_template('menu.html', drinks=filtered_drinks, cart_quantity='', show='customer')
+        return render_template('menu.html', menu=filtered_drinks, show='customer')
     else:
-        return render_template('menu.html', drinks=filtered_drinks, cart_quantity=session['cart_quantity'], show='customer')
+        return render_template('menu.html', menu=filtered_drinks, cart_quantity=session['cart_quantity'], show='customer')
 
 
-@app.route('/cart')
+@app.route('/cart', methods=['GET'])
 def cart():
     if 'shopping_cart' not in session:
-        return render_template('cart.html', drinks={}, cart_quantity='', show='customer')
+        return render_template('cart.html', cart={}, show='customer')
     else:
-        return render_template('cart.html', drinks=session['shopping_cart'], cart_quantity=session['cart_quantity'], show='customer')
+        return render_template('cart.html', cart=session['shopping_cart'], cart_quantity=session['cart_quantity'], show='customer')
 
 
-@app.route('/pour-portal')
+@app.route('/pour-portal', methods=['GET'])
 def pour_portal():
-    # Clear shopping cart and cart quantity session when user first enters portal
+    # Set pour session and clear cart session when customer first enters portal
     if 'shopping_cart' in session:
         session['pour_items'] = session['shopping_cart'].copy()
         session.pop('shopping_cart', None)
         session.pop('cart_quantity', None)
 
     if 'pour_items' not in session:
-        return render_template('pour_portal.html', drinks={}, cart_quantity='', show='customer')
+        return render_template('pour_portal.html', pour_drinks={}, show='customer')
     else:
-        return render_template('pour_portal.html', drinks=session['pour_items'], cart_quantity='')
+        return render_template('pour_portal.html', pour_drinks=session['pour_items'])
 
 
 @app.route('/add-to-cart', methods=['POST'])
 def add_to_cart():
     data = json.loads(request.data)
-    drink_id = data['drink_id']
-    drink_quantity = data['drink_quantity']
+    id = data['id']
+    quantity = data['quantity']
 
     session.modified = True
     if 'shopping_cart' not in session:
         session['shopping_cart'] = {}
-        session['cart_quantity'] = '0'
+        session['cart_quantity'] = 0
 
-    # If drink is already in cart, update quantity
-    if drink_id not in session['shopping_cart']:
-        session['shopping_cart'][drink_id] = drinks[drink_id].copy()
-        session['shopping_cart'][drink_id]['quantity'] = drink_quantity
+    # Add drink id to cart if id is not in cart, else update drink id quantity
+    if id not in session['shopping_cart']:
+        session['shopping_cart'][id] = drinks[id].copy()
+        session['shopping_cart'][id]['quantity'] = int(quantity)
     else:
-        new_quantity = int(session['shopping_cart'][drink_id]['quantity']) + int(drink_quantity)
-        session['shopping_cart'][drink_id]['quantity'] = str(new_quantity)
+        new_quantity = session['shopping_cart'][id]['quantity'] + int(quantity)
+        session['shopping_cart'][id]['quantity'] = new_quantity
 
     session['cart_quantity'] = get_cart_quantity()
     return jsonify(session['cart_quantity'])
@@ -221,59 +228,49 @@ def add_to_cart():
 @app.route('/edit-cart', methods=['POST'])
 def edit_cart():
     data = json.loads(request.data)
-    drink_id = data['drink_id']
+    id = data['id']
     updated_quantity = data['updated_quantity']
 
     session.modified = True
-
-    # Update quantity
-    session['shopping_cart'][drink_id]['quantity'] = updated_quantity
+    session['shopping_cart'][id]['quantity'] = updated_quantity
     session['cart_quantity'] = get_cart_quantity()
-
     return jsonify(session['cart_quantity'])
 
 
 @app.route('/remove-from-cart', methods=['POST'])
 def remove_from_cart():
     data = json.loads(request.data)
-    drink_id = data['drink_id']
+    id = data['id']
 
     session.modified = True
-
-    # Remove item from session
-    del session['shopping_cart'][drink_id]
-    session['cart_quantity'] = get_cart_quantity()
-
-    # Render empty cart page and clear session if cart becomes empty
+    del session['shopping_cart'][id]
     if len(session['shopping_cart']) == 0:
         session.pop('shopping_cart', None)
         session.pop('cart_quantity', None)
         return jsonify('')
 
+    session['cart_quantity'] = get_cart_quantity()
     return jsonify(session['cart_quantity'])
 
 
 @app.route('/pour-drink', methods=['POST'])
 def pour_drink():
     data = json.loads(request.data)
-    drink_id = data['drink_id'] # This id is used to determine which drink to pour
-    print(drinks[drink_id]['name'] + ' poured!')
+    id = data['id']
 
     session.modified = True
+    updated_quantity = session['pour_items'][id]['quantity'] - 1
 
-    new_quantity = int(session['pour_items'][drink_id]['quantity']) - 1
-
-    # Delete drink from pour_items session if quantity reaches 0, else
-    # set the new quantity to old quantity minus 1
-    if new_quantity == 0:
-        del session['pour_items'][drink_id]
+    # Delete drink id from pour session if id quantity reaches 0, else set
+    # the new quantity to old quantity minus 1
+    if updated_quantity == 0:
+        del session['pour_items'][id]
     else:
-        session['pour_items'][drink_id]['quantity'] = str(new_quantity)
+        session['pour_items'][id]['quantity'] = updated_quantity
 
-    print(drink_id)
-    PouringService.pourDrink(drink_id)
+    # PouringService.pourDrink(id)
+    print('%s poured!' % drinks[id]['name'])
 
-    # Remove pour_items session if there are no more drinks on the pour page
     if len(session['pour_items']) == 0:
         session.pop('pour_items', None)
         return jsonify('')
@@ -283,24 +280,22 @@ def pour_drink():
 
 @app.route('/checkout-session', methods=['POST'])
 def checkout_session():
-    cart_items = get_cart_items()
-
+    line_items = get_line_items()
     checkout_session = stripe.checkout.Session.create(
         payment_method_types=['card'],
-        line_items=cart_items,
+        line_items=line_items,
             mode='payment',
             allow_promotion_codes=True,
             success_url=url_for('pour_portal', _external=True) + '?session_id={CHECKOUT_SESSION_ID}',
             cancel_url=url_for('cart', _external=True),
     )
-
     return jsonify(id=checkout_session.id, public_key=app.config['STRIPE_PUBLIC_KEY'])
 
 
 @app.route('/stripe-webhook', methods=['POST'])
 def stripe_webhook():
     if request.content_length > 1024 * 1024:
-        print('REQUEST TOO BIG')
+        print('Request too big!')
         abort(400)
 
     payload = request.get_data()
@@ -343,19 +338,19 @@ def order_bottles(bottles, pump_map):
 
 def get_cart_quantity():
     if 'shopping_cart' in session:
-        return str(sum(int(drink['quantity']) for drink in session['shopping_cart'].values()))
+        return sum(int(drink['quantity']) for drink in session['shopping_cart'].values())
 
 
-def get_cart_items():
+def get_line_items():
     if 'shopping_cart' in session:
-        items, items_list = session['shopping_cart'].copy(), []
-        for item in items:
+        cart, line_items = session['shopping_cart'].copy(), []
+        for id, drink in cart.items():
             item_dict = {}
-            item_dict['price_data'] = {'currency': 'usd', 'product_data': {'name': items[item]['name'], 'images': [items[item]['image']]}, 'unit_amount': int(float(items[item]['price']) * 100)}
-            item_dict['quantity'] = int(items[item]['quantity'])
+            item_dict['price_data'] = {'currency': 'usd', 'product_data': {'name': drink['name'], 'images': [drink['image']]}, 'unit_amount': int(float(drink['price']) * 100)}
+            item_dict['quantity'] = drink['quantity']
             item_dict['tax_rates'] = ['txr_1IrTYZEx3ZnFyUF0aZ43zasr']
-            items_list.append(item_dict)
-        return items_list
+            line_items.append(item_dict)
+        return line_items
 
 
 

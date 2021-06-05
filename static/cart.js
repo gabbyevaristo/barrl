@@ -9,7 +9,7 @@ var max_quantity = 4;
 // Remove item from cart
 $('.trash-btn').click(function() {
     var i = $(this).data('index');
-    var drink_id = $(this).data('id');
+    var id = $(this).data('id');
 
     $('#cart-item-'.concat(i)).remove();
     calculate_total();
@@ -22,7 +22,7 @@ $('.trash-btn').click(function() {
 
     fetch("/remove-from-cart", {
         method: "POST",
-        body: JSON.stringify({ drink_id: drink_id }),
+        body: JSON.stringify({ id: id }),
     })
     .then(response => response.json())
     .then(data => {
@@ -102,7 +102,7 @@ $('.plus-btn, .minus-btn').click(function() {
 // When update cart button is clicked
 $('.update-btn').click(function() {
     var i = $(this).data('index');
-    var drink_id = $(this).data('id');
+    var id = $(this).data('id');
 
     var updated_quantity = $('#modal-cart-quantity-'.concat(i)).text();
     $('#cart-quantity-'.concat(i)).text(updated_quantity);
@@ -117,7 +117,7 @@ $('.update-btn').click(function() {
 
     fetch("/edit-cart", {
         method: "POST",
-        body: JSON.stringify({ drink_id: drink_id, updated_quantity: updated_quantity }),
+        body: JSON.stringify({ id: id, updated_quantity: updated_quantity }),
     })
     .then(response => response.json())
     .then(data => {
