@@ -1,5 +1,5 @@
-from flask import Flask, render_template, redirect, request, session, jsonify, url_for, abort, flash
-from pi import jsonService, MenuService, IngredientService, PouringService
+from flask import Flask, render_template, redirect, request, url_for, session, jsonify, abort, flash
+from pi import IngredientService, MenuService, PouringService
 from datetime import timedelta
 import json
 import stripe
@@ -14,19 +14,20 @@ app.config['STRIPE_PUBLIC_KEY'] = 'pk_test_51IrKAPEx3ZnFyUF0TLud5ekbUAvIM6Cdvo7R
 app.config['STRIPE_SECRET_KEY'] = 'sk_test_51IrKAPEx3ZnFyUF0xExm1uVSSm9XzTELrGlQwLnioL1PZ7N2OnuQbxy6IkJj7Jb1j7j1PTvvsI2rR0ISXC2ypBXI00VKnWo9Cm'
 stripe.api_key = app.config['STRIPE_SECRET_KEY']
 
-bottles = jsonService.loadJson(r'jsonFiles/ingredients.json')
-drinks = jsonService.loadJson(r'jsonFiles/menu.json')
+
+bottles = IngredientService.getIngredients(r'jsonFiles/ingredients.json')
+drinks = MenuService.getMenu(r'jsonFiles/menu.json')
 pump_map = IngredientService.getPumpMap()
 
 
-@app.route('/', methods=["GET"])
+@app.route('/', methods=['GET'])
 def index():
     return render_template('index.html')
 
 
-@app.route('/admin-login', methods=["GET","POST"])
+@app.route('/admin-login', methods=['GET','POST'])
 def admin_login():
-    if request.method == "POST":
+    if request.method == 'POST':
         # Confirm correct access code was inputted
         if request.form.get('code') == 'highball':
             session['admin_login'] = True
@@ -41,7 +42,7 @@ def admin_login():
             return render_template('admin_login.html')
 
 
-@app.route('/admin', methods=["GET"])
+@app.route('/admin', methods=['GET'])
 def admin():
     if 'admin_login' in session:
         return render_template('admin.html', bottles=order_bottles(bottles, pump_map), \
@@ -50,112 +51,113 @@ def admin():
         return redirect('/admin-login')
 
 
-@app.route('/logout', methods=["POST"])
+@app.route('/logout', methods=['POST'])
 def logout():
     if 'admin_login' in session:
         session.pop('admin_login', None)
     return jsonify({})
 
 
-@app.route('/update-bottles/<id>', methods=["POST"])
+@app.route('/update-bottles/<id>', methods=['POST'])
 def update_bottles(id):
-    global bottles
-    global pump_map
+    global bottles, pump_map
     name = request.form.get('name')
-    mL = request.form.get('ml')
+    ml = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
     estimated_fill = request.form.get('fill')
+
+    # Get pump number if bottle is connected to a pump, else get the
+    # pump number from form
     pump_num = pump_map.get(id)
     if pump_num == None:
         pump_num = int(request.form.get('pump_num'))
-    if name:
-        IngredientService.modifyIngredient(id, name, pump_num , int(mL), brand, drink_type, int(estimated_fill))
-        IngredientService.modifyPumpMap(id, pump_num)
-        pump_map = IngredientService.getPumpMap()
-        bottles = IngredientService.getAllIngredients()
-        bottles = order_bottles(bottles, pump_map)
-        flash(name + ' ingredient updated')
+
+    IngredientService.modifyIngredient(id, name, pump_num, int(ml), brand, drink_type, int(estimated_fill))
+    IngredientService.modifyPumpMap(id, pump_num)
+    bottles = IngredientService.getIngredients()
+    bottles = order_bottles(bottles, pump_map)
+    pump_map = IngredientService.getPumpMap()
+    flash('%s ingredient updated' % name)
     return redirect('/admin')
 
 
-@app.route('/add-ingredient', methods=["POST"])
+@app.route('/add-ingredient', methods=['POST'])
 def add_ingredient():
     global bottles
-    global pump_map
     name = request.form.get('name')
-    mL = request.form.get('ml')
+    ml = request.form.get('ml')
     brand = request.form.get('brand')
     drink_type = request.form.get('type')
     estimated_fill = request.form.get('fill')
-    if name:
-        IngredientService.addIngredient(name, -1, int(mL), brand, drink_type, int(estimated_fill))
-        bottles = IngredientService.getAllIngredients()
-        bottles = order_bottles(bottles, pump_map)
-        flash(name + ' ingredient added')
+
+    IngredientService.addIngredient(name, -1, int(ml), brand, drink_type, int(estimated_fill))
+    bottles = IngredientService.getIngredients()
+    bottles = order_bottles(bottles, pump_map)
+    flash('%s ingredient added' % name)
     return redirect('/admin')
 
 
-@app.route('/delete-ingredient/<id>', methods=["POST"])
+@app.route('/delete-ingredient/<id>', methods=['POST'])
 def delete_ingredient(id):
-    global bottles
-    global pump_map
+    global bottles, pump_map
     name = bottles[id]['name']
     IngredientService.removeIngredientByGuid(id)
-    bottles = IngredientService.getAllIngredients()
+    # Reload pump map in case deleted ingredient was in map
     pump_map = IngredientService.getPumpMap()
+    bottles = IngredientService.getIngredients()
     bottles = order_bottles(bottles, pump_map)
-    flash(name + ' deleted')
+    flash('%s deleted' % name)
     return redirect('/admin')
 
 
-@app.route('/update-menu/<id>', methods=["POST"])
+@app.route('/update-menu/<id>', methods=['POST'])
 def update_menu(id):
     global drinks
     name = request.form.get('name')
     price = request.form.get('price')
+    description = request.form.get('description')
     image = request.form.get('image')
-    if name and price and image:
-        drinks[id]['name'] = name
-        drinks[id]['price'] = float(price)
-        drinks[id]['description'] = request.form.get('description')
-        drinks[id]['image'] = image
-        jsonService.saveJson(drinks, r'jsonFiles/menu.json')
-        flash(name + ' updated')
+
+    MenuService.modifyDrink(id, name, drinks[id]['ings'], description, float(price), image)
+    drinks = MenuService.getMenu()
+    flash('%s updated' % name)
     return redirect('/admin')
 
 
-@app.route('/add-drink', methods=["POST"])
+@app.route('/add-drink', methods=['POST'])
 def add_drink():
     global drinks
+    name = request.form.get('name')
+    price = request.form.get('price')
+    description = request.form.get('description')
+    image = request.form.get('image')
     ingredients = {}
     for x in range(1,7):
         id = request.form.get(f'ing{x}')
         ml = request.form.get(f'ml{x}')
         if id and id != "none" and ml != 0:
             ingredients[id] = ml
-    name = request.form.get('name')
-    image = request.form.get('image')
-    price = request.form.get('price')
-    if ingredients and name and image and price:
-        MenuService.addDrinkToMenu(name, ingredients, request.form.get('description'), float(price), image)
-        flash(name + ' added')
+
+    MenuService.addDrinkToMenu(name, ingredients, description, float(price), image)
+    drinks = MenuService.getMenu()
+    flash('%s added' % name)
     return redirect('/admin')
 
 
-@app.route('/delete-drink/<id>', methods=["POST"])
+@app.route('/delete-drink/<id>', methods=['POST'])
 def delete_drink(id):
     global drinks
     name = drinks[id]['name']
     MenuService.removeDrinkByGuid(id)
     drinks = MenuService.getMenu()
-    flash(name + ' deleted')
+    flash('%s deleted' % name)
     return redirect('/admin')
 
 
-@app.route('/mvp', methods=["GET", "POST"])
+@app.route('/mvp', methods=['GET', 'POST'])
 def mvp():
-    if request.method == "POST":
+    if request.method == 'POST':
         print('Pouring predetermined drink')
         return redirect('/mvp')
     else:

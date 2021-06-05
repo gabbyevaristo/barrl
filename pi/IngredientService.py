@@ -164,7 +164,7 @@ def getIngredientByGuid(guid, ingredientfilePath=defaultIngredientfilePath):
     return ret
 
 
-def getAllIngredients(ingredientfilePath=defaultIngredientfilePath):
+def getIngredients(ingredientfilePath=defaultIngredientfilePath):
     allIngs = jsonService.loadJson(ingredientfilePath)
     return allIngs
 

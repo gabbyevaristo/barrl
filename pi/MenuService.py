@@ -24,7 +24,7 @@ def generateRandomDrink(maxIngredient=4, maxMl=100):
 
     # Generate random ingredient-amount pairs
     numIngs = random.randrange(maxIngredient) + 1
-    allIngs = IngredientService.getAllIngredients()
+    allIngs = IngredientService.getIngredients()
     ings = {}
     for i in range(numIngs):
         allKeys = list(allIngs.keys())
@@ -46,7 +46,7 @@ def addDrinkToMenu(name, ings, description='', price=0.0, image='', menuFilePath
     drink['image'] = image
     drink['ings'] = {}
 
-    allIngs = IngredientService.getAllIngredients()
+    allIngs = IngredientService.getIngredients()
     for ing in ings:
         if ing in allIngs:
             drink['ings'][ing] = float(ings[ing])
@@ -72,7 +72,7 @@ def modifyDrink(guid, name, ings, description='', price=0.0, image='', menuFileP
     drink['image'] = image
     drink['ings'] = {}
 
-    allIngs = IngredientService.getAllIngredients()
+    allIngs = IngredientService.getIngredients()
     for ing in ings:
         if ing in allIngs:
             drink['ings'][ing] = float(ings[ing])
@@ -116,7 +116,7 @@ def isValidDrinkInDb(drinkGuid, menuFilePath=defaultMenufilePath, ingredientfile
         print('Drink %s not in menu' % drinkGuid)
         return False
 
-    allIngs = IngredientService.getAllIngredients(ingredientfilePath)
+    allIngs = IngredientService.getIngredients(ingredientfilePath)
     pumpMap = IngredientService.getPumpMap(pumMapfilePath)
     drink = menu[drinkGuid]
     for ingGuid in drink['ings']:
@@ -133,7 +133,7 @@ def isValidDrinkToPour(drinkGuid, menuFilePath=defaultMenufilePath, ingredientfi
         print('Drink %s not in menu' % drinkGuid)
         return False
 
-    allIngs = IngredientService.getAllIngredients(ingredientfilePath)
+    allIngs = IngredientService.getIngredients(ingredientfilePath)
     pumpMap = IngredientService.getPumpMap(pumMapfilePath)
     drink = menu[drinkGuid]
     for ingGuid in drink['ings']:
