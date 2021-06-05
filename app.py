@@ -6,7 +6,7 @@ import stripe
 
 
 app = Flask(__name__)
-app.secret_key = 'barrrrrl'
+app.secret_key = 'barrrrl'
 app.permanent_session_lifetime = timedelta(hours=4)
 
 # Configure Stripe API keys
@@ -268,7 +268,7 @@ def pour_drink():
     else:
         session['pour_items'][id]['quantity'] = updated_quantity
 
-    # PouringService.pourDrink(id)
+    PouringService.pourDrink(id)
     print('%s poured!' % drinks[id]['name'])
 
     if len(session['pour_items']) == 0:

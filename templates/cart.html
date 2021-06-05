@@ -52,39 +52,39 @@
     <div id="cart" class="list-group">
 
       <!-- Shopping cart items -->
-      {% for drink in cart.keys(): %}
+      {% for id, drink in cart.items(): %}
         <div id="cart-item-{{ loop.index }}" class="list-group-item list-group-item-action flex-column align-items-start cart-item">
           <div class="row">
 
             <!-- Image column -->
             <div class="col-1 cart-drink-img-col">
-              <img src={{ cart[drink]["image"] }} class="cart-drink-img">
+              <img src={{ drink["image"] }} class="cart-drink-img">
             </div>
 
             <!-- Name and description column -->
             <div class="col-6">
               <div class="d-flex w-100 justify-content-between">
-                <h6 class="font-weight-bold cart-drink-name"> {{ cart[drink]["name"] }} </h6>
+                <h6 class="font-weight-bold cart-drink-name"> {{ drink["name"] }} </h6>
               </div>
               <div class="small-text">
-                <p class="mb-1"><small> {{ cart[drink]["description"] }} </small></p>
+                <p class="mb-1"><small> {{ drink["description"] }} </small></p>
               </div>
             </div>
 
             <!-- Price column -->
             <div id="cart-price-{{ loop.index }}" class="col-1 cart-drink-price-col">
-              <p class="cart-price"> {{ cart[drink]["price"] }} </p>
+              <p class="cart-price"> {{ drink["price"] }} </p>
             </div>
 
             <!-- Quantity and edit/remove column -->
             <div class="col-4 cart-drink-quantity-col">
               <div>
-                <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> {{ cart[drink]["quantity"] }} </span>
+                <span id="cart-quantity-{{ loop.index }}" class="cart-qty"> {{ drink["quantity"] }} </span>
                 <div class="pull-right">
                   <button data-index="{{ loop.index }}" class="btn btn-xs ml-3 edit-btn cart-btn" type="button">
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                   </button>
-                  <button data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-xs ml-1 trash-btn cart-btn" type="button">
+                  <button data-index="{{ loop.index }}" data-id={{ id }} class="btn btn-xs ml-1 trash-btn cart-btn" type="button">
                     <i class="fa fa-trash" aria-hidden="true"></i>
                   </button>
                 </div>
@@ -101,7 +101,7 @@
             <div class="modal-content">
 
               <div class="modal-header">
-                <h5 class="font-weight-bold"> {{ cart[drink]["name"] }} </h5>
+                <h5 class="font-weight-bold"> {{ drink["name"] }} </h5>
                 <button class="close reset-modal" data-index="{{ loop.index }}" data-dismiss="modal" type="button" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -125,7 +125,7 @@
               </div>
 
               <div class="modal-footer">
-                <button data-index="{{ loop.index }}" data-id={{ drink }} class="btn btn-dark btn-block p-3 radius-remove update-btn" type="button">
+                <button data-index="{{ loop.index }}" data-id={{ id }} class="btn btn-dark btn-block p-3 radius-remove update-btn" type="button">
                   <span class="pull-left"><i class="fas fa-shopping-cart"></i> &nbsp; Update Cart </span>
                   <span id="modal-cart-price-{{ loop.index }}" class="pull-right"> </span>
                 </button>

@@ -33,23 +33,23 @@
         <div id="pour-portal" class="list-group list-group-flush">
 
         <!-- List of drinks that need to be poured -->
-        {% for drink in pour_drinks.keys(): %}
+        {% for id, drink in pour_drinks.items(): %}
             {% set outer_loop = loop %}
-            {% for _ in range(pour_drinks[drink]["quantity"] | int): %}
+            {% for _ in range(drink["quantity"] | int): %}
                 {% set drink_index = [ outer_loop.index, loop.index ] | join("-") %}
 
                 <div id="pour-item-{{ drink_index }}" data-index="{{ drink_index }}" class="list-group-item list-group-item-action flex-column align-items-start">
                     <div class="row ml-2">
                         <div class="col-1 pour-drink-img-col">
-                            <img src={{ pour_drinks[drink]["image"] }} class="pour-drink-img">
+                            <img src={{ drink["image"] }} class="pour-drink-img">
                         </div>
                         <div class="col-6 ml-3">
                             <div class="d-flex w-100 justify-content-between">
-                                <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name"> {{ pour_drinks[drink]["name"] }} </p>
+                                <p id="drink-name-{{ drink_index }}" class="font-weight-bold mt-3 mb-1 pour-drink-name"> {{ drink["name"] }} </p>
                             </div>
                         </div>
                         <div class="col">
-                            <button id="pour-button-{{ drink_index }}" data-index="{{ drink_index }}" data-id={{ drink }} class="btn btn-dark btn-sm mt-2 mb-1 mr-4 pour-btn pull-right" type="button"> Pour </button>
+                            <button id="pour-button-{{ drink_index }}" data-index="{{ drink_index }}" data-id={{ id }} class="btn btn-dark btn-sm mt-2 mb-1 mr-4 pour-btn pull-right" type="button"> Pour </button>
                         </div>
                     </div>
                 </div>
