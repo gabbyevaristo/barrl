@@ -1,5 +1,6 @@
 import json
 
+
 def loadJson(filePath):
     ret = None
     with open(filePath, "r") as file:

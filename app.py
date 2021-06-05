@@ -71,7 +71,7 @@ def update_bottles(id):
         pump_num = int(request.form.get('pump_num'))
     if name:
         IngredientService.modifyIngredient(id, name, pump_num , int(mL), brand, drink_type, int(estimated_fill))
-        IngredientService.modifyPumpMapp(id, pump_num)
+        IngredientService.modifyPumpMap(id, pump_num)
         pump_map = IngredientService.getPumpMap()
         bottles = IngredientService.getAllIngredients()
         bottles = order_bottles(bottles, pump_map)
@@ -139,7 +139,6 @@ def add_drink():
     price = request.form.get('price')
     if ingredients and name and image and price:
         MenuService.addDrinkToMenu(name, ingredients, request.form.get('description'), float(price), image)
-        drinks = MenuService.getMenu()
         flash(name + ' added')
     return redirect('/admin')
 
@@ -148,9 +147,8 @@ def add_drink():
 def delete_drink(id):
     global drinks
     name = drinks[id]['name']
-    if id in drinks:
-        del drinks[id]
     MenuService.removeDrinkByGuid(id)
+    drinks = MenuService.getMenu()
     flash(name + ' deleted')
     return redirect('/admin')
 
@@ -360,4 +358,4 @@ def get_cart_items():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    app.run(debug=True, host='0.0.0.0', port=3000)

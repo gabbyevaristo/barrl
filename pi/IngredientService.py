@@ -1,12 +1,14 @@
-import json
-import os
-import uuid
 import pi.jsonService as jsonService
+import json
+import uuid
+import os
 
-defaultIngredientfilePath = "./jsonFiles/ingredients.json"
-defaultPumpMapfilePath = "./jsonFiles/pumpMap.json"
 
-# in ml per second
+defaultIngredientfilePath = './jsonFiles/ingredients.json'
+defaultPumpMapfilePath = './jsonFiles/pumpMap.json'
+
+
+# Pump rate in mL per second
 pumpRate = {
     0: 80.0/60.0,
     1: 80.0/60.0,
@@ -16,24 +18,19 @@ pumpRate = {
     5: 80.0/60.0
 }
 
-def convertBottlesToIngredients(bottlesFilePath="./bottles.json"):
-    bottles = jsonService.loadJson(bottlesFilePath)
 
+''' Script to convert from old bottles format to new format '''
+def convertBottlesToIngredients(bottlesFilePath='./bottles.json'):
+    bottles = jsonService.loadJson(bottlesFilePath)
     pumpNumber = 0
     for bottleNum in bottles:
         bottle = bottles[bottleNum]
-        addIngredient(name=bottle["name"], pumpNumber=pumpNumber, ml=bottle["ml"], brand=bottle["brand"] , drinkType=bottle["type"] , estimated_fill=bottle["estimated_fill"], image=bottle["image"])
+        addIngredient(name=bottle['name'], pumpNumber=pumpNumber, ml=bottle['ml'], brand=bottle['brand'], drinkType=bottle['type'], estimatedFill=bottle['estimated_fill'], image=bottle['image'])
         if pumpNumber >= 0 and pumpNumber < 6:
             pumpNumber += 1
         if pumpNumber >= 6:
             pumpNumber = -1
 
-
-def clearIngredients(ingredientfilePath=defaultIngredientfilePath):
-    jsonService.saveJson({}, ingredientfilePath)
-
-def isValidPumpNumber(pumpNumber):
-    return pumpNumber >= 0 and pumpNumber < 6
 
 def clearPumpMap(pumpMapfilePath=defaultPumpMapfilePath):
     pumpMap = {}
@@ -41,29 +38,36 @@ def clearPumpMap(pumpMapfilePath=defaultPumpMapfilePath):
         pumpMap[str(i)] = None
     jsonService.saveJson(pumpMap, pumpMapfilePath)
 
-def modifyPumpMapp(ingGuid, pumpNumber, pumpMapfilePath=defaultPumpMapfilePath):
-    pumpMap = jsonService.loadJson(pumpMapfilePath)
+
+def isValidPumpNumber(pumpNumber):
+    return pumpNumber >= 0 and pumpNumber < 6
+
+
+def modifyPumpMap(ingGuid, pumpNumber, pumpMapfilePath=defaultPumpMapfilePath):
     if not isValidPumpNumber(pumpNumber):
-        print("Pump number out of range when updating pump map")
+        print('Pump number out of range when updating pump map')
         return
 
-    # remove old entries if they exist so we can maintain two way dictionary
-    oldLiquid = pumpMap.get(str(pumpNumber))
-    if oldLiquid is not None:
-        del pumpMap[oldLiquid]
+    pumpMap = jsonService.loadJson(pumpMapfilePath)
 
+    # Remove old entries if they exist so we can maintain a two-way dictionary
+    oldIng = pumpMap.get(str(pumpNumber))
+    if oldIng is not None:
+        del pumpMap[oldIng]
     pumpMap.pop(str(pumpNumber), None)
 
-    # pumpMap[str(pumpNumber)] = ingGuid
-    pumpMap[str(pumpNumber)] = ingGuid
+    # Save pump to ingredient and ingredient to pump mapping
     pumpMap[ingGuid] = pumpNumber
+    pumpMap[str(pumpNumber)] = ingGuid
+
     jsonService.saveJson(pumpMap, pumpMapfilePath)
+
 
 def getPumpMap(pumpMapfilePath=defaultPumpMapfilePath):
     pumpMap = jsonService.loadJson(pumpMapfilePath)
 
-    # json does not support integer keys
-    # we store keys as strings but we convert them to also have integers for ease of use
+    # json does not support integer keys. Keys are stored as strings, but we
+    # convert them to also use integers for ease of use
     i = 0
     while isValidPumpNumber(i):
         if str(i) in pumpMap:
@@ -72,17 +76,23 @@ def getPumpMap(pumpMapfilePath=defaultPumpMapfilePath):
 
     return pumpMap
 
-# add all these atributes to ingredient and assign it a guid
-# additional attributes can be addded through kwargs
-def addIngredient(name="", pumpNumber=-1, ml=1000, brand= "", drinkType= "", estimated_fill= "", image= "", ingredientfilePath=defaultIngredientfilePath, **kwargs):
+
+def clearIngredients(ingredientfilePath=defaultIngredientfilePath):
+    jsonService.saveJson({}, ingredientfilePath)
+
+
+# Add ingredient with the specified attributes and assign it to a guid
+'''
+Additional attributes can be addded through kwargs
+'''
+def addIngredient(name='', pumpNumber=-1, ml=1000, brand='', drinkType='', estimatedFill='', image='', ingredientfilePath=defaultIngredientfilePath, **kwargs):
     ing = {
-            "name": name \
-            ,"ml": ml \
-            ,"brand": brand \
-            ,"type": drinkType \
-            ,"estimated_fill": estimated_fill \
-            ,"image": image \
-            # ,"pumpNumber": pumpNumber \
+            'name': name, \
+            'ml': ml, \
+            'brand': brand, \
+            'type': drinkType, \
+            'estimated_fill': estimatedFill, \
+            'image': image
           }
 
     for key, value in kwargs.items():
@@ -90,29 +100,26 @@ def addIngredient(name="", pumpNumber=-1, ml=1000, brand= "", drinkType= "", est
 
     guid = str(uuid.uuid1())
 
-    if isValidPumpNumber(pumpNumber):
-        modifyPumpMapp(guid, pumpNumber)
-
     allIngs = jsonService.loadJson(ingredientfilePath)
     if guid in allIngs:
-        print("Collision in ID when adding ingredient")
+        print('Collision in ID when adding ingredient')
     allIngs[guid] = ing
     jsonService.saveJson(allIngs, ingredientfilePath)
 
-    print("Added Ingredient")
-    print(guid)
-    print(ing)
+    if isValidPumpNumber(pumpNumber):
+        modifyPumpMap(guid, pumpNumber)
+
     return guid
 
-def modifyIngredient(guid, name="", pumpNumber=-1, ml=1000, brand= "", drinkType= "", estimated_fill= "", image= "", ingredientfilePath=defaultIngredientfilePath, **kwargs):
+
+def modifyIngredient(guid, name='', pumpNumber=-1, ml=1000, brand='', drinkType='', estimatedFill='', image= '', ingredientfilePath=defaultIngredientfilePath, **kwargs):
     ing = {
-            "name": name \
-            ,"ml": ml \
-            ,"brand": brand \
-            ,"type": drinkType \
-            ,"estimated_fill": estimated_fill \
-            ,"image": image \
-            # ,"pumpNumber": pumpNumber \
+            'name': name, \
+            'ml': ml, \
+            'brand': brand, \
+            'type': drinkType, \
+            'estimated_fill': estimatedFill, \
+            'image': image
           }
 
     for key, value in kwargs.items():
@@ -120,50 +127,53 @@ def modifyIngredient(guid, name="", pumpNumber=-1, ml=1000, brand= "", drinkType
 
     allIngs = jsonService.loadJson(ingredientfilePath)
     if guid not in allIngs:
-        print("Attempted to modify ingredient that is not in database")
+        print('Attempted to modify ingredient not in database')
         return
 
     allIngs[guid] = ing
-
-    if isValidPumpNumber(pumpNumber):
-        modifyPumpMapp(guid, pumpNumber)
-
     jsonService.saveJson(allIngs, ingredientfilePath)
 
-    print("Modified Ingredient")
-    print(guid)
-    print(ing)
+    if isValidPumpNumber(pumpNumber):
+        modifyPumpMap(guid, pumpNumber)
+
 
 def removeIngredientByGuid(guid, ingredientfilePath=defaultIngredientfilePath, pumpMapfilePath=defaultPumpMapfilePath):
     allIngs = jsonService.loadJson(ingredientfilePath)
-    pump_map = jsonService.loadJson(pumpMapfilePath)
-    pump_num = pump_map.get(guid)
-    if pump_num != None:
-        del pump_map[str(pump_num)]
-        del pump_map[guid]
+    pumpMap = jsonService.loadJson(pumpMapfilePath)
+    pumpNum = pumpMap.get(guid)
+
+    # Remove mappings from pump map if guid was connected to a pump
+    if pumpNum != None:
+        del pumpMap[str(pumpNum)]
+        del pumpMap[guid]
+
     if guid in allIngs:
         del allIngs[guid]
-    jsonService.saveJson(pump_map, pumpMapfilePath)
+
+    jsonService.saveJson(pumpMap, pumpMapfilePath)
     jsonService.saveJson(allIngs, ingredientfilePath)
+
 
 def getIngredientByGuid(guid, ingredientfilePath=defaultIngredientfilePath):
     allIngs = jsonService.loadJson(ingredientfilePath)
-
     if guid in allIngs:
         ret = allIngs[guid]
     else:
-        print("Guid %s not in ingredients" % guid)
+        print('Guid %s not in ingredients' % guid)
         return None
-
     return ret
+
 
 def getAllIngredients(ingredientfilePath=defaultIngredientfilePath):
     allIngs = jsonService.loadJson(ingredientfilePath)
     return allIngs
 
-# if ingredients are not present, then create file so everything does not break
+
+# If ingredients file does not exist, then create it so everything does not break
 if not os.path.exists(defaultIngredientfilePath):
     clearIngredients()
 
+
+# If pump map file does not exist, then create it so everything does not break
 if not os.path.exists(defaultPumpMapfilePath):
     clearPumpMap()
