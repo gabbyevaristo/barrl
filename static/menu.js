@@ -52,7 +52,7 @@ $('.plus-btn, .minus-btn').click(function() {
     // Update price value according to quantity
     var drink_price = $('#menu-price-'.concat(i)).text();
     var price = parseInt(updated_quantity) * parseFloat(drink_price);
-    $('#modal-menu-price-'.concat(i)).text("$" + price.toString());
+    $('#modal-menu-price-'.concat(i)).text("$" + price.toFixed(2).toString());
 })
 
 

@@ -3,7 +3,7 @@ window.onload = calculate_total;
 
 var alert_time = 1200;
 var min_quantity = 1;
-var max_quantity = 4;
+var max_quantity = 20;
 
 
 // Remove item from cart
@@ -95,7 +95,7 @@ $('.plus-btn, .minus-btn').click(function() {
     // Update price value according to quantity
     var drink_price = $('#cart-price-'.concat(i)).text();
     var price = parseInt(updated_quantity) * parseFloat(drink_price);
-    $('#modal-cart-price-'.concat(i)).text("$" + price.toString());
+    $('#modal-cart-price-'.concat(i)).text("$" + price.toFixed(2).toString());
 })
 
 
