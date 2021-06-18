@@ -1,6 +1,5 @@
 import pi.IngredientService as IngredientService
 import pi.MenuService as MenuService
-from joblib import Parallel, delayed
 import time
 import os
 
@@ -50,7 +49,7 @@ def pourFromPump(pumpNumber, amount):
 
 
 # Pour drink given by drinkGuid
-def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredientfilePath=IngredientService.defaultIngredientfilePath, pumMapfilePath=IngredientService.defaultPumpMapfilePath, n_jobs=6):
+def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredientfilePath=IngredientService.defaultIngredientfilePath, pumMapfilePath=IngredientService.defaultPumpMapfilePath):
     if not MenuService.isValidDrinkToPour(drinkGuid, menuFilePath=menuFilePath, ingredientfilePath=ingredientfilePath, pumMapfilePath=pumMapfilePath):
         print('Skipping drink to pour due to invalid drink entry')
         return
@@ -59,13 +58,9 @@ def pourDrink(drinkGuid, menuFilePath=MenuService.defaultMenufilePath, ingredien
     drink = menu[drinkGuid]
     pumpMap = IngredientService.getPumpMap()
 
-    # If n_jobs is -1, then standard serial pumping loop is excecuted
-    if n_jobs == -1:
-        for ing, amount in drink['ings'].items():
-            pumpNum = pumpMap[ing]
-            pourFromPump(pumpNum, amount)
-    else:
-        Parallel(n_jobs=n_jobs)(delayed(pourFromPump)(pumpMap[ing], amount) for ing, amount in drink['ings'].items())
+    for ing, amount in drink['ings'].items():
+        pumpNum = pumpMap[ing]
+        pourFromPump(pumpNum, amount)
 
 
 '''
