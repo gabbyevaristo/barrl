@@ -1,5 +1,5 @@
 # Barrl
-Check out the web app [https://barrl.herokuapp.com](https://barrl.herokuapp.com) <br/>
+Check out the web app: [https://barrl.herokuapp.com](https://barrl.herokuapp.com) <br/>
 
 For more information about our project overview and goals, check out our Wiki page [here.](https://github.com/tschelbs18/barrl/wiki)
 <br/> <br/>
