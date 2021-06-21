@@ -149,11 +149,11 @@ function calculate_total() {
     var cart_items = document.getElementsByClassName('cart-item');
     var subtotal = 0
     for (var i = 0; i < cart_items.length; i++) {
-        var price = cart_items[i].getElementsByClassName('cart-price')[0].innerHTML;
-        var quantity = cart_items[i].getElementsByClassName('cart-qty')[0].innerHTML;
+        var price = cart_items[i].getElementsByClassName('cart-price')[0].innerText;
+        var quantity = cart_items[i].getElementsByClassName('cart-qty')[0].innerText;
         subtotal = subtotal + (price * quantity);
     }
-    document.getElementById('subtotal').innerHTML = "$" + subtotal.toFixed(2).toString();
+    document.getElementById('subtotal').innerText = "$" + subtotal.toFixed(2).toString();
 }
 
 
