@@ -24,7 +24,7 @@ body {
     color: white;
     font-size: 4.9em;
     font-family: Optima, Georgia, sans-serif;
-    letter-spacing: 12px;
+    letter-spacing: 20px;
     margin-bottom: -60px;
     animation: bubble-in 3s 1 forwards;
 }
