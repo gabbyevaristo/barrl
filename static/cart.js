@@ -158,8 +158,7 @@ function calculate_total() {
 
 
 // When proceed to checkout is clicked
-var checkout_button = document.getElementById('checkout');
-checkout_button.addEventListener('click', function() {
+$('#checkout').click(function() {
     fetch('/checkout-session', {
         method: 'POST',
     })
