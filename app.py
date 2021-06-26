@@ -90,7 +90,7 @@ def update_bottles(id):
     bottles = IngredientService.getIngredients()
     bottles = order_bottles(bottles, pump_map)
     pump_map = IngredientService.getPumpMap()
-    flash('%s ingredient updated' % name)
+    flash(f"{name} ingredient updated")
     return redirect('/admin')
 
 
@@ -106,7 +106,7 @@ def add_ingredient():
     IngredientService.addIngredient(name, -1, int(ml), brand, drink_type, int(estimated_fill))
     bottles = IngredientService.getIngredients()
     bottles = order_bottles(bottles, pump_map)
-    flash('%s ingredient added' % name)
+    flash(f"{name} ingredient added")
     return redirect('/admin')
 
 
@@ -119,7 +119,7 @@ def delete_ingredient(id):
     pump_map = IngredientService.getPumpMap()
     bottles = IngredientService.getIngredients()
     bottles = order_bottles(bottles, pump_map)
-    flash('%s deleted' % name)
+    flash(f"{name} deleted")
     return redirect('/admin')
 
 
@@ -133,7 +133,7 @@ def update_menu(id):
 
     MenuService.modifyDrink(id, name, drinks[id]['ings'], description, float(price), image)
     drinks = MenuService.getMenu()
-    flash('%s updated' % name)
+    flash(f"{name} updated")
     return redirect('/admin')
 
 
@@ -153,7 +153,7 @@ def add_drink():
 
     MenuService.addDrinkToMenu(name, ingredients, description, float(price), image)
     drinks = MenuService.getMenu()
-    flash('%s added' % name)
+    flash(f"{name} added")
     return redirect('/admin')
 
 
@@ -163,7 +163,7 @@ def delete_drink(id):
     name = drinks[id]['name']
     MenuService.removeDrinkByGuid(id)
     drinks = MenuService.getMenu()
-    flash('%s deleted' % name)
+    flash(f"{name} deleted")
     return redirect('/admin')
 
 
@@ -269,7 +269,8 @@ def pour_drink():
         session['pour_items'][id]['quantity'] = updated_quantity
 
     PouringService.pourDrink(id)
-    print('%s poured!' % drinks[id]['name'])
+    name = drinks[id]['name']
+    flash(f"{name} poured")
 
     if len(session['pour_items']) == 0:
         session.pop('pour_items', None)
