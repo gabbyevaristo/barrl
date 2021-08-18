@@ -1,7 +1,7 @@
 # Barrl
 Check out the web app: [https://barrl.herokuapp.com](https://barrl.herokuapp.com) <br/>
 
-For more information about our project overview and goals, check out our Wiki page [here.](https://github.com/tschelbs18/barrl/wiki)
+For more information about our project overview and goals, check out our Wiki page [here.](https://github.com/gabbyevaristo/barrl/wiki)
 <br/> <br/>
 
 ## How to build a Barrl
@@ -18,7 +18,7 @@ To run a Barrl instance, you will need:
 &nbsp;&nbsp;&nbsp; 1. In your terminal, run ``` pip install virtualenv ```  <br/>
 &nbsp;&nbsp;&nbsp; 2. In your terminal, run ``` virtualenv venv ```  <br/>
 &nbsp;&nbsp;&nbsp; 3. In your terminal, run ``` venv\scripts\activate ``` to activate the virtual environment <br/>
-3. In your terminal, run ``` pip install -r requirements.txt ```
+3. In your terminal, run ``` pip install -r requirements.txt ```  <br/><br/>
 
 ## To run the instance locally
 In your terminal, run ``` flask run ```
