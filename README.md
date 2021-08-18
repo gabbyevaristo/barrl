@@ -20,7 +20,7 @@ To run a Barrl instance, you will need:
 &nbsp;&nbsp;&nbsp; 3. In your terminal, run ``` venv\scripts\activate ``` to activate the virtual environment <br/>
 3. In your terminal, run ``` pip install -r requirements.txt ``` to install the dependencies <br/><br/>
 
-Alternatively, one can use ``` pipvenv ``` as the virtual environment. If this is the case: </b>
+Alternatively, you can use ``` pipvenv ``` as the virtual environment: <br/>
 1. Clone the repository
 2. In your terminal, run ``` pip install pipenv ```  <br/>
 3. In your terminal, run ``` pipenv shell ``` to activate the virtual environment <br/>
